@@ -1,0 +1,56 @@
+tar -xvf beegfs-rpm.tar.gz
+
+sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
+
+
+rpm -ivh ./beegfs-common-7.1.3-el7.noarch.rpm
+rpm -ivh ./beegfs-mgmtd-7.1.3-el7.x86_64.rpm
+rpm -ivh ./beegfs-utils-7.1.3-el7.x86_64.rpm
+rpm -ivh ./libbeegfs-ib-7.1.3-el7.x86_64.rpm
+rpm -ivh ./beegfs-admon-7.1.3-el7.x86_64.rpm
+rpm -ivh ./beegfs-storage-7.1.3-el7.x86_64.rpm 
+rpm -ivh ./beegfs-meta-7.1.3-el7.x86_64.rpm
+rpm -ivh ./beegfs-helperd-7.1.3-el7.x86_64.rpm
+rpm -ivh ./beegfs-client-7.1.3-el7.noarch.rpm
+
+echo "127.0.0.1  bgfs01" >> /etc/hosts
+
+mkdir -p /opt/data/beegfs/beegfs_mgmtd
+/opt/beegfs/sbin/beegfs-setup-mgmtd -p /opt/data/beegfs/beegfs_mgmtd
+
+mkdir -p /opt/data/beegfs/beegfs_meta
+/opt/beegfs/sbin/beegfs-setup-meta -p /opt/data/beegfs/beegfs_meta -s 2 -m bgfs01
+
+mkdir -p /opt/data/beegfs/beegfs_storage
+/opt/beegfs/sbin/beegfs-setup-storage -p /opt/data/beegfs/beegfs_storage -s 3 -i 301 -m bgfs01
+
+mkdir -p /mnt/beegfs
+/opt/beegfs/sbin/beegfs-setup-client -m bgfs01
+
+# start mgmtd
+systemctl start beegfs-mgmtd
+systemctl start beegfs-meta
+systemctl start beegfs-storage
+
+# start client
+systemctl start beegfs-helperd
+systemctl start beegfs-client
+
+# admon
+systemctl start beegfs-admon
+
+# status
+/opt/beegfs/sbin/beegfs-ctl --listnodes --nodetype=meta --nicdetails
+/opt/beegfs/sbin/beegfs-ctl --listnodes --nodetype=storage --nicdetails
+/opt/beegfs/sbin/beegfs-ctl --listnodes --nodetype=client --nicdetails
+
+# other
+# show client info
+/usr/bin/beegfs-net
+# show server info
+/usr/bin/beegfs-check-servers
+# show data storae info
+/usr/bin/beegfs-df
+
+
+

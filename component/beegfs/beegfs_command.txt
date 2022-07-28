@@ -1,0 +1,72 @@
+beegfs-ctl --removetarget 601    
+beegfs-ctl --removenode --nodetype=storage 4
+beegfs-ctl --removestoragepool 2
+
+beegfs-ctl --listtargets --nodetype=metadata --state
+beegfs-ctl --listtargets --nodetype=storage --state
+
+beegfs-ctl --listnodes --nodetype=meta --nicdetails
+beegfs-ctl --listnodes --nodetype=storage --nicdetails
+beegfs-ctl --listnodes --nodetype=client --nicdetails
+beegfs-ctl --listnodes --nodetype=management --nicdetails   
+beegfs-net                #显示Client实际使用的连接
+beegfs-check-servers      #显示服务的连接性
+beegfs-df                 #显示存储和元数据目标的空闲空间和索引节点
+beegfs-ctl --addstoragepool --desc=401 # 添加存储
+beegfs-ctl --liststoragepools  
+
+beegfs-ctl --getentryinfo /mnt/beegfs/D5/1.txt    # 获取文件信息
+所有节点关闭防火墙和SELINUX
+   systemctl stop firewalld
+   systemctl disable firewalld
+   ifconfig virbr0 down
+   systemctl disable libvirtd.service
+   brctl delbr virbr0 
+   sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
+
+修改服务，元数据，存储，客户端等的connInterfacesFile= /etc/beegfs/network/beegfs-network-interface.conf
+
+	启动web:
+admin节点需要启动。
+java -jar /opt/beegfs/beegfs-admon-gui/beegfs-admon-gui.jar
+
+
+用户“Information”  (初始密码“Information”)只能查看统计信息，
+用户“Administrator”(初始密码“admin”)可以执行管理任务。
+
+
+节点管理：
+/opt/beegfs/sbin/beegfs-setup-mgmtd -p /data/beegfs/beegfs_mgmtd
+systemctl start beegfs-mgmtd
+
+/opt/beegfs/sbin/beegfs-setup-meta -p /data/beegfs/beegfs_meta -s 6 -m bgfs06
+systemctl start beegfs-meta
+
+/opt/beegfs/sbin/beegfs-setup-storage -p /opt/data/hd/hd1 -s 6 -i 1601 -m bgfs06
+systemctl start beegfs-storage
+
+/opt/beegfs/sbin/beegfs-setup-client -m bgfs01；
+systemctl start beegfs-helperd && systemctl start beegfs-client
+
+vi /etc/beegfs/beegfs-
+admon.conf
+  sysMgmtdHost=bgfs01
+
+systemctl start beegfs-admon
+
+/opt/beegfs/sbin/beegfs-setup-storage -p /opt/data/hd/hd1 -s 6 -i 601 -m bgfs06
+/opt/beegfs/sbin/beegfs-setup-storage -p /opt/data/hd/hd1 -s 4 -i 401 -m bgfs06
+
+多个beegfs/gluster ，systemctl top beegfs-client
+
+1、node reject重新生成-s -i -m
+2、meta镜像
+222：
+rm /beegfs_meta/meta* -rf
+/opt/beegfs/sbin/beegfs-setup-meta -p /data/beegfs/beegfs_meta -s 2 -m bgfs06
+beegfs-ctl --addmirrorgroup --automatic --nodetype=meta --force
+beegfs-ctl --listmirrorgroups --nodetype=meta
+beegfs-ctl --mirrormd
+systemctl restart beegfs-meta
+
+3、storage镜像

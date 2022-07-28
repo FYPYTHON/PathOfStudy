@@ -1,0 +1,60 @@
+http://blog.itcloudblog.cn/index.php/Storage-technology/BeeGFS.html/comment-page-1
+
+centos7
+https://blog.csdn.net/i_chips/article/details/73469690
+使用
+
+https://www.kclouder.cn/centos7-beegfs/
+
+配置源：
+wget -O /etc/yum.repos.d/beegfs_rhel7.repo https://www.beegfs.io/release/latest-stable/dists/beegfs-rhel7.repo
+安装依赖库：
+centos7 rpm:
+http://vault.centos.org/6.3/os/x86_64/Packages/
+http_proxy="http://172.16.83.87:1180/" yum install libuuid-devel libibverbs-devel librdmacm-devel libattr-devel redhat-rpm-config rpm-build xfsprogs-devel cppunit cppunit-devel zlib-devel openssl-devel sqlite sqlite-devel ant gcc-c++ gcc redhat-lsb-core java-devel kernel-devel elfutils-libelf-devel
+
+rpm -i 安装
+Created symlink from /etc/systemd/system/multi-user.target.wants/beegfs-mgmtd.service to /usr/lib/systemd/system/beegfs-mgmtd.service.
+
+# management service
+node1:
+yum install beegfs-mgmtd   
+
+# metadata service 
+node2: 
+yum install beegfs-meta libbeegfs-ib
+
+# storage service
+node3:
+yum install beegfs-storage libbeegfs-ib
+
+#client and command-line utils
+node4:
+yum install beegfs-client beegfs-helperd beegfs-utils
+
+# admon service
+node5
+yum install beegfs-admon
+
+rpm下载地址：
+https://www.beegfs.io/release/beegfs_7_1/dists/rhel7/x86_64/
+
+install from git:
+1、Get the sources:
+$ git clone https://git.beegfs.io/pub/v6
+2、Go into directory v6:
+$ cd v6
+3、Read the BUILD.txt:
+$ less BUILD.txt
+4、Install dependencies that are stated in BUILD.txt:
+$ yum install ...
+5、Change directory to beegfs_auto_package:
+$ cd beegfs_auto_package
+6、Check options for ./make-rpms (or ./make-debs, depending on the system):
+$ ./make-rpms.sh -h       #./make-debs.sh -h
+7、Build the packages, defining a version number and the path where to save the packages and for most cases to omit the beegfs-admon packages:
+$ ./make-rpms.sh -v 6 -m 18 -p ~/beegfs_6-18_packages -D
+8、Install the beegfs-opentk-lib and beegfs-common packages on all nodes:
+$ rpm -i ~/beegfs_6-18_packages/beegfs-opentk-lib-6.18-*.rpm ~/beegfs_6-18_packages/beegfs-common-6.18-*.rpm
+9、Install the other packages on the machines according to your needs.
+10、Check the instructions for manual installation of BeeGFS to continue with the installation.

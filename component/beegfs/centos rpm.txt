@@ -1,0 +1,25 @@
+https://buildlogs.centos.org/c7.1708.00/kernel/20170822030048/3.10.0-693.el7.x86_64/
+https://buildlogs.centos.org/c7.1708.00/kernel/20170822030048/3.10.0-693.el7.i386/
+ftp://ftp.pbone.net/mirror/ftp.scientificlinux.org/linux/scientific/7.0/x86_64/
+http://mirrors.aliyun.com/centos/7/
+https://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/hadoop-3.2.1/
+http://archive.apache.org/dist/hadoop/core/hadoop-3.2.1/      # hadoop
+
+
+https://github.com/cea-hpc/robinhood/wiki/Documentation    # bgfs 使用robinhood 配额？
+https://blog.csdn.net/nmcha/article/details/52139444    # gfs目录配额
+https://www.cnblogs.com/staryea/p/8573812.html    # hdfs spce配额
+https://www.jianshu.com/p/8b4dc5a154e5    # hdfs工作原理
+https://blog.csdn.net/hliq5399/article/details/78193113  # hdfs配置
+
+
+https://my.oschina.net/LastRitter/blog/3061769
+beegfs-ctl --listtargets --nodetype=metadata --state
+beegfs-ctl --listtargets --nodetype=storage --state
+
+beegfs-ctl --listnodes --nodetype=meta --nicdetails
+beegfs-ctl --listnodes --nodetype=storage --nicdetails
+beegfs-ctl --listnodes --nodetype=client --nicdetails
+
+# 查看服务使用的网口
+beegfs-ctl --listnodes --nodetype=management --nicdetails 
