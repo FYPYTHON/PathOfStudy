@@ -3,4 +3,6 @@
 1、beegfs  
 2、canal  
 3、vscode  
+4、debezium  
+
 

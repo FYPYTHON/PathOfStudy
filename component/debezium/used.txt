@@ -1,0 +1,27 @@
+useradd pgsql
+groupadd pgsql
+usermod -g pgsql pgsql
+编译：
+./configure --prefix=/opt/midware/postgresql
+make && make install
+make -p /opt/midware/postgresql/pgbase /opt/midware/postgresql/pgdata
+
+使用
+chown -R pgsql:pgsql /opt/midware/postgresql
+pg_ctl init -D /opt/midware/postgresql/pgbase
+
+
+# psql -U pgsql -d postgres
+
+
+
+配置插件：
+decoderbufs.so wal2json.so 放postgresql的lib下。
+配置文件修改参考 pg_hba.conf postgresql.conf
+启停postgresql脚本：start.sh stop.sh
+
+
+配置kafka:
+*.jar 放kafka的libs下
+配置文件 postgres.properties 放kafka配置config下。
+启动脚本：postgre.sh
