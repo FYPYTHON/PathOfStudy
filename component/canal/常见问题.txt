@@ -1,0 +1,12 @@
+1、exception.PositionNotFoundException: can't find start position for example
+开发环境，如果在canal.properties使用file-instace.xml配置，则重置position下拉取最新位置就可以了
+命令：rm conf/{你的实例名}/meta.dat
+
+PS：生产环境慎用，会导致丢失部分未同步数据
+
+stop再start就可以了
+
+canal总的就这几个配置，刚开始时会觉得很绕，熟悉后还可以
+
+conf/canal.properties
+conf/{isntance}/instance.properties
