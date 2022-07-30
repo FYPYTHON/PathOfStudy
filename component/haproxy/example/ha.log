@@ -1,0 +1,11 @@
+0
+0
+this is a c./ttthis is a c./tt
+this
+this is a c
+haproxy is start warning
+haproxy is start alert
+haproxy is start notice
+argv[0]: /opt/apps/ha/sbin/haproxy .src/haproxy.c2721
+argv[1]: -f .src/haproxy.c2722
+argv[2]: /opt/apps/ha/shell/haproxy.cfg .src/haproxy.c2723

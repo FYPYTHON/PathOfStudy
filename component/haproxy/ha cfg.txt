@@ -1,0 +1,39 @@
+[root]# mkdir /etc/haproxy
+[root]# cat /etc/haproxy/haproxy.cfg
+global
+    maxconn 100000
+    chroot /usr/local/haproxy
+    stats socket /var/lib/haproxy/haproxy.sock mode 600 level admin
+    uid 99
+    gid 99
+    daemon
+    #nbproc 4
+    #cpu-map 1 0
+    #cpu-map 2 1
+    #cpu-map 3 2
+    #cpu-map 4 3
+    pidfile /var/lib/haproxy/haproxy.pid
+    log 127.0.0.1 local3 info
+
+defaults
+    option http-keep-alive
+    option forwardfor
+    maxconn 100000
+    mode http
+    timeout connect 300000ms
+    timeout client 300000ms
+    timeout server 300000ms
+
+listen stats
+    mode http
+    bind 0.0.0.0:9999
+    stats enable
+    log global
+    stats uri /haproxy-status
+    stats auth haadmin:q1w2e3r4ys
+
+listen web_port
+    bind 192.168.99.118:80
+    mode http  
+    log global  
+    server web1 192.168.99.119:80 check inter 3000 fall 2 rise 5  

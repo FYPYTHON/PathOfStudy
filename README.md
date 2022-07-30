@@ -8,6 +8,8 @@
 5、docker  
 6、elasticsearch  
 7、glusterfs  
+8、haproxy  
+
 
 #### python
 1、多线程、多进程  

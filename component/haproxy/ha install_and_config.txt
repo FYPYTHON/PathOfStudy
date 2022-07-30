@@ -1,0 +1,294 @@
+运行环境：centos7.4 +haproxy
+1.安装：
+#yum -y install haproxy
+2.文件列表：
+/etc/haproxy
+/etc/haproxy/haproxy.cfg                --haproxy的配置文件
+/etc/logrotate.d/haproxy
+/etc/sysconfig/haproxy
+/usr/bin/halog
+/usr/bin/iprange
+/usr/lib/systemd/system/haproxy.service  --haproxy的服务启动脚本
+/usr/sbin/haproxy/usr/sbin/haproxy-systemd-wrapper
+...
+/usr/share/haproxy
+/usr/share/haproxy/400.http             --以下为HTTP访问的错误状态码页面
+/usr/share/haproxy/403.http
+/usr/share/haproxy/408.http
+/usr/share/haproxy/500.http
+/usr/share/haproxy/502.http
+/usr/share/haproxy/503.http
+/usr/share/haproxy/504.http
+/usr/share/haproxy/README
+/usr/share/man/man1/halog.1.gz         --可以直接使用man halog查看命令的使用语法
+/usr/share/man/man1/haproxy.1.gz       --使用man haproxy查看命令的使用语法
+3.haproxy的启动和关闭：
+# systemctl start haproxy
+# systemctl status haproxy
+● haproxy.service - HAProxy Load Balancer   
+Loaded: loaded (/usr/lib/systemd/system/haproxy.service; disabled; vendor preset: disabled)   
+Active: active (running) since Tue 2018-09-04 15:06:11 CST; 6s ago 
+Main PID: 508502 (haproxy-systemd)   
+Memory: 2.0M  
+ CGroup: /system.slice/haproxy.service           
+├─508502 /usr/sbin/haproxy-systemd-wrapper -f /etc/haproxy/haproxy.cfg -p /run/haproxy.pid           
+├─508503 /usr/sbin/haproxy -f /etc/haproxy/haproxy.cfg -p /run/haproxy.pid -Ds           └
+─508504 /usr/sbin/haproxy -f /etc/haproxy/haproxy.cfg -p /run/haproxy.pid -Ds 
+Sep 04 15:06:11 k8s-ceph-node-189-221 systemd[1]: Started HAProxy Load Balancer.
+Sep 04 15:06:11 k8s-ceph-node-189-221 systemd[1]: Starting HAProxy Load Balancer...
+Sep 04 15:06:11 k8s-ceph-node-189-221 haproxy-systemd-wrapper[508502]: haproxy-systemd-wrapper: executing /usr/sbin/haproxy -f /etc/haproxy/haproxy.cfg -p /run/ha....pid -DsHint: Some lines were ellipsized, use -l to show in full. 
+
+--启动的脚本：
+# cat /usr/lib/systemd/system/haproxy.service
+
+[Unit]
+Description=HAProxy Load Balancer
+After=syslog.target network.target 
+
+[Service]
+EnvironmentFile=/etc/sysconfig/haproxy
+ExecStart=/usr/sbin/haproxy-systemd-wrapper -f /etc/haproxy/haproxy.cfg -p /run/haproxy.pid $OPTIONS
+ExecReload=/bin/kill -USR2 $MAINPID
+KillMode=mixed 
+
+[Install]
+WantedBy=multi-user.target
+
+4.版本查询：
+# haproxy -v
+HA-Proxy version 1.5.18 2016/05/10
+Copyright 2000-2016 Willy Tarreau <willy@haproxy.org>
+
+5.常用的参数配置：有关haproxy配置文件我们先简单介绍，如下：
+global配置段，用于设定全局配置参数。
+代理配置段中，主要是使用defaults、frontend、backend、listen关键词。
+defaults配置段用于为所有其它配置段提供默认参数，这配置默认配置参数可由下一个“defaults”所重新设定。
+frontend配置段用于定义一系列监听的套接字，这些套接字可接受客户端请求并与之建立连接。
+backend配置段用于定义一系列“后端”服务器，代理将会将对应客户端的请求转发至这些服务器。
+listen配置段通过关联“前端”和“后端”定义了一个完整的代理，通常只对TCP流量有用。 
+
+所有代理的名称只能使用大写字母、小写字母、数字、-(中线)、_(下划线)、.(点号)和:(冒号)。此外，ACL名称会区分字母大小写。
+
+ 默认的配置模板：
+# grep -vE "^#|^$" /etc/haproxy/haproxy.cfg 
+global   
+ log         127.0.0.1 local2    
+chroot      /var/lib/haproxy    
+pidfile     /var/run/haproxy.pid    
+maxconn     4000    
+user        haproxy    
+group       haproxy    
+daemon   
+ # turn on stats unix socket    
+stats socket /var/lib/haproxy/stats
+
+defaults    
+mode                    http    
+log                     global    
+option                  httplog    
+option                  dontlognull    
+option http-server-close    
+option forwardfor       except 127.0.0.0/8    
+option                  redispatch    
+retries                 3    
+timeout http-request    10s    
+timeout queue           1m    
+timeout connect         10s    
+timeout client          1m    
+timeout server          1m   
+timeout http-keep-alive 10s    
+timeout check           10s   
+maxconn                 3000
+
+frontend  main *:5000   
+acl url_static       path_beg       -i /static /images /javascript /stylesheets    
+acl url_static       path_end       -i .jpg .gif .png .css .js    
+use_backend static          if url_static    
+default_backend             app
+
+backend static    
+balance     roundrobin    
+server      static 127.0.0.1:4331 check
+
+backend app    
+balance     roundrobin    
+server  app1 127.0.0.1:5001 check    
+server  app2 127.0.0.1:5002 check    
+server  app3 127.0.0.1:5003 check    
+server  app4 127.0.0.1:5004 check 
+
+最重要的参数： nbproc 和 maxconn 参数。 maxconn 设置 HAProxy 允许提供的最大 TCP 连接数（单向）。
+nbproc <number>：指定启动的haproxy进程的个数，只能用于守护进程模式的haproxy；默认只启动一个进程，鉴于调试困难等多方面的原因，一般只在单进程仅能打开少数文件描述符的场景中才使用多进程模式；
+
+4. 配置详解：
+global             
+log         127.0.0.1 local2                                                                                                                                   
+chroot /var/haproxy           #chroot运行的路径，增加安全性       
+uid 99                          #程序运行的用户id       
+gid 99                          #程序运行的用户组id       
+daemon                          #以后台形式运行haproxy       
+nbproc 1                        #number of process进程数量，不建议修改       
+pidfile /var/run/haproxy.pid    #haproxy的pid存放路径       
+maxconn 4000                   #默认最大连接数
+
+defaults    
+mode                   http    #工作模式    
+option                  dontlognull    
+log                     global #记录日志    
+option http-server-close       #启用服务器端关闭    
+option forwardfor       except 127.0.0.0/8 #传递客户端ip    
+option                  redispatch #当服务器组中的某台设备故障后，自动将请求重定向到组内其他主机。    
+retries                 3          #请求重试的次数    
+timeout http-request    10s        #http请求超时时间    
+timeout queue           1m         #一个请求在队列里的超时时间·    
+timeout connect         10s        #连接服务器超时时间    
+timeout client          1m         #设置客户端侧最大非活动时间    
+timeout server          1m         #设置服务器侧最大非活动时间    
+timeout http-keep-alive 10s        #设置http-keep-alive的超时时间    
+timeout check           10s        #当一个连接建立之后，    
+maxconn                 3000       #同时处理的最大连接数    
+#errorfile 403 /etc/haproxy/errorfiles/403.http    
+#errorfile 500 /etc/haproxy/errorfiles/500.http    
+#errorfile 502 /etc/haproxy/errorfiles/502.http    
+#errorfile 503 /etc/haproxy/errorfiles/503.http    
+#errorfile 504 /etc/haproxy/errorfiles/504.http	
+
+#启用stats查看，认证等功能：
+#默认在/haproxy?stats
+listen stas  #自定义监听名,任意取   
+ bind 192.168.1.97:1080 #监听的地址和端口，默认端口1080	
+mode http              #模式    
+stats enable           #启用状态监控    
+stats hide-version     #隐藏软件版本号    
+stats auth admin:admin #登陆用户名和密码    
+stats realm HAproxy\ stats #提示信息，空格之前加\    
+stats admin if TRUE     #当通过认证才可管理    
+stats uri /stats        #访问路径，在域名后面添加/stats可以查看haproxy监控状态,默认为/haproxy?stats    
+stats refresh 5         #页面自动刷新间隔,每隔5s刷新     
+
+#Haproxy 负载均衡实例：
+frontend webserver    bind 192.168.1.97:80    
+default_backend webservers    
+backend webservers    
+balance roundrobin   
+server  web1    192.168.1.100:80 check    
+server  web2   192.168.1.101:80 check
+#或者
+#listen webservers
+#    bind 192.168.1.97:80
+#    server  web1    192.168.1.100:80 check
+#    server  web2   192.168.1.101:80 check  
+6.haproxy常用功能介绍：
+haproxy支持的功能：
+1.域名跳转 如将a.example.com 跳转到x.example.com
+2.IP地址跳转客户端访问http://192.168.1.171时，要把请求分发到192.168.1.174:80、192.168.1.178:80这两台服务器上。同时还要求客户端每一次访问，都跳转到不同的服务器上。
+3.端口跳转客户端访问http://a.test.com:8090和http://b.test.com:8090这两个地址时，要把请求分发到192.168.1.174:8090、192.168.1.178:8090，这两台服务器上。
+4.默认跳转如果客户端访问的不是dg.test.com与192.168.1.171，这两个地址的话，要把请求全部分发到192.168.1.178:8080上。
+5.多ACL匹配
+如果客户端的IP是192.168.1.140，同时访问的是http://192.168.1.171时，要把请求分发到www.example.com上。
+--ACL用法示例：
+dst <ip_address>
+dst_port <port>
+src <ip_address>
+src_port <port>
+e.g.
+#用法一、允许10.0.0.0/24的用户访问，其他用户将禁止
+acl  goodguys  src  10.0.0.0/24
+tcp-request content  accept  if  goodguys
+tcp-request  content  rejecttcp-request content accept [{if | unless} <condition>]
+Accept a connection if/unless a content inspection condition is matched
+#用法二、将源IP为172.16.254.52的用户禁止、将403的错误重定向到其他服务器；
+acl  badguy  src  172.16.254.52
+block if badguy
+errorloc  403  http://www.afwing.com/
+#用法三、当用户访问172.16.1.100时，重定向到http://www.afwing.com
+acl  dstipaddr  hdr(Host) 172.16.1.100
+redirect  location   http://www.afwing.com if  dstipaddr
+#用法四、读写分离：
+acl  read method GET
+acl  read method HEAD
+acl write method PUT
+acl write method POST
+use_backend imgservers if read
+use_backend uploadservers if write
+#用法五、限制某个IP访问的路径（文件）
+acl  badguy  src  172.16.254.52
+acl  denyfile  path  /index.html
+http-request deny if denyfile  badguy
+#用法六、动静分离
+acl url_static       path_beg       -i /static /images /Javascript /stylesheets
+acl url_static       path_end       -i .jpg .gif .png .css .js
+#或者
+acl url_static       path_end       -i .jpg$ .gif$ .png$ .css$ .js$
+#或者
+acl  url_static   hdr_beg(host)  -i  www
+acl  url_static   hdr_beg(host)  -i  news. video. download. ftp.
+use_backend static          if url_staticdefault_backend             app
+backend static    
+balance     roundrobin     
+server      static 192.168.10.1:80 check maxconn 6000    
+server      static 192.168.10.2:80 check maxconn 6000
+backend app    
+balance     roundrobin    
+server  app1 192.168.10.3:80 check maxconn 1000    
+server  app2 192.168.10.4:80 check maxconn 1000
+#Additional examples
+acl invalid_src  src          0.0.0.0/7 224.0.0.0/3
+acl invalid_src  src_port     0:1023
+acl local_dst    hdr(host) -i localhost
+Move the login URL>server和default-server options：   
+
+6.动静分离#Haproxy 负载均衡实例：
+frontend webserver    bind 192.168.1.97:80    
+default_backend webservers    
+log global    
+log 127.0.0.1:514 local2 info    
+option httplog    
+##################将源IP为192.168.1.13的用户禁止、将403的错误重定向到其他服务器；   
+#acl badguy src 192.168.1.13     
+#http-request deny if badguy      
+#errorloc 403 http://www.baidu.com     
+#################    
+# 限制某个IP访问的路径（文件）    
+# acl badguy src 192.168.1.13     
+# acl denyfile path /1.html      
+# http-request deny if badguy denyfile    
+###############     
+#当用户访问192.168.1.97时，重定向到http://www.baidu.com    
+#acl  dstipaddr  hdr(Host) 192.168.1.97    
+#redirect  location   http://www.baidu.com if  dstipaddr   
+ ########################    
+#动静分离        
+#acl static path_end -i .html .jpg .png.jpeg .gif .swf .css .xml .txt .pdf    
+# use_backend jingtai if static    
+#default_backend dongtai     
+#backend jingtai    
+# server  web1    192.168.1.100:80 check    
+#backend dongtai       
+# server  web2   192.168.1.101:80 check
+backend webservers   
+ balance roundrobin    
+server  web1    192.168.1.100:80 check    
+server  web2   192.168.1.101:80 check
+#或者
+#listen webservers
+#    bind 192.168.1.97:80
+#    server  web1    192.168.1.100:80 check
+#    server  web2   192.168.1.101:80 check
+
+7.负载均衡：
+frontend mysql
+bind *:3306
+mode tcp
+log global
+default_backend mysqlservers
+backend mysqlservers
+balance leastconnserver dbsrv1 192.168.1.111:3306 check port 3306 inter 2 rise 1 fall 2 maxconn 300
+server dbsrv2 192.168.1.112:3306 check port 3306 inter 2 rise 1 fall 2 maxconn 300  
+
+参考文档：
+http://cbonte.github.io/haproxy-dconv
+社区网站：
+www.haproxy.org
+商业化网站：
+https://www.haproxy.com
