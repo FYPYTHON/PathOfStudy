@@ -1,0 +1,35 @@
+1.减少系统相互依赖，降低耦合， 为复杂的模块或子系统提供外界访问的模块
+2.提高灵活性，子系统相对独立
+3.提高安全性，预防低水平人员带来的风险
+
+class SubSystemA:
+    def methodA(self):
+        pass
+class SubSystemB:
+    def methodB(self):
+        pass
+class SubSystemC:
+    def methodC(self):
+        pass
+ 
+class Facade:
+    objA=None
+    objB=None
+    objC=None
+ 
+    def __init__(self):
+        self.objA=SubSystemA()
+        self.objB=SubSystemB()
+        self.objC=SubSystemC()
+ 
+    def method(self):
+        self.objA.methodA()
+        self.objB.methodB()
+        self.objC.methodC()
+ 
+def clientUI():
+    facade=Facade()
+    facade.method()
+ 
+if __name__=='__main__':
+    clientUI()

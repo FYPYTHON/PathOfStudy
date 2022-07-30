@@ -1,0 +1,49 @@
+import abc
+ 
+class Student(object):
+ 
+    __metaclass__ = abc.ABCMeta
+ 
+    def __init__(self, *args, **kwargs):
+        self.name = args[0]
+        self.hobby = args[1]
+        self.hometown = args[2]
+ 
+    @abc.abstractmethod
+    def introduce(self):
+        pass
+ 
+ 
+class A_cs(Student):
+ 
+    def __init__(self, *args, **kwargs):
+        super(A_cs, self).__init__(*args, **kwargs) # 复用父类方法。super(类名，self).方法名
+ 
+    def introduce(self):
+        print("I am %s, I like %s, and i like money very much. in the future, "
+              "we can make money together, by the way, I come from %s" % (self.name, self.hobby, self.hometown))
+ 
+ 
+class B_se(Student):
+    def __init__(self, *args, **kwargs):
+        super(B_se, self).__init__(*args, **kwargs)
+ 
+    def introduce(self):
+        print("I am %s, I like %s and so on,I'm from %s,  it is a beautiful place"
+              % (self.name, self.hobby, self.hometown))
+ 
+ 
+class Instructor(object):
+    def __init__(self):
+        pass
+ 
+    def introduce(self, student):
+        return student.introduce()
+ 
+ 
+if __name__ == '__main__':
+    xiaoming = A_cs('xiaoming', 'pretty girl', 'zhengzhou')
+    xiaogang = B_se('xiaogang', 'money and pretty girl', 'suzhou')
+    instructor = Instructor()
+    instructor.introduce(xiaoming)
+    instructor.introduce(xiaogang)

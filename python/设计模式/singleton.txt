@@ -1,0 +1,50 @@
+1¡¢ÔªÀà
+class SingletonMeta(type):
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(SingletonMeta, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+class Singleton(metaclass=SingletonMeta):
+    pass
+
+cls1 = Singleton()
+cls2 = Singleton()
+print(cls1, cls2)
+print(id(cls1) == id(cls2))
+
+2¡¢×°ÊÎÆ÷
+def singleton(cls, *args, **kwargs):
+    instances = {}
+    def _wrapper():
+        if cls not in instances:
+            instances[cls] = cls(*args, **kwargs)
+        return instances[cls]
+    return _wrapper
+
+@singleton
+class Singleton(object):
+    pass
+
+t1 = Singleton()
+t2 = Singleton()
+
+3¡¢new
+class Singleton(object):
+    _instance = None
+
+    def __new__(cls, *args, **kw):
+        if cls._instance is None:
+            cls._instance = object.__new__(cls, *args, **kw)
+        return cls._instance
+
+    def __init__(self):
+        pass
+
+
+single1 = Singleton()
+single2 = Singleton()
+print(single1, single2)
+print(id(single1) == id(single2))

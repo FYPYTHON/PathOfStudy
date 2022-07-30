@@ -1,0 +1,64 @@
+1.远程代理，也就是为一个对象在不同的地址空间提供局部代表。这样可以隐藏一个对象存在于不同地址空间的事实。
+2.虚拟代理，是根据需要创建开销大的对象。通过它来存放实例化需要很长时间的真是对象，例如html中，图片需要load很久，所以通过虚拟代理来代替真实的图片
+3.安全代理，用来控制真实对象访问时的权限
+4.智能指引，是指当调用真实的对象时，代理处理另外一些事
+
+from abc import ABCMeta, abstractmethod
+
+
+class FemaleA():
+    def __init__(self, name):
+        self.name = name
+
+
+class Male():
+    __metaclass__ = ABCMeta
+
+    @abstractmethod
+    def send_flower(self):
+        pass
+
+    @abstractmethod
+    def send_chocolate(self):
+        pass
+
+    @abstractmethod
+    def send_book(self):
+        pass
+
+
+class MaleA(Male):
+    def __init__(self, name, love_female):
+        self.name = name
+        self.love_female = FemaleA(love_female)
+
+    def send_flower(self):
+        print '%s送花给%s' % (self.name, self.love_female.name)
+
+    def send_chocolate(self):
+        print '%s送巧克力给%s' % (self.name, self.love_female.name)
+
+    def send_book(self):
+        print '%s送书给%s' % (self.name, self.love_female.name)
+
+
+class Proxy(Male):
+    def __init__(self, name, proxyed_name, love_female):
+        self.name = name
+        self.proxyed = MaleA(proxyed_name, love_female)
+
+    def send_flower(self):
+        self.proxyed.send_flower()
+
+    def send_chocolate(self):
+        self.proxyed.send_chocolate()
+
+    def send_book(self):
+        self.proxyed.send_book()
+
+
+if __name__ == '__main__':
+    p = Proxy('男B', '男A', '女A')
+    p.send_book()
+    p.send_chocolate()
+    p.send_flower()
