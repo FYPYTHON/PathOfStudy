@@ -1,0 +1,38 @@
+切换目录：直接d:
+# 读锁
+flush tables with read lock;
+mysql>mysqldump -uroot -ptest123 cmdb > cmdb.sql   # 导出
+mysql>mysql -uroot -ptest123 cmdb<cmdb.sql              # 导入
+unlock tables;         # 解锁
+
+show full columns from tbl_account;
+
+# 创建数据库
+create database cmdb default charset utf8;
+# 创建表
+create table tbl_account (id int not null, name varchar(100)not null , age tinyint);
+# 插入数据
+insert into tbl_account (username, ) values ('zhangsan',)
+insert  tbl_account (username, ) values ('zhangsan', ) ,('lisi', ),('wangwu', )
+# 添加列、删除列
+ALTER TABLE table_name ADD column_name datatype
+ALTER TABLE table_name DROP COLUMN column_name
+# 修改字段类型
+ALTER TABLE table_name MODIFY COLUMN column_name datatype
+# 更新
+UPDATE table_name
+SET column1=value1,column2=value2,...
+WHERE some_column=some_value;
+# 删除数据
+DELETE FROM table_name WHERE some_column=some_value;
+# 删除数据库/表
+DROP TABLE/DATABASE  name;
+# 删除数据，不删除表结构
+TRUNCATE TABLE table_name
+# 创建视图
+CREATE VIEW view_name AS
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+# 删除视图
+DROP VIEW view_name；

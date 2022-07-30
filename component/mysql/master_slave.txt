@@ -1,0 +1,91 @@
+my.ini == my.conf
+# -e 后面接收命令
+mysql -uroot -pPassword -P3306 -e "STOP GROUP_REPLICATION; stop slave;reset master; reset slave; SET GLOBAL group_replication_bootstrap_group=ON;"
+1、主服务器上创建用户
+mysql>create user repl; //创建新用户
+//repl用户必须具有REPLICATION SLAVE权限，除此之外没有必要添加不必要的权限，密码为123456。说明一下192.168.0.%，这个配置是指明repl用户所在服务器，这里%是通配符，表示192.168.0.0-192.168.0.255的Server都可以以repl用户登陆主服务器。当然你也可以指定固定Ip。
+mysql> GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%.%.%.%' IDENTIFIED BY '123456';
+2、找到MySQL安装文件夹修改my.Ini文件。mysql中有好几种日志方式，这不是今天的重点。我们只要启动二进制日志log-bin就ok。
+在[mysqld]下面增加下面几行代码
+server-id=1   //给数据库服务的唯一标识，一般为大家设置服务器Ip的末尾号
+log-bin=master-bin
+log-bin-index=master-bin.index
+3、重启mysql
+
+配置从服务器：
+1、找到MySQL安装文件夹修改my.ini文件，在[mysqld]下面增加下面几行代码
+ 
+[mysqld]
+server-id=2
+binlog-do-db=faye_dream    #要同步的数据库名
+binlog-ignore-db = mysql     #不同步mysql库和test库
+binlog-ignore-db = test
+relay-log-index=slave-relay-bin.index
+relay-log=slave-relay-bin 
+
+# to have multiple channels, repository cannot be of type FILE; Please check the repository configuration and convert them to TABLE.
+master_info_repository  =table
+relay_log_info_repository =table
+重启MySQL服务
+（2）连接Master
+//Master 服务器Ip
+//Master服务器产生的日志
+mysql>
+change master to master_host='172.16.83.226',
+master_port=3306,
+master_user='repl',
+master_password='fy123456', 
+master_log_file='master-bin.000001',
+master_log_pos=154 for channel 'fy';
+###### -------------
+https://www.cnblogs.com/zyxnhr/p/11154959.html
+[mysqld]
+master_info_repository=TABLE
+relay_log_info_repository=TABLE
+
+change master to master_host='172.16.83.87',
+master_port=3306,
+master_user='repl',
+master_password='123456', 
+master_log_file='master-bin.000225',
+master_log_pos=1973 for channel 'fy';
+start slave for channel 'fy';
+（3）启动Slave
+start slave;
+
+
+数据库复制：
+主库操作：
+1、停止主库的数据更新操作
+mysql>flush tables with read lock;
+2、新开终端，生成主数据库的备份（导出数据库）
+[root@zhoujietest ~]# mysqldump -uroot -ptest123 cmdb > cmdb.sql
+3、将备份文件传到从库
+[root@zhoujietest ~]# scp cmdb.sql root@192.168.8.11:/root/
+4、主库解锁
+mysql>unlock tables;
+
+从库操作：
+1、停止从库slave
+mysql>stop slave ;
+2、新建数据库cmdb
+mysql> create database cmdb default charset utf8;
+3、导入数据
+[root@ops-dev ~]# mysql -uroot -ptest123 cmdb<cmdb.sql 
+
+
+
+从库变主库 
+RESET MASTER;STOP SLAVE;RESET SLAVE; 
+show master status; #记录FILE Position 
+
+主库变从库 
+RESET MASTER;STOP SLAVE;RESET SLAVE; 
+CHANGE MASTER TO master_host='localhost',master_port=3308, master_user='repl',master_password='pwd', master_log_file='mysql-bin.xxxxx',master_log_pos=xxxxx; 
+START SLAVE;SELECT SLEEP(1);SHOW SLAVE STATUS\G;
+
+
+reset slave all；
+
+
+

@@ -1,0 +1,3 @@
+
+cd $MYSQL_HOME
+bin/mysqlbinlog -vv --base64-output=decode-rows mysql-bin.000110 > 110.txt

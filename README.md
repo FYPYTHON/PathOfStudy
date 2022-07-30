@@ -9,6 +9,8 @@
 6、elasticsearch  
 7、glusterfs  
 8、haproxy  
+9、mysql  
+
 
 
 #### python
