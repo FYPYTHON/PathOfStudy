@@ -1,0 +1,19 @@
+# >=python3.8
+
+# supervisorctl help
+add    exit      open  reload  restart   start   tail   
+avail  fg        pid   remove  shutdown  status  update 
+clear  maintail  quit  reread  signal    stop    version
+
+一种是unix_http_server 配置的tcp套接字通信；
+一种是inet_http_server配置的端口通信模式。
+
+UNIX socket是进程间的通信（Inter Process Communication），但只在同一台机器上；
+TCP/IP sockets允许进程通过网络通信
+
+
+http 和 http-socket的使用上有一些区别:
+http: 自己会产生一个http进程(可以认为与nginx同一层)负责路由http请求给worker, http进程和worker之间使用的是uwsgi协议
+http-socket: 不会产生http进程, 一般用于在前端webserver不支持uwsgi而仅支持http时使用, 他产生的worker使用的是http协议
+因此, http 一般是作为独立部署的选项; http-socket 在前端webserver不支持uwsgi时使用,
+如果前端webserver支持uwsgi, 则直接使用socket即可(tcp or unix)
