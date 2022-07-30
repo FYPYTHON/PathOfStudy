@@ -1,0 +1,10 @@
+scp -P 22223 glusterfsd.tar.gz root@10.255.2.61:/usr/local/
+scp -P 22223 /etc/init.d/glusterd root@10.255.2.61:/etc/init.d
+
+mkdir -p /opt/data/glusterfs/volume-data
+mkdir -p /mnt/files
+
+gluster volume add-brick common_app replica 2  :/opt/data/glusterfs/volume-data
+
+
+glusterfs --volfile-id=common_app --volfile-server= /mnt/files

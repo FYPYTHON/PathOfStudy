@@ -1,0 +1,6 @@
+yum -y install keepalived
+
+主节点keepalived配置 /etc/keepalived/keepalived.conf
+从节点keepalived配置 /etc/keepalived/keepalived.conf
+
+keepalived:script脚本

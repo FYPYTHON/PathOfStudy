@@ -6,5 +6,7 @@
 4、debezium  
 5、docker  
 6、elasticsearch  
+7、glusterfs  
+
 
 

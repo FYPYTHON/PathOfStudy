@@ -1,0 +1,29 @@
+﻿cp /usr/local/bin/python3 /usr/bin/
+"/usr/local/glusterfsd/sbin/glusterd -p /var/run/glusterd.pid --log-level INFO"
+
+/usr/local/glusterfsd/sbin/glusterd -p /var/run/glusterd.pid --log-level INFO
+
+/usr/local/glusterfsd/sbin/glusterfs --volfile-id=common_app --volfile-server=gfs-223 /mnt/files
+
+
+查看gfs设置
+/usr/local/glusterfsd/sbin/gluster volume set help
+
+设置属性
+/usr/local/glusterfsd/sbin/gluster volume set <key> <value>
+
+
+远程查看
+/usr/local/glusterfsd/sbin/gluster --remote-host=gfs-227 --mode=script
+--remote-host 这个命令对读请求可以执行，所有写操作无法执行。
+
+backupvolfile-server
+mount -t glusterfs -o backupvolfile-server=volfile_server2 ,fetch-attempts=2,log-level=WARNING,log-file=/var/log/gluster.logserver1:/test-volume /mnt/glusterfs
+
+如果backupvolfile-server选项在挂载选项中添加了，在第一个volfileserver 失效的时候，指定的backupvolfile-server选项将作为volfileserver供客户端挂载
+
+# backupvolfile-server=gluster2
+# backup-volfile-servers=gluster2:gluster3:gluster4
+
+
+

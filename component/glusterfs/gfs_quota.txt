@@ -1,0 +1,17 @@
+# 启用配额
+gluster volume quota common_app enable
+
+# 限制大小(单位byte)
+gluster volume quota common_app limit-usage /meetingData 4194304
+
+# 查看限制
+gluster volume quota common_app list
+
+# 删除配额
+gluster volume quota common_app remove /meetingData
+
+
+*** 以上配额是针对磁盘使用量，另外glusterFS提供文件数量的配额，limit-objects，list-object。
+能够根据场景使用。磁盘配额功能gluster volume quota 目录容量达到目标大小时，不是立刻生效，
+而是有必定的时间窗口，（若干秒），在这个时间内，数据还能够写入。
+这样的特性在配额比较大的时候并不影响，通常不会在短期内超过太多。

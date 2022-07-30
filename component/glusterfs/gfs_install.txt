@@ -1,0 +1,95 @@
+GFS安装配置：
+
+gluster centos7.7 安装：
+在baseurl=http://mirror.centos.org/centos/$releasever/extras/$basearch/下载
+centos-release-gluster6-1.0-1.el7.centos.noarch.rpm
+yum -y updates
+
+1、关闭防火墙：
+firewall-cmd --state  
+systemctl stop firewalld.service
+systemctl disable firewalld.service
+ubuntu：
+sudo apt-get install glusterfs-server
+
+2、安装glusterfs
+yum install -y centos-release-gluster
+yum install -y glusterfs glusterfs-server glusterfs-fuse glusterfs-rdma --skip-broken
+systemctl start glusterd.service
+systemctl enable glusterd.service   # 开机启动
+3、创建peer node
+gluster peer probe 192.168.186.133   # 创建peer
+
+删除peer
+gluser peer detach 192.168.83.222
+# 分布式复制卷
+4、创建卷
+gluster volume create gvol replica 2 192.168.83.223:/opt/data/region/Aidata/hd1/ 192.168.83.222:/opt/data/region/Aidata/hd1/ 192.168.83.223:/opt/data/region/Aidata/hd2/ 192.168.83.222:/opt/data/region/Aidata/hd2/
+
+
+
+启动
+gluster volume  start common_app force
+gluster volume status common_app
+gluster volume stop gvol
+gluster volume delete gvol
+
+替换卷：
+gluster volume replace-brick gvol 192.168.83.223:/opt/gfs/bk1 192.168.83.223:/opt/gfs1/bk1 commit force
+volume delete时并未删掉create时创建的目录，需要手动删除后再使用
+service glusterd restart
+删除块：
+gluster volume remove-brick gvol replica 3 192.168.83.222:/opt/gfs/bk3 192.168.83.223:/opt/gfs1/bk3 192.168.83.224:/opt/gfs/bk3 force
+删除卷：
+gluster volume delete gvol
+
+5、客户端：
+mount -t glusterfs 192.168.83 .222:/gvol /home/wgq/gfs
+glusterfs --volfile-id=/common_app --volfile-server=${gfs_id} /mnt/files
+glusterfs --volfile-id=common_app --volfile-server=192.168.83.226 /mnt/files
+
+/usr/local/glusterfsd/sbin/glusterfs --volfile-id=common_app --volfile-server=f637c366-3ba2-11eb-a1e5-000c291f16b2 /mnt/files
+
+6、问题
+peer disconnect:  #删除之前的peer节点
+vim /var/lib/glusterd/peers/5537a2d2-1fb0-48a7-8a57-b68e2fb30af9
+挂载目录
+mount  /dev/sdd1 /opt/data/region/Aidata/
+日志：
+/var/log/glustershd.log
+
+1）/opt/gfs/bk1 is already part of a volume
+setfarrt -x # 将gfs 的信息重置掉。
+setfattr -x trusted.glusterfs.volume-id /opt/gfs/bk1
+setfattr -x trusted.glusterfs.volume-id  /opt/data/gfs
+getfattr -m . -d -e hex --absolute-names /opt/data/gfs
+setfattr -x trusted.glusterfs.mdata  /opt/data/gfs/bk1
+setfattr -x trusted.glusterfs.volume-id /opt/data/gfs/bk1
+setfattr -x trusted.afr.dirty  /opt/data/gfs
+
+2)  heal
+gluster volume heal <VOLNAME>
+gluster volume heal <VOLNAME> info
+3) Transport endpoint is not connected
+rm -rf /opt/gfs/bk1/.glusterfs
+setfattr -x trusted.glusterfs.volume-id /opt/gfs/bk1
+
+4) peer reject
+删除/var/lib/glusterd/目录下除glusterd.info文件的其他文件，然后重启gluster再执行
+gluster peer probe node1
+
+5）peer probe: failed: Probe returned with Transport endpoint is not connected
+node节点的防火墙没关闭
+
+6）未删除其他卷残留信息：/var/lib/glusterd/vols/gvol/bricks/gfs-223:-opt-gfs-bk3. [No such file or directory]
+删除/var/lib/glusterd/  下除了glusterd.info所有文件，重启glusterd。
+7）gluster磁盘brick必须是挂载目录的子目录，否则出现：
+ls: cannot access bk1: No such file or directory
+ls: cannot access bk2: No such file or directory
+ls: cannot access bk3: No such file or directory
+d?????????? ? ?    ?    ?            ? bk1
+d?????????? ? ?    ?    ?            ? bk2
+d?????????? ? ?    ?    ?            ? bk3
+
+8) /opt/data/gfs is already part of a volume
+
