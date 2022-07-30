@@ -5,5 +5,6 @@
 3、vscode  
 4、debezium  
 5、docker  
+6、elasticsearch  
 
 
