@@ -1,0 +1,2 @@
+ІйїґЦёБо
+docker command --help   # eg: docker image --help

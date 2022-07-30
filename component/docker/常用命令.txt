@@ -1,0 +1,43 @@
+镜像
+docker images
+docker search centos7    # 搜索
+docker pull centos:7     # 下载
+docker images rm centos:7  # 删除
+
+容器保存为镜像
+docker commit cs1 my_cs1
+镜像保存为文件
+docker save -o my_cs1.tar.gz cs1
+导入
+docker load -i my_cs1.tar.gz
+
+#* export import， save load
+
+
+创建运行容器
+docker run -it --name=cs1 centos:7 /bin/bash
+
+docker run -di --name=cs2 centos:7 /bin/bash
+
+进入容器
+dcoker exec -it aad2488cb343214a  /bin/bash
+
+删除容器
+docker stop cs1
+docker rm cs1
+docker rm 
+
+
+目录挂载
+docker run -di -v /use/local/aa:/docker/aa --name=cs3 centos:7
+
+查看ip
+docker inspect cs1
+docker inspect cs1 --format='{{.NetworkSettings.IPAddress}}'
+
+端口映射
+# -p本地：docker
+docker run -di --name=cs1 -p3306:3306 -e MYSQL_ROOT_PASSWORD="ssss"
+
+build dockerfile:
+docker build -t='cs2' .

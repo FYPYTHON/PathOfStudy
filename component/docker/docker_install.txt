@@ -1,0 +1,31 @@
+源码：
+https://download.docker.com/linux/static/stable/
+tar xzvf /path/to/<FILE>.tar.gz 
+sudo cp docker/* /usr/bin/ 
+sudo dockerd & 
+sudo docker run hello-world
+
+docker centos安装：
+1、uname -r ；CentOS 系统的内核版本高于 3.10
+     3.10.0-327.el7.x86_64
+2、sudo yum install docker
+
+cat /etc/sysconfig/docker
+OPTIONS='--selinux-enabled=false --log-driver=journald --signature-verification=false -H unix:///var/run/docker.sock -H tcp://0.0.0.0:2375'
+
+3、启动docker
+    systemctl start docker.service
+    service docker start
+    #systemctl start docker
+
+
+脚本安装 Docker
+1、sudo yum update
+2、执行 Docker 安装脚本。
+$ curl -fsSL https://get.docker.com -o get-docker.sh
+3、$ sudo sh get-docker.sh
+4、启动 Docker 进程。
+sudo systemctl start docker
+5、验证 docker 是否安装成功并在容器中执行一个测试的镜像。
+$ sudo docker run hello-world
+docker ps

@@ -1,0 +1,12 @@
+查看启动容器
+docker ps
+
+创建启动
+docker run -it --name=cs1 centos:7
+
+导出/导入 容器
+docker container export 'cid' > cs1.tar     # 默认无元数据信息,容器运行快照
+docker images import cs1.tar centos:self    # 导入指定容器信息
+
+docker image save centos:7 > cs7.tar  # 包含信息
+docker image load cs7.tar
