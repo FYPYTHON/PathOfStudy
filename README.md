@@ -10,6 +10,8 @@
 7、glusterfs  
 8、haproxy  
 9、mysql  
+10、rabbitmq  
+
 
 
 

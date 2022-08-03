@@ -1,0 +1,25 @@
+
+
+ 常用命令
+       ./rabbitmq-server -deched  --后台启动服务
+　　./rabbitmqctl start_app  --启动服务
+　　./rabbitmqctl stop_app  --关闭服务
+　　./rabbitmq-plugins enable rabbitmq_management --启动web管理插件
+　　./rabbitmqctl add_user zlh zlh  --添加用户，密码
+　　./rabbitmqctl set_user_tags zlh administrator --设置zlh为admin权限
+
+　　1）停止当前机器中 rabbitmq 服务
+
+　　./rabbitmqctl stop_app
+
+　　2）加入集群
+
+　　./rabbitmqctl join_cluster --ram rabbit@mini2
+
+　　3）开启当前机器的 rabbitmq 服务
+
+　　./rabbitmqctl start_app
+
+
+集群状态
+       ./rabbitmqctl cluster_status

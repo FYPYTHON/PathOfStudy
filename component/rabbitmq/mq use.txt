@@ -1,0 +1,28 @@
+PDF：
+https://www.linuxidc.com/Linux/2017-10/147592.htm
+
+pip install amqplib
+demo：
+Python_mqc_receive.py
+python_mqc_send.py
+
+pika:
+https://pika.readthedocs.io/en/stable/intro.html
+csdn:
+https://blog.csdn.net/jinixin/article/details/84202958
+
+tornado + rabbitmq:
+https://note.youdao.com/ynoteshare1/index.html?id=ca548acd7ddb5750cc9d9d236edafd7c&type=note
+https://stackoverflow.com/questions/17539118/how-to-communicate-rabbitmqpika-library-in-tornado-application
+https://www.rabbitmq.com/devtools.html
+
+transient:转瞬
+purge:清除
+durable:耐用的
+internal:内部
+access ticket:通行证
+exclusive:独占的，专有的
+passive:被动的，消极的
+delivery:传输
+
+走80端口之后，kdfs的内部API，比如http://10.67.18.31:8085/api/inner/kdfs/v1还能直接访问吗
