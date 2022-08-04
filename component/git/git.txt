@@ -35,3 +35,20 @@ git rm -r --cached .
 git config --global credential.helper store
 不弹框密码：git credential-manager uninstall
 
+7、切换分支
+git checkout master
+git branch
+
+8、删除文件
+git rm test.file
+git commit -m "删除文件"
+#恢复
+git checkout -- test.file
+
+9、remote
+git remote
+git remote -v 
+git remote get-url [--push] [--all] <name>
+git remote set-url [--push] <name> <newurl> [<oldurl>]
+# 
+
