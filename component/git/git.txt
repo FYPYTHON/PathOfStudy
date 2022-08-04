@@ -1,0 +1,37 @@
+1、fatal: Could not read from remote repository
+hosts文件中增加：
+13.229.188.59 github.com
+13.229.188.59 git@github.com
+
+2、global
+git config --global user.name "bryan sun"
+git config --global user.email "hitsjt@gmail.com"
+git config -l # 查看
+ssh-keygen
+cat /c/Users/{username}/.ssh/id_rsa.pub     #获取公钥
+
+git rebase --continue
+git rebase --abort  # 回退rebase前
+git reset HEAD~2   # 回退两个提交
+git revert HEAD~2 # 撤销一个提交的同时会创建一个新的提交, 找出倒数第二个提交；创建一个新的提交来撤销这些更改，然后把这个提交加入项目中。
+
+3、git 文档 
+https://git-scm.com/book/zh/v1/自定义-Git-配置-Git
+
+4、Connection reset by 52.74.223.119
+/c/Users/{username}/.ssh/known_hosts 将id_rsa.pub 写入？
+查看网页上的：https://github.com/FYPYTHON/PyQt.git   与 git remote -v 是否一致。
+git remote get-url origin
+设置url:
+git remote set-url origin https://github.com/FYPYTHON/PyQt.git
+git remote set-url origin git@github.com:/FYPYTHON/PyQt.git
+git push -u origin master -f
+
+5、清空缓存
+git rm -r --cached .
+
+
+6、记住密码
+git config --global credential.helper store
+不弹框密码：git credential-manager uninstall
+

@@ -11,12 +11,13 @@
 8、haproxy  
 9、mysql  
 10、rabbitmq  
+11、git  
 
 
 
 
 #### python
-1、多线程、多进程  
+1、多线程、多进程、协程  
 2、设计模式  
 3、进程监控管理模块supervisord  
 
