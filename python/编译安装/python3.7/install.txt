@@ -1,0 +1,8 @@
+yum install zlib
+yum install python3-devel
+yum install libffi-devel
+
+./configure --prefix=/opt/midware/python3.7 --enable-optimizations
+
+
+# --enable-optimizations 配置文件引导优化（PGO）和链接时间优化（LTO）
