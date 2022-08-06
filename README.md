@@ -12,6 +12,7 @@
 9、mysql  
 10、rabbitmq  
 11、git  
+12、openGauss  
 
 
 

@@ -1,0 +1,17 @@
+
+
+只支持AES128
+
+1、加密导出文件
+
+gs_dump dbname -p port --with-encryption=AES128 --with-key=KEY -f filename
+（此加密方式只适合纯SQL文本方式导出）
+
+2、解密导入文件
+gsql dbname -p port -f filename --with-key=KEY
+
+客户端登录操作：
+gsql -d postgres -p 5432；
+\i+ filename KEY
+\ir+ filename KEY
+（KEY表示加密和解密的密钥）

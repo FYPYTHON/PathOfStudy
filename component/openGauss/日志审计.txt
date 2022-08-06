@@ -1,0 +1,55 @@
+参考：
+https://blog.csdn.net/qq_42226855/article/details/108780801
+
+1、支持的审计项
+用户登录、注销审计
+数据库启动、停止、恢复和切换审计
+用户锁定和解锁审计
+用户访问越权审计
+授权和回收权限审计
+数据库对象（数据库、表、schema 等）增删改审计
+具体表的insert、delete、update操作审计
+安全配置变更审计
+
+2、参数配置
+audit_enabled：审计总开关不支持动态加载。默认值为on，必须重启生效
+               其他审计项开关支持动态加载。
+audit_data_format： 只支持二进制
+audit_rotation_interval：1d
+audit_rotation_size：10MB
+audit_space_limit：1024MB	
+audit_file_remain_threshold: 1024
+audit_login_logout: 7  # 默认7，表示开启用户登录、退出的审计功能。设置为0表示关闭用户登录、退出的审计功能。
+
+audit_database_process: 1
+# 默认值为1，表示开启GaussDB启动、停止、恢复和切换的审计功能。
+
+audit_user_locked: 1
+# 默认值为1，表示开启审计用户锁定和解锁功能。
+
+audit_user_violation: 0
+# 默认值为0，表示关闭用户越权操作审计功能。
+
+audit_grant_revoke: 1
+# 默认值为1，表示开启审计用户权限授予和回收功能。
+
+audit_system_object: 7
+# 默认值为7，表示只对DATABASE、SCHEMA、USER这三类数据库对象的CREATE、ALTER、DROP操作进行审计。
+
+audit_dml_state: 0
+# 具体表的INSERT、UPDATE、DELETE操作审计
+
+audit_dml_state_select：0
+# 默认值0，这个参数决定是否对SELECT操作进行审计。1表示开启。0表示关闭。
+
+
+3、命令设置
+su omm;
+gs_guc set -c audit_system_object=511 -D /opt/data/gaussdb/data/single_node
+gs_guc reload -c audit_rotation_interval=12d -D /opt/data/gaussdb/data/single_node
+
+
+4、查询审计记录
+gsql -d postgres -p 5432;
+show audit_enabled;
+select* from pg_query_audit('2022-08-05 08:00:00','2022-08-06 23:59:59');

@@ -1,0 +1,53 @@
+参考
+https://blog.csdn.net/qq_42226855/article/details/109535734?spm=1001.2014.3001.5502
+
+
+1、用户分类
+GaussDB的用户可分为两类：系统管理员和普通用户。
+
+系统管理员： 具备数据库的最高权限、所有系统权限和对象权限
+
+普通用户：可以连接GaussDB默认的数据库postgres，并访问其中默认的系统表和视图。除此之外还具有对所有数据库的登录权限以及所有函数的执行权限。普通用户只能通过系统管理员使用CREATE/ALTER USER的方式来给予其系统权限，但自身可以通过GRANT语句指定对象权限。
+
+
+2、权限分类
+
+系统权限：初始化安装-U指定。包括SUPERUSER，CREATEDB，CREATEROLE，AUDITADMIN，LOGIN，可以在创建用户或修改用户时指定这些属性。
+
+对象权限：表、视图、索引、序列、函数等数据库对象上执行特殊操作，对象权限包括SELECT、INSERT、UPDATE、DELETE等。
+
+角色：角色是一组权限的集合
+
+
+3、权限划分
+
+系统管理员：SUPERUSER权限
+安全管理员：CREATEROLE权限
+审计管理员：AUDITADMIN权限
+
+对象操作员：默认不具有任何权限
+
+
+4、权限创建
+管理员用户：
+CREATE USER syssso WITH SUPERUSER IDENTIFIED BY "TEST@2022";
+CREATE USER sysdba WITH CREATEROLE IDENTIFIED BY "TEST@2022";
+CREATE USER syssao WITH AUDITADMIN IDENTIFIED BY "TEST@2022";
+
+对象操作用户：
+CREATE ROLE gtest IDENTIFIED BY "TEST@2022";
+GRANT SELECT ON TABLE films TO gtest;
+CREATE USER gtest2 IN ROLE gtest PASSWORD "TEST2@2022";
+
+
+
+
+
+
+
+
+
+
+
+
+
