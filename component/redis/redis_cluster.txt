@@ -13,7 +13,7 @@ gem install redis
 redis-trib.rb  create  --replicas  1  192.168.31.245:7000 192.168.31.245:7001  192.168.31.245:7002 192.168.31.210:7003  192.168.31.210:7004  192.168.31.210:7005
 
 redis-cli:
-redis-cli --cluster create 172.16.83.223:7000 172.16.83.223:7001 172.16.83.223:7002 172.16.83.224:7004 172.16.83.224:7005 172.16.83.224:7006 --cluster-replicas 1
+redis-cli --cluster create 192.168.3.223:7000 192.168.3.223:7001 192.168.3.223:7002 192.168.3.224:7004 192.168.3.224:7005 192.168.3.224:7006 --cluster-replicas 1
 在第一台机器上连接集群的7002端口的节点，在另外一台连接7005节点，
 连接方式为 redis-cli -h 192.168.31.245 -c -p 7002  ,加参数 -C 可连接到集群，
 因为上面 redis.conf 将 bind 改为了ip地址，所以 -h 参数不可以省略。
@@ -23,8 +23,8 @@ set hello world
 在conf中配置
 masterauth yourpass
 解除：
-./redis-cli -h 172.16.83.222 -a fy123456 slaveof no one  
-./redis-cli -h 172.16.83.222 -a fy123456 slaveof 172.16.83.227 6379
+./redis-cli -h 192.168.3.222 -a fy123456 slaveof no one  
+./redis-cli -h 192.168.3.222 -a fy123456 slaveof 192.168.3.227 6379
 
 查看主从关系：
 info replication
