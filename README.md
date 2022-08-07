@@ -13,6 +13,7 @@
 10、rabbitmq  
 11、git  
 12、openGauss  
+13、redis  
 
 
 

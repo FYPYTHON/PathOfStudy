@@ -1,0 +1,39 @@
+redis desktop manage
+
+centos:
+wget http://download.redis.io/releases/redis-5.0.5.tar.gz
+tar xzf redis-4.0.2.tar.gz
+cd redis-4.0.2
+make
+make install
+
+redis6.0.8:
+gcc5.0+
+make
+./redis-cli
+auth "yourpass"
+
+配置启动：
+cd redis-5.0.5/utils
+cp redis_init_script /etc/init.d/redis_6379
+mkdir -p /etc/redis
+mkdir -p /var/redis/6379
+redis-5.0.5/redis.conf 复制到/etc/redis 目录中，以端口号命名（如“6379.conf”）
+
+daemonize	yes	使Redis以守护进程模式运行
+pidfile	/var/run/redis_端口号.pid	设置Redis的PID文件位置
+port	端口号	设置Redis监听的端口号
+dir	/var/redis/端口号	设置持久化文件存放位置
+
+vim /etc/init.d/redis_6379
+在打开的redis初始化脚本文件头部第四行的位置，追加下面两句
+# chkconfig: 2345 90 10 
+# description: Redis is a persistent key-value database
+//设置开机执行redis脚本
+chkconfig redis_6379 on
+
+service redis_6379 start
+service redis_6379 stop
+
+:::::
+redis-cli SHUTDOWN

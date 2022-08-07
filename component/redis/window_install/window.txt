@@ -1,0 +1,10 @@
+https://github.com/ServiceStack/redis-windows/blob/master/downloads/redis64-2.8.17.zip
+
+添加服务到window
+redis-server --service-install redis.windows.conf --loglevel verbose  
+
+卸载服务
+D:\redis\redis-server.exe --service-uninstall  
+
+启动服务
+D:\redis\redis-server.exe D:\redis\redis.windows.conf 
