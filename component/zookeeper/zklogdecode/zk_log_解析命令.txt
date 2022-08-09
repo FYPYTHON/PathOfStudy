@@ -1,0 +1,10 @@
+
+
+java -classpath /usr/local/zookeeper/zookeeper-3.4.5.jar:/usr/local/zookeeper/lib/slf4j-api-1.6.1.jar:/usr/local/zookeeper/lib/slf4j-log4j12-1.6.1.jar:/usr/local/zookeeper/lib/log4j-1.2.15.jar org.apache.zookeeper.server.LogFormatter /usr/local/zookeeper/data/version-2/log.82 1>82.txt
+
+java -classpath /usr/local/zookeeper/zookeeper-3.4.5.jar:/usr/local/zookeeper/lib/slf4j-api-1.6.1.jar:/usr/local/zookeeper/lib/slf4j-log4j12-1.6.1.jar:/usr/local/zookeeper/lib/log4j-1.2.15.jar org.apache.zookeeper.server.SnapshotFormatter /usr/local/zookeeper/data/version-2/snapshot.81 1>81.txt
+
+
+java -classpath /opt/midware/zookeeper/zookeeper-3.4.5.jar:/opt/midware/zookeeper/lib/slf4j-api-1.6.1.jar:/opt/midware/zookeeper/lib/slf4j-log4j12-1.6.1.jar:/opt/midware/zookeeper/lib/log4j-1.2.15.jar org.apache.zookeeper.server.LogFormatter /opt/midware/zookeeper/data/version-2/log.82 1>82.txt
+
+

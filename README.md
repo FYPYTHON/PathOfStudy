@@ -14,6 +14,7 @@
 11、git  
 12、openGauss  
 13、redis  
+14、zookeeper  
 
 
 

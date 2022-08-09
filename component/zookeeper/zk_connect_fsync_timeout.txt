@@ -1,0 +1,21 @@
+https://www.cnblogs.com/lwhctv/p/10408295.html
+
+zk配置：
+tickTime=2000  # 默认值，毫秒为单位。服务器之间或客户端与服务器之间维持心跳的时间间隔
+initLimit=5
+syncLimit=2
+
+断链自测
+异常日志：
+2021-01-30 18:09:47,062 [myid:] - WARN  [SyncThread:0:FileTxnLog@341] - fsync-ing the write ahead log in SyncThread:0 took 4507ms which will adversely effect operation latency. See the ZooKeeper troubleshooting guide
+2021-01-30 18:09:48,562 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2171:NIOServerCnxn@383] - Exception causing close of session 0x101a114a93a0001: Connection reset by peer
+
+磁盘io: iostat: idle 0% （dd命令写入io写满）
+出现断链的zk fsync时间：3.3~6.1s
+
+***磁盘IO性能跟不上；
+***大量的fsync的告警，说明ZooKeeper将数据存入磁盘慢，导致ZooKeeper服务端与客户端超时，进而ZooKeeper实例异常；
+
+zk py client:
+Connection dropped: outstanding heartbeat ping not received
+Transition to CONNECTING

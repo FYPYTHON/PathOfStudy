@@ -1,0 +1,19 @@
+https://blog.csdn.net/dandandeshangni/article/details/80558383
+
+ls  /
+create /zkPro myData
+create -e 临时节点
+create -s 顺序节点
+create -e -s 
+get /zkPro
+
+set /zkPro myData123
+
+delete /zkPro
+
+
+getAcl /test      -- 获取某个节点的acl权限信息
+
+
+# 命令行，登录授权
+addauth digest user:password

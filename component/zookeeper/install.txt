@@ -1,0 +1,59 @@
+http://mirror.bit.edu.cn/apache/zookeeper/stable/
+wget http://mirror.bit.edu.cn/apache/zookeeper/stable/apache-zookeeper-3.5.8.tar.gz 
+tar -zxvf 
+cd 
+java -version
+修改配置：
+cp conf/zoo_sample.cfg conf/zoo-1.cfg
+
+
+# vim conf/zoo-1.cfg
+dataDir=/tmp/zookeeper-1
+clientPort=2181
+server.1=127.0.0.1:2888:3888
+server.2=127.0.0.1:2889:3889
+server.3=127.0.0.1:2890:3890
+
+# 
+server.A=B：C：D：其中 A 是一个数字，表示这个是第几号服务器；
+B 是这个服务器的 ip 地址；
+C 表示的是这个服务器与集群中的 Leader 服务器交换信息的端口；
+D 表示的是万一集群中的 Leader 服务器挂了，需要一个端口来重新进行选举，选出一个新的 Leader，而这个端口就是用来执行选举时服务器相互通信的端口。
+如果是伪集群的配置方式，由于 B 都是一样，所以不同的 Zookeeper 实例通信端口号不能一样，所以要给它们分配不同的端口号。
+
+
+zoo-1.cfg复制两个配置文件zoo-2.cfg和zoo-3.cfg，只需修改dataDir和clientPort不同即可
+# cp conf/zoo-1.cfg conf/zoo-2.cfg
+# cp conf/zoo-1.cfg conf/zoo-3.cfg
+# vim conf/zoo-2.cfg
+dataDir=/tmp/zookeeper-2
+clientPort=2182
+# vim conf/zoo-2.cfg
+dataDir=/tmp/zookeeper-3
+clientPort=2183
+
+
+创建三个文件夹/tmp/zookeeper-1，/tmp/zookeeper-2，/tmp/zookeeper-2，在每个目录中创建文件myid 文件，写入当前实例的server id，即1.2.3
+# cd /tmp/zookeeper-1
+# vim myid
+1
+# cd /tmp/zookeeper-2
+# vim myid
+2
+# cd /tmp/zookeeper-3
+# vim myid
+3
+
+
+启动三个zookeeper实例
+# bin/zkServer.sh start conf/zoo-1.cfg
+# bin/zkServer.sh start conf/zoo-2.cfg
+# bin/zkServer.sh start conf/zoo-3.cfg
+
+检测集群状态，也可以直接用命令“zkCli.sh -server IP:PORT”连接zookeeper服务端检测
+./bin/zkCli.sh -server 127.0.0.1:2182
+./bin/zkServer.sh status conf/zk2.cfg
+
+
+
+
