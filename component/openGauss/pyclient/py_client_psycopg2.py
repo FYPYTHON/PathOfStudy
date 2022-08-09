@@ -1,11 +1,12 @@
 # coding=utf-8
 # python3 -m pip install  psycopg2-binary
+
 import psycopg2
 
 host = '127.0.0.1'
 user = 'test'
 pwd = 'test'
-port = 3314
+port = 5432
 table = 'emp'
 database = 'repl'
 SQL_TIMEOUT = 30
@@ -26,17 +27,33 @@ def get_data():
 
     print(one_data)
 
+def check_table(table='test'):
+    cursor.execute("SELECT * from information_schema.tables where table_name='{table}';".format(table=table))
+    count = cursor.rowcount
+    print("get data len is : {}".format(count))
+    if count == 0:
+        cursor.execute("CREATE TABLE {table} (emp_first_name text, emp_last_name text, emp_salary numeric)".format(table=table))
+        sql_conn.commit()
+    else:
+        one_data = cursor.fetchone()
+
+        print(one_data)
 
 def database_info():
-    cursor.execute("select oid,datname from pg_database where datname='{table}';".format(table=table))
+    sql_conn_admin = psycopg2.connect(host=host, port=port, user=user, password=pwd, database='postgres',
+                                connect_timeout=SQL_TIMEOUT)
+    cursor = sql_conn.cursor()
+    cursor.execute("select oid,datname,datcompatibility from pg_database where datname='{database}';".format(database=database))
     one_data = cursor.fetchone()
     print("database at disk: ", one_data)
-    cursor.execute("select pg_size_pretty(pg_database_size('{table}'));".format(table=table))
+    cursor.execute("select pg_size_pretty(pg_database_size('{database}'));".format(database=database))
     one_data = cursor.fetchone()
     print("database size:", one_data)
 
 
-def write_data(MAX=10**8):
+def write_data(MAX=10**7):
+    table = "emp_2"
+    check_table(table)
     import random
     def get_randam_str(num):
         return ''.join(random.sample(
@@ -56,5 +73,5 @@ def write_data(MAX=10**8):
 
 if __name__ == '__main__':
     database_info()
-    get_data()
+    # get_data()
     write_data()
