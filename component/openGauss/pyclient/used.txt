@@ -1,0 +1,23 @@
+# 文档  https://github.com/vimiix/py-opengauss/blob/master/py_opengauss/documentation/bin.rst
+
+$ python3 -m postgresql.bin.pg_python -h localhost -W
+Password for pg_python[pq://dbusername@localhost:5432]:
+>>> ps = prepare('select 1')
+>>> ps.first()
+1
+>>> c = ps()
+>>> c.read()
+[(1,)]
+>>> ps.close()
+>>> import sys
+>>> sys.exit(0)
+
+### 
+$ echo "setting = value" >pg.conf
+# change 'setting'
+$ python3 -m postgresql.bin.pg_dotconf pg.conf setting=newvalue
+$ python3 -m postgresql.bin.pg_dotconf pg.conf another_setting=value
+$ cat pg.conf
+setting = 'newvalue'
+another_setting = 'value'
+
