@@ -40,9 +40,34 @@ GRANT SELECT ON TABLE films TO gtest;
 CREATE USER gtest2 IN ROLE gtest PASSWORD "TEST2@2022";
 
 
+### 命令
+# 连接
+gsql -r -p 54323 -d postgres -U omm -W TEST2@2022
+
+
+# 删除用户，同时强制删除该用户的数据库对象
+DROP USER if exists test CASCADE;
+
+create user gtest with password 'TEST2@2022';
+grant all on schema public to gtest;
+grant all on all tables in schema public to gtest;
+
+# 数据库赋予权限
+# grant all privileges on database mydb to gtest;
 
 
 
+-- 查看用户权限
+select * from information_schema.role_table_grants where grantor='gtest';
+
+-- 测试
+create table userinfo (id varchar(20) not null, name varchar(20) not null);
+
+
+* ERROR:  permission denied for schema public
+DETAIL:  N/A
+这是因为安全原因，不允许普通客户在public模式下操作。
+--- grant all on schema public to gtest;
 
 
 
