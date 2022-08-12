@@ -1,0 +1,27 @@
+# 1823218990@qq.com
+
+参考：https://www.bookstack.cn/read/openGauss-2.1-zh/Developerguide-%E8%A7%92%E8%89%B2.md
+      https://www.bookstack.cn/read/openGauss-2.1-zh/Developerguide-%E4%BD%BF%E7%94%A8SQL%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3%E8%BF%9B%E8%A1%8C%E9%80%BB%E8%BE%91%E8%A7%A3%E7%A0%81.md
+
+# 复制槽
+select * from pg_replication_slots;
+
+select * from pg_stat_replication;
+
+# 创建
+
+* 物理复制
+
+select * from pg_create_logic_replication_slot()
+
+* 逻辑复制
+
+select * from pg_create_logical_replication_slot('slot_databasename', 'mppdb_decoding');
+
+select * from pg_create_logical_replication_slot('slot_1_databasename', 'mppdb_decoding');
+
+select * from pg_create_logical_replication_slot('slot_2_databasename', 'mppdb_decoding');
+
+# 删除
+
+select * from pg_drop_replication_slot('slot_movision');
