@@ -1,0 +1,51 @@
+节点状态说明
+
+
+状态
+
+字段含义
+
+Normal 表示节点启动正常
+
+Need repair 当前节点需要修复
+
+Starting 节点正在启动中
+
+Wait promoting节点正等待升级中，例如备机向主机发送升级请求后，正在等待主机回应时的状态
+
+Promoting   备节点正在升级为主节点的状态
+
+Demoting  节点正在降级中，如主机正在降为备机中
+
+Building  备机启动失败，需要重建
+
+Catchup 备节点正在追赶主节点
+
+Coredump 节点程序崩溃
+
+Unknown 节点状态未知
+
+当节点出现Needrepair状态时，可能需要对该节点进行重建使其恢复正常。通常情况下，节点重建原因说明如下：
+
+表 3 节点重建原因说明
+
+
+状态
+
+字段含义
+
+Normal 表示节点启动正常
+
+WAL segment removed  主机日志WAL日志不存在，备机日志比主机日志新
+
+Disconnect 备机不能连接主机
+
+Version not matched 主备二进制版本不一致
+
+Mode not matched 主备角色不匹配，例如两个备机互联
+
+System id not matched 主备数据库系统id不一致，主备双机要求System ID必须一致
+
+Timeline not matched 日志时间线不一致
+
+Unknown 其他原因
