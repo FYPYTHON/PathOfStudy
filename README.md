@@ -24,6 +24,8 @@
 2、设计模式  
 3、进程监控管理模块supervisord  
 
-
+#### java
+1、java mysql client
+2、java zookeeper client
 
 
