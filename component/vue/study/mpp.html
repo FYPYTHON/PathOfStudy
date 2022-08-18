@@ -1,0 +1,58 @@
+<html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="item-template">
+<li class="item">
+	<div class="bold" :class="{'item-active':itemData.active}">
+				  @click.self.prevent="changeToggleOpen()"></span>
+			<span class="item-name" @click="changeActive(itemData)">
+				<i class="fa fa-folder folder"></i>
+				{{ itemData.department_name }}
+			</span>
+		</div>
+		<div class="ul-parent">
+			<span><i class="fa fa-align-justify"></i></span>
+			<ul class="anddelete" :did="itemData.id">
+				<li data-tp="1">添加部门</li>
+				<li data-tp="2">重命名</li>
+				<li data-tp="3">删除</li>
+			</ul>
+		</div>
+	</div>
+	<ul v-if="itemData.child" v-show="itemData.toggleOpen">
+		<item-li v-for="item in itemData.child" :item-data="item" @change-active="changeActive($event)"></item-li>
+	</ul>
+</li>
+
+</div>
+
+
+<script>
+Vue.component('item-li', {
+    template: '#item-template',
+    props: ['itemData'],
+    data: function() {
+        return {
+            pleft: "padding-left:0px;",
+        }
+    },
+    methods: {
+        countPleft() {
+            var num = $(this.$el).parents(".item").length;
+            this.pleft = "padding-left:"+ num*10 +"px;";
+        },
+        changeToggleOpen() {
+            this.itemData.toggleOpen = !this.itemData.toggleOpen;
+        },
+        changeActive(d) {
+            this.$emit('change-active', d);
+        }
+    },
+    mounted() {
+        this.$nextTick(function() {
+            this.countPleft();
+        });
+    },
+})
+</script>
+</html>

@@ -1,0 +1,4 @@
+v-bind  == :
+v-on   == @
+
+v-on:click == @click

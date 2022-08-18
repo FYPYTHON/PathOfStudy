@@ -1,0 +1,41 @@
+<html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<div id="app">
+
+		<label value="用户名" placeholder="请输入用户名"/>
+		<div style="width:200px;position: relative;">
+			<input :type="passwordType" value="密码" placeholder="请输入密码" v-model="password" style="width:200px;" />
+			<span style="position: absolute;width:20px;z-index:5;float:left;margin-left:-20px;"><img :src="paSrc" alt="" @click="changePasswardShow" style="width:20px;"></span>
+		</div>
+</div>
+
+<script>
+// <span v-show="!downIcon" @click-right-icon="eye" right-icon="eye-o"/>
+	var app4 = new Vue({
+	  el: '#app',
+	  data: {
+		password: "pp",
+		passwordType: "password",
+		paSrc:"2.png",
+	  },
+	  methods: {
+          changePasswardShow() {
+			/*
+			this.passwordType = this.passwordType==='password'?'text':'password';
+            this.paSrc = this.paSrc == require("@/assets/images/login_pass_active.png")?require('@/assets/images/login_pass.png'):require("@/assets/images/login_pass_active.png");
+			*/
+				  if(this.passwordType == "text")
+				  {
+				     this.passwordType = "password";
+					 this.paSrc = "2.png";
+				  } else {
+				     this.passwordType = "text";
+					 this.paSrc = "1.png";
+				  }
+              },
+        }
+	});
+
+</script>
+
+</html>

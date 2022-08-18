@@ -15,6 +15,8 @@
 12、openGauss  
 13、redis  
 14、zookeeper  
+15、vue  
+
 
 
 
@@ -25,7 +27,7 @@
 3、进程监控管理模块supervisord  
 
 #### java
-1、java mysql client
+1、java mysql client  
 2、java zookeeper client
 
 

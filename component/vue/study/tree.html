@@ -1,0 +1,63 @@
+<html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://element.eleme.cn/2.0/element-ui.64e9e36.js"></script>
+<script src="https://element.eleme.cn/2.0/docs.e446877.js"></script>
+<script src="https://www.google-analytics.com/analytics.js"></script>
+<script src="https://element.eleme.cn/2.0/zh-CN.c666ec7.js"></script>
+
+<div>
+<el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+</div>
+<script>
+  export default {
+    data() {
+      return {
+        data: [{
+          label: '一级 1',
+          children: [{
+            label: '二级 1-1',
+            children: [{
+              label: '三级 1-1-1'
+            }]
+          }]
+        }, {
+          label: '一级 2',
+          children: [{
+            label: '二级 2-1',
+            children: [{
+              label: '三级 2-1-1'
+            }]
+          }, {
+            label: '二级 2-2',
+            children: [{
+              label: '三级 2-2-1'
+            }]
+          }]
+        }, {
+          label: '一级 3',
+          children: [{
+            label: '二级 3-1',
+            children: [{
+              label: '三级 3-1-1'
+            }]
+          }, {
+            label: '二级 3-2',
+            children: [{
+              label: '三级 3-2-1'
+            }]
+          }]
+        }],
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        }
+      };
+    },
+    methods: {
+      handleNodeClick(data) {
+        console.log(data);
+      }
+    }
+  };
+</script>
+</html>

@@ -1,0 +1,24 @@
+<html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<script>
+
+// 全局注册
+// 到目前为止，我们只用过 Vue.component 来创建组件：
+Vue.component('my-component-name', {
+  // ... 选项 ...
+})；
+
+// 局部注册
+var ComponentA = { /* ... */ }
+var ComponentB = { /* ... */ }
+var ComponentC = { /* ... */ }
+new Vue({
+  el: '#app',
+  components: {
+    'component-a': ComponentA,
+    'component-b': ComponentB
+  }
+})；
+</script>
+</html>

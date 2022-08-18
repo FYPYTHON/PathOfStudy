@@ -1,0 +1,19 @@
+1、v-bind 缩写
+     <!-- 完整语法 -->
+     <a v-bind:href="url">...</a>
+
+     <!-- 缩写 -->
+     <a :href="url">...</a>
+
+     <!-- 动态参数的缩写 (2.6.0+) -->
+     <a :[key]="url"> ... </a>
+
+2、v-on 缩写
+     <!-- 完整语法 -->
+     <a v-on:click="doSomething">...</a>
+
+     <!-- 缩写 -->
+     <a @click="doSomething">...</a>
+
+     <!-- 动态参数的缩写 (2.6.0+) -->
+     <a @[event]="doSomething"> ... </a>

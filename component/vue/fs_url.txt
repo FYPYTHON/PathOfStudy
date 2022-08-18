@@ -1,0 +1,7 @@
+/page/CbsCheckPage
+
+check 页面：
+http://localhost:8080/#/check/
+
+授权到期页面
+http://localhost:8080/#/warrant

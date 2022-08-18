@@ -1,0 +1,30 @@
+
+	vue $router
+
+路由信息对象：即$router会被注入每个组件中，可以利用它进行一些信息的获取。
+
+**1.$route.path**
+      字符串，对应当前路由的路径，总是解析为绝对路径，如 "/foo/bar"。
+**2.$route.params**
+      一个 key/value 对象，包含了 动态片段 和 全匹配片段，
+      如果没有路由参数，就是一个空对象。
+**3.$route.query**
+      一个 key/value 对象，表示 URL 查询参数。
+      例如，对于路径 /foo?user=1，则有 $route.query.user == 1，
+      如果没有查询参数，则是个空对象。
+**4.$route.hash**
+      当前路由的 hash 值 (不带 #) ，如果没有 hash 值，则为空字符串。锚点
+**5.$route.fullPath**
+      完成解析后的 URL，包含查询参数和 hash 的完整路径。
+**6.$route.matched**
+      数组，包含当前匹配的路径中所包含的所有片段所对应的配置参数对象。
+**7.$route.name    当前路径名字**
+**8.$route.meta  路由元信息
+
+	vue :key
+key的作用主要是为了高效的更新虚拟DOM.需要使用key来给每个节点做一个唯一标识，
+Diff算法就可以正确的识别此节点，找到正确的位置区插入新的节点。
+
+	vue export / export default
+export 和export default 的区别在于：export 可以导出多个命名模块,
+export default 只能导出一个默认模块，这个模块可以匿名,不需要大括号。

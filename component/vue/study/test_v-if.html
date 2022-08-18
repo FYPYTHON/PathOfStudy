@@ -1,0 +1,48 @@
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<h1 v-if="awesome">Vue is awesome!</h1>
+<h1 v-else>Oh no 😢</h1>
+
+<template v-if="ok">
+  <h1>Title</h1>
+  <p>Paragraph 1</p>
+  <p>Paragraph 2</p>
+</template>
+
+<div v-if="Math.random() > 0.5">
+  Now you see me
+</div>
+<div v-else>
+  Now you don't
+</div>
+
+<div v-if="type === 'A'">
+  A
+</div>
+<div v-else-if="type === 'B'">
+  B
+</div>
+<div v-else-if="type === 'C'">
+  C
+</div>
+<div v-else>
+  Not A/B/C
+</div>
+
+
+<template v-if="loginType === 'username'">
+  <label>Username</label>
+  <input placeholder="Enter your username">
+</template>
+<template v-else>
+  <label>Email</label>
+  <input placeholder="Enter your email address">
+</template>
+// 那么在上面的代码中切换 loginType 将不会清除用户已经输入的内容。
+// 因为两个模板使用了相同的元素，<input> 不会被替换掉——仅仅是替换了它的 placeholder。
+
+
+// 一般来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。
+// 因此，如果需要非常频繁地切换，则使用 v-show 较好；
+// 如果在运行时条件很少改变，则使用 v-if 较好。

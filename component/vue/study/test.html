@@ -1,0 +1,141 @@
+<html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app">
+  {{ message }}
+</div>
+
+<div id="app-2">
+  <span v-bind:title="message">
+    鼠标悬停提示信息！
+  </span>
+</div>
+<div id="app-3">
+  <p v-if="seen">现在你看到我了</p>
+</div>
+
+<div id="app-4">
+  <ol>
+    <li v-for="todo in todos">
+      {{ todo.text }}
+    </li>
+  </ol>
+  <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+</div>
+
+<div id="app-5">
+  <p>{{ foo }}</p>
+  <!-- 这里的 `foo` 不会更新！ -->
+  <button v-on:click="foo = 'baz'">Change it</button>
+</div>
+
+<div id="app-6">
+  <p>Original message: "{{ message }}"</p>
+  <p>Computed reversed message: "{{ reversedMessage }}"</p>
+</div>
+
+<div id="app-7">{{ fullName }}</div>
+<script>
+var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue!'
+  }
+});
+var app2 = new Vue({
+  el: '#app-2',
+  data: {
+    message: '页面加载于 ' + new Date().toLocaleString()
+  }
+});
+var app3 = new Vue({
+  el: '#app-3',
+  data: {
+    seen: true
+  }
+});
+
+var app4 = new Vue({
+  el: '#app-4',
+  data: {
+    todos: [
+      { text: '学习 Django' },
+      { text: '学习 Vue' },
+      { text: '整个牛项目' }
+    ],
+	rawHtml: "<button>raw</button>",
+  }
+});
+
+// app-5
+var obj = {
+  foo: 'bar'
+}
+
+// Object.freeze(obj)  // 阻止修改现有的 property
+var app5 = new Vue({
+  el: '#app-5',
+  data: obj,
+  created: function () {
+    // `this` 指向 vm 实例
+    console.log('created data is: ' + this.foo)
+  },
+  mounted: function(){
+    console.log("mounted ..");
+  },
+})
+// app-6
+var app6 = new Vue({
+  el: '#app-6',
+  data: {
+    message: 'Hello'
+  },
+  computed: {
+    // 计算属性的 getter
+    reversedMessage: function () {
+      // `this` 指向 vm 实例
+      return this.message.split('').reverse().join('')
+    }
+  }
+})
+// app-7
+// 计算属性
+var app7 = new Vue({
+  el: '#app-7',
+  data: {
+    firstName: 'Foo',
+    lastName: 'Bar',
+    // fullName: 'Foo Bar'
+  },
+  /*
+  watch: {
+    firstName: function (val) {
+      this.fullName = val + ' ' + this.lastName
+    },
+    lastName: function (val) {
+      this.fullName = this.firstName + ' ' + val
+    }
+  },
+  */
+  computed: {
+    /*
+    fullName: function () {
+      return this.firstName + ' ' + this.lastName
+    }
+	*/
+	fullName: {
+		// getter
+		get: function () {
+		  return this.firstName + ' ' + this.lastName
+		},
+		// setter
+		set: function (newValue) {
+		  var names = newValue.split(' ')
+		  this.firstName = names[0]
+		  this.lastName = names[names.length - 1]
+		}
+	}
+  }
+})
+</script>
+</html>

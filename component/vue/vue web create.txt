@@ -1,0 +1,211 @@
+node -v
+npm install -g vue-cli
+vue init webpack bms_web
+npm run dev
+npm config set registry https://registry.npm.taobao.org
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+"C:\Program Files\nodejs\node.exe" "C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js" install --scripts-prepend-node-path=auto
+
+used:
+1、Vue 实例还提供了一些有用的实例属性与方法。它们都有前缀 $，以便与用户定义的属性区分开来
+     var vm = new Vue({
+         el: '#vue_det',
+        data: data})
+
+     document.write(vm.$data === data) // true
+2、v-html 
+     指令用于输出 html 
+     message: '<h1>菜鸟教程</h1>'
+3、v-bind     -- 缩写 ：
+     HTML 属性中的值应使用 v-bind 指令
+     <div v-bind:class="{'class1': use}">
+     use:false
+     <pre><a v-bind:href="url">菜鸟教程</a></pre>
+     href = "www.baidu.com"
+    
+    <div class="static"
+     v-bind:class="{ active: isActive, 'text-danger': hasError }">
+    </div>
+  多个属性：
+    <div id="app">
+   <div v-bind:style="[baseStyles, overridingStyles]">菜鸟教程</div>
+   </div>
+data: {
+    baseStyles: {
+      color: 'green',
+      fontSize: '30px'
+    },
+	overridingStyles: {
+      'font-weight': 'bold'
+    }
+  }
+
+4、v-if
+<p v-if="seen">现在你看到我了</p>
+
+<div id="app">
+    <div v-if="type === 'A'">
+      A
+    </div>
+    <div v-else-if="type === 'B'">
+      B
+    </div>
+    <div v-else-if="type === 'C'">
+
+
+      C
+    </div>
+    <div v-else>
+      Not A/B/C
+    </div>
+</div>
+
+seen: true
+
+5、v-on    -- 缩写 @
+     v-on 指令，它用于监听 DOM 事件
+    <a v-on:click="doSomething">
+    <form v-on:submit.prevent="onSubmit"></form>
+
+   <button v-on:click="say('hi')">Say hi</button>
+
+6、v-model
+     input、select、textarea、checkbox、radio 等表单控件元素上创建双向数据绑定，根据表单上的值，自动更新绑定的元素的值。
+
+7、v-show
+     <h1 v-show="ok">Hello!</h1>
+
+8、computed vs method
+computed vs methods
+我们可以使用 methods 来替代 computed，效果上两个都是一样的，
+但是 computed 是基于它的依赖缓存，只有相关依赖发生改变时才会重新取值。
+而使用 methods ，在重新渲染的时候，函数总会重新调用执行。
+可以说使用 computed 性能会更好，但是如果你不希望缓存，你可以使用 methods 属性。
+
+{{message}}
+{{reversedMessage}}
+computed: {
+    // 计算属性的 getter
+    reversedMessage: function () {
+      // `this` 指向 vm 实例
+      return this.message.split('').reverse().join('')
+    }
+  }
+属性：set ,get
+{{site}}
+computed: {
+    site: {
+      // getter
+      get: function () {
+        return this.name + ' ' + this.url
+      },
+      // setter
+      set: function (newValue) {
+        var names = newValue.split(' ')
+        this.name = names[0]
+        this.url = names[names.length - 1]
+      }
+    }
+  }
+
+9、监听属性 -- watch
+<div id = "computed_props">
+    千米 : <input type = "text" v-model = "kilometers">
+    米 : <input type = "text" v-model = "meters">
+</div>
+<p id="info"></p>
+<script type = "text/javascript">
+    var vm = new Vue({
+    el: '#computed_props',
+    data: {
+        kilometers : 0,
+        meters:0
+    },
+    methods: {
+    },
+    computed :{
+    },
+    watch : {
+        kilometers:function(val) {
+            this.kilometers = val;
+            this.meters = this.kilometers * 1000
+        },
+        meters : function (val) {
+            this.kilometers = val/ 1000;
+            this.meters = val;
+        }
+    }
+    });
+    // $watch 是一个实例方法
+    vm.$watch('kilometers', function (newValue, oldValue) {
+    // 这个回调将在 vm.kilometers 改变后调用
+    document.getElementById ("info").innerHTML = "修改前值为: " + oldValue + "，修改后值为: " + newValue;
+})
+</script>
+
+10、事件修饰符
+事件修饰符
+Vue.js 为 v-on 提供了事件修饰符来处理 DOM 事件细节，如：event.preventDefault() 或 event.stopPropagation()。
+Vue.js通过由点(.)表示的指令后缀来调用修饰符。
+.stop ，.prevent，.capture，.self，.once
+<!-- 阻止单击事件冒泡 -->
+<a v-on:click.stop="doThis"></a>
+<!-- 提交事件不再重载页面 -->
+<form v-on:submit.prevent="onSubmit"></form>
+<!-- 修饰符可以串联  -->
+<a v-on:click.stop.prevent="doThat"></a>
+<!-- 只有修饰符 -->
+<form v-on:submit.prevent></form>
+<!-- 添加事件侦听器时使用事件捕获模式 -->
+<div v-on:click.capture="doThis">...</div>
+<!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 -->
+<div v-on:click.self="doThat">...</div>
+
+<!-- click 事件只能点击一次，2.1.4版本新增 -->
+<a v-on:click.once="doThis"></a>
+按键修饰符
+<input v-on:keyup.enter="submit">
+全部的按键别名：
+.enter
+.tab
+.delete (捕获 "删除" 和 "退格" 键)
+.esc
+.space
+.up
+.down
+.left
+.right
+.ctrl
+.alt
+.shift
+.meta
+
+11、v-model多向绑定
+<p>textarea 元素：</p>
+  <p style="white-space: pre">{{ message2 }}</p>
+  <textarea v-model="message2" placeholder="多行文本输入……"></textarea>
+
+<input type="checkbox" id="runoob" value="Runoob" v-model="checkedNames">
+  <label for="runoob">Runoob</label>
+  <input type="checkbox" id="google" value="Google" v-model="checkedNames">
+  <label for="google">Google</label>
+  <input type="checkbox" id="taobao" value="Taobao" v-model="checkedNames">
+  <label for="taobao">taobao</label>
+
+<select v-model="selected" name="fruit">
+    <option value="">选择一个网站</option>
+    <option value="www.runoob.com">Runoob</option>
+    <option value="www.google.com">Google</option>
+  </select>
+
+.lazy
+在默认情况下， v-model 在 input 事件中同步输入框的值与数据，但你可以添加一个修饰符 lazy ，从而转变为在 change 事件中同步
+.number
+如果想自动将用户的输入值转为 Number 类型（如果原值的转换结果为 NaN 则返回原值），可以添加一个修饰符 number 给 v-model 来处理输入值
+.trim
+如果要自动过滤用户输入的首尾空格，可以添加 trim 修饰符到 v-model 上过滤输入：v-model.trim="istring"
+
+12、Prop
+prop 是父组件用来传递数据的一个自定义属性。
+
+父组件的数据需要通过 props 把数据传给子组件，子组件需要显式地用 props 选项声明 "prop"：

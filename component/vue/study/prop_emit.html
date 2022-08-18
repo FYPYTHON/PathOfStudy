@@ -1,0 +1,52 @@
+<html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<div id="app"></div>
+
+<script>
+var TrainCity = {
+	template:`
+	<div class="train-city">
+		<h3>from parent toCity:{{sendData}}</h3> 
+		<br/><button @click="select('大连')">click 大连 send to parent</button>
+	</div>
+	`,
+	name:'trainCity',
+    props:['sendData'], // get parent data
+    methods:{
+      select(val) {
+        var data = {
+          cityname: val
+        };
+        this.$emit('showCityName',data);
+      }
+    },
+}
+var ctx = {
+	template:`<div>
+        <div>parent {{toCity}}</div>
+		<train-city @showCityName="updateCity" :sendData="toCity"></train-city>
+    </div>`,
+	name:'index',
+    components: {TrainCity},
+    data () {
+      return {
+        toCity:"北京"
+      }
+    },
+    methods:{
+      updateCity(data){
+        this.toCity = data.cityname;
+        console.log('toCity:'+this.toCity)
+      }
+    }
+};
+var app = new Vue({
+	el: "#app",
+	template:`<ctx></ctx>`,
+	components:{
+		'ctx':ctx,
+	}
+});
+
+</script>
+</html>
