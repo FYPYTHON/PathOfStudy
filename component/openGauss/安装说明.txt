@@ -1,0 +1,151 @@
+https://opengauss.org/zh/download.html
+
+纯欧拉：
+openGauss-3.0.0-openEuler-64bit-all.tar.gz
+纯centos:
+openGauss-3.0.0-CentOS-64bit.tar.bz2
+
+
+1、创建用户 --需要以非root用户运行， user:omm, passwd:gauss_1234
+mkdir -p /opt/midware/openGauss
+groupadd dbgroup
+useradd -g dbgroup omm
+passwd omm
+chmod 777 -R openGauss
+chown omm:dbgroup -R /opt/midware/openGauss
+
+1.1
+vim /etc/selinux/config
+SELINUX=disabled
+#reboot
+#systemctl disable firewalld.service
+#systemctl stop firewalld.service
+1.2
+vi /etc/security/limits.conf
+omm soft nofile 102400
+omm hard nofile 102400
+1.3
+vi /home/omm/.bashrc
+ulimit -n 10240
+1.4
+vim /etc/sysctl.conf 
+net.core.somaxconn = 65533
+kernel.sem = 250 32000 100 512
+	
+sysctl -p	
+
+
+
+mkdir -p /opt/midware/openGauss
+tar -jxf openGauss-x.x.x-openEuler-64bit.tar.bz2
+ls -lb
+cd /opt/midware/openGauss/simpleInstall
+
+2、修改install脚本去除root退出
+
+sh install.sh -w password -p 5432
+source /root/.bashrc
+# sh install.sh  -w "xxxx" &&source ~/.bashrc
+
+	-w：初始化数据库密码（gs_initdb指定），安全需要必须设置。
+	-p：指定的openGauss端口号，如不指定，默认为5432。
+	-h|–help：打印使用说明。
+	--报错“the maximum number of SEMMNI is not correct, the current SEMMNI is xxx. Please check it.”，请使用有root权限的用户执行如下命令。
+		sysctl -w kernel.sem="250 85000 250 330" 
+	
+	
+###
+vim /etc/sysctl.conf 
+net.core.somaxconn = 65533
+kernel.sem = 250 32000 100 512
+	
+sysctl -p	
+
+
+
+
+
+
+
+
+# 安装om
+tar -zxvf openGauss-3.0.0-openEuler-64bit-all.tar.gz
+tar -zxvf openGauss-3.0.0-openEuler-64bit-om.tar.gz
+
+-- sed -i "s/python3/python3.6/g" `grep python3 -rl ./script`
+-- cd /home/bc/simpleInstall
+
+
+
+##### clib
+# /home/omm/openGaussTar/script/gspylib/clib/libc.so.6  复制一个到此目录下
+\cp /usr/lib64/libc.so.6 /home/bc/script/gspylib/clib
+\cp /usr/lib64/libutil.so.1 /home/bc/script/gspylib/clib
+\cp /usr/lib64/libdl.so.2 /home/bc/script/gspylib/clib
+\cp /usr/lib64/libpthread.so.0 /home/bc/script/gspylib/clib
+
+
+export LD_LIBRARY_PATH=/home/omm/openGaussTar/script/gspylib/clib
+
+chown omm:dbgroup /home/omm/env_single
+-- export LD_LIBRARY_PATH=/home/omm/openGaussTar/script/gspylib/clib:/home/omm/script/gspylib/inspection/lib
+export PYTHONPATH=/home/omm/openGaussTar/lib
+python3.6 /home/omm/openGaussTar/script/gs_preinstall -U omm -G dbgroup -X /home/omm/single.xml --sep-env-file=/home/omm/env_single
+
+
+#### 
+
+sh install.sh -U omm -G dbgroup -h 192.168.0.101 -p 5432 -D /opt/midware/openGauss
+sh install.sh -U omm -G dbgroup -h 192.168.0.101 -p 5432 -D /home/bc
+-- sh install.sh -U omm -G dbgroup -h 192.168.0.101 -p 5432 -D /opt/midware/openGauss
+
+echo yes | sh install.sh -U omm -G dbgroup -h 192.168.0.101 -p 5432 -D /home/bc
+
+tar zcvf openGauss-3.0.0-CentOS-64bit-om.tar.gz lib script simpleInstall upgrade_sql.sha256 upgrade_sql.tar.gz version.cfg
+
+###
+yum install zlib
+yum install python3-devel
+yum install libffi-devel
+
+./configure --prefix=/opt/midware/python3.7 --enable-optimizations
+
+
+
+
+默认放/home/omm下安装
+--# 注释fn_precheck
+--# fn_install 中python3 修改为python3.6
+--#修改script目录下的脚本中python3 为 python3.6
+-- \cp *.tar /home/omm/openGaussTar
+-- \cp libpython3.6m.so.1.0 /home/omm/script/gspylib/inspection/lib
+-- \cp libpython3.6m.so.1.0 /home/omm/openGaussTar/script/gspylib/clib
+-- export LD_LIBRARY_PATH=/home/omm/openGaussTar/script/gspylib/clib:/home/omm/script/gspylib/inspection/lib
+-- tar zcvf openGauss-3.0.0-CentOS-64bit-om.tar.gz lib script simpleInstall upgrade_sql.sha256 upgrade_sql.tar.gz version.cfg
+-- cat /home/omm/env_single
+export GS_CLUSTER_NAME=dbCluster
+export GAUSS_ENV=2
+export MPPDB_ENV_SEPARATE_PATH=/home/omm/env_single
+export GPHOME=/home/omm/cluster/tool
+export PATH=$GPHOME/script/gspylib/pssh/bin:$GPHOME/script:$PATH
+export LD_LIBRARY_PATH=$GPHOME/lib:$LD_LIBRARY_PATH
+export PYTHONPATH=$GPHOME/lib
+export PATH=/root/gauss_om/omm/script:$PATH
+export GAUSSHOME=/home/omm/cluster/app
+export PATH=$GAUSSHOME/bin:$PATH
+export LD_LIBRARY_PATH=$GAUSSHOME/lib:$LD_LIBRARY_PATH
+export S3_CLIENT_CRT_FILE=$GAUSSHOME/lib/client.crt
+export GAUSS_VERSION=3.0.0
+export PGHOST=/home/omm/cluster/tmp
+export GAUSSLOG=/home/omm/cluster/gaussdb_log/omm
+umask 077
+
+
+-- chown omm:dbgroup -R /home/omm/openGaussTar/script
+   vi /home/omm/openGaussTar/simpleInstall/install 
+   在gs_install 前加上
+-- sh install.sh -U omm -G dbgroup -h 192.168.0.101 -p 5432 -D /home/omm
+
+
+
+	
