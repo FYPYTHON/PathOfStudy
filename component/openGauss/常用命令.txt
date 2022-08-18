@@ -46,3 +46,30 @@ gs_dump dbname -p port -n schema_name -f out.sql
 导出table
 gs_dump dbname -p port -t table_name -f out.sql
 
+#### 元命令
+# -E 显示元命令
+gsql -U omm -p 5432 -d postgres -E
+\l   -- 数据库
+\du  -- 用户和角色
+\db  -- 表空间
+\dn  -- schema信息
+\d   -- 数据库对象信息
+\d tablename
+\dt  -- 数据库所有表
+\dt+ -- 扩展显示
+\di  -- 索引
+\di indexname
+\dv  -- 视图
+\ds  -- 序列
+\df  -- 函数信息
+\dx  -- 扩展程序信息
+\x[on|off|auto] -- 输出
+\timing on  -- 显示sql执行时间
+\h [merge]  -- 帮助
+\?   -- 元命令帮助
+\!   -- 执行系统命令  \! pwd[ls|...]
+\o   -- 重定向到文件  \o test.out
+\conninfo   -- 显示会话信息
+\c   -- 切换数据库
+\c - username   -- 切换用户
+
