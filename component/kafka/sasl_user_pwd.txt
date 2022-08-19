@@ -1,0 +1,13 @@
+kafka python:
+     producer = KafkaProducer(bootstrap_servers=bkserver, send_buffer_bytes=2 * 1024 * 1024,
+                                 request_timeout_ms=100,
+                                 sasl_mechanism="PLAIN", security_protocol="SASL_PLAINTEXT",
+                                 sasl_plain_username=kafka_usr, sasl_plain_password=kafka_pwd
+                                 )
+
+kafka tool
+1¡¢connect -> security -> type -> sasl plaintext
+2¡¢connect -> advanced -> broke , sasl machine 
+
+3¡¢
+org.apache.kafka.common.security.plain.PlainLoginModule required username="" password="";

@@ -1,0 +1,94 @@
+﻿1、下载安装
+https://mirrors.tuna.tsinghua.edu.cn/apache/kafka/2.4.0/
+kafka_2.13-2.4.0.tgz    
+tar -xzf kafka_2.12-2.4.0.tgz
+cd kafka_2.12-2.4.0
+
+2、启动
+zk:
+bin/zookeeper-server-start.sh config/zookeeper.properties
+kafka:
+bin/kafka-server-start.sh config/server.properties
+
+server.properties: remote addr
+      advertised.listeners=PLAINTEXT://192.168.196.129:9092
+
+3、创建topic
+topic name: test
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic test
+show topic:
+bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+ads.h323 
+delete a topic:
+./bin/kafka-topics.sh --delete --bootstrap-server localhost:9092 --topic kptest
+>>test
+
+# 分区扩容
+./kafka-topics.sh --zookeeper 127.0.0.1:2181 -alter --partitions 4 --topic test
+
+4、消息发送
+> bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+
+5、消息消费
+> bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic ods.h323 --from-beginning
+
+6、多节点
+> cp config/server.properties config/server-1.properties
+> cp config/server.properties config/server-2.properties
+config/server-1.properties:
+    broker.id=1
+    listeners=PLAINTEXT://:9093
+    log.dirs=/tmp/kafka-logs-1
+ 
+config/server-2.properties:
+    broker.id=2
+    listeners=PLAINTEXT://:9094
+    log.dirs=/tmp/kafka-logs-2
+
+> bin/kafka-server-start.sh config/server-1.properties &
+...
+> bin/kafka-server-start.sh config/server-2.properties &
+
+> bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 3 --partitions 1 --topic my-replicated-topic
+
+> bin/kafka-topics.sh --describe --bootstrap-server localhost:9092 --topic my-replicated-topic
+
+> bin/kafka-topics.sh --describe --bootstrap-server localhost:9092 --topic test
+
+publish:
+> bin/kafka-console-producer.sh --broker-list localhost:9092 --topic my-replicated-topic
+consume:
+> bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic my-replicated-topic
+
+kill:
+ps aux | grep server-1.properties
+wmic process where "caption = 'java.exe' and commandline like '%server-1.properties%'" get processid
+
+
+7、数据导入/导出
+echo -e "foo\nbar" > test.txt
+> bin/connect-standalone.sh config/connect-standalone.properties config/connect-file-source.properties config/connect-file-sink.properties
+
+> bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic connect-test --from-beginning
+
+---------------
+kafka.tools.DumpLogSegment:
+/opt/midware/kafka/bin/kafka-run-class.sh kafka.tools.DumpLogSegments --files 00000000000000916383.log
+
+kafka 使用内存修改：
+kafka-server-start.sh   
+export KAFKA_HEAP_OPTS="-Xmx500m -Xms500m" 
+
+kafka zk:
+/opt/midware/kafka/bin/zookeeper-shell.sh localhost:2180
+
+kafka tool linux:
+如果没有图像界面需要安装如下：
+yum install xorg-x11-xauth xorg-x11-server-utils xorg-x11-server-Xnest libXi libXp libXtst 
+INSTALL4J_JAVA_HOME=/opt/midware/jdk1.8.0_181/ ./kafkatool.sh
+INSTALL4J_JAVA_HOME=/opt/midware/jdk-13 ./kafkatool.sh
+LD_LIBRARY_PATH=/opt/midware/kafkatool/lib_nonstd:$LD_LIBRARY_PATH
+
+
+
+
