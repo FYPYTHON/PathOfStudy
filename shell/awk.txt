@@ -1,0 +1,5 @@
+eg:json.tt =     "hwtype": "jdb4000",
+
+
+-F 以（正则表达式）为分割
+(grep hwtype json.tt | awk -F[\"] '{print $4}')

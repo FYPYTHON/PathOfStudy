@@ -31,4 +31,5 @@
 1、java mysql client  
 2、java zookeeper client
 
+#### shell  
 

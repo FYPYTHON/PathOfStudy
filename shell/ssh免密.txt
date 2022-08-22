@@ -1,0 +1,7 @@
+cd /root/.ssh
+
+ssh-keygen -t rsa
+
+ssh-copy-id root@192.168.3.2
+
+所有环境 sshd 重启

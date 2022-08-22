@@ -1,0 +1,22 @@
+1、mdadm   RAID命令
+-C   创建模式
+-l    RAID级别
+-n   设备个数
+-a  yes|no 自动创建备份文件
+-c   数据块大小（64K）
+-x   空闲盘个数
+mdadm -C /dev/md0 -a yes -l 0 -n 2 /dev/sdb1 /dev/sdc1
+mdadm -C /dev/md1 -a yes -l 0 -n 2 /dev/sdb1 /dev/sdc1 -x 1 /dev/sde1  # 若有磁盘损坏，空闲盘补充
+mkfs.xfs -b 4096 /dev/md0   # -b指定块大小 4byte, -E stride=16
+挂载后使用：
+mount /dev/md0 /home/data
+
+2、查看RAID
+mdadm -D /dev/md1
+mdadm --detail /dev/md1   #详细信息
+模拟损坏： mdadm /dev/md1 -f /dev/sdc1    # /dev/sdc1损坏
+移除损坏： mdadm /dev/md1 --remove /dev/sdc1
+添加备用：moun mdadm /dev/md1 -a /dev/sdd1   # /dev/sdd1 新加
+停止RAID：mdadm -S /dev/md1  然后删除所有磁盘：mdadm --misc --zero-superblock /dev/sdd
+重新装配启动：mdadm -A /dev/md1 /dev/sdb1 /dev/sdc1
+创建RAID5：mdadm -C /dev/md2 -l 5 -n 3 /dev/sdd /dev/sde /dev/sdf -x /dev/sdg

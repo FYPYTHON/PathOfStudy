@@ -1,0 +1,56 @@
+awk -v RS=';'  'END {print --NR}'
+# -v 带参数，RS定义行分割符， NR是awk内置变量，Number of Records的缩写，表示当前记录条数（文件行数）；
+
+awk 'NR==1{print $1}' file
+# NR==1 定位在file的第一行   print $1 显示第一列内容
+
+查找目录下包含内容的文件
+grep -r "test"  /data/reports
+
+上次开机时间：
+date -d "$(awk -F. '{print $1}' /proc/uptime) second ago" +"%Y-%m-%d %H:%M:%S"
+
+rpm查看信息：
+rpm -qpi ****.rpm  | head
+
+
+history 显示时间，ip
+USER_IP=`who -u am i 2>/dev/null| awk '{print $NF}'|sed -e 's/[()]//g'`
+export HISTTIMEFORMAT="%F %T <$USER_IP>:`whoami` "
+# 只看时间
+# export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S  "
+history
+
+
+# ps查看进程启动时间
+ps -eo pid,lstart,etime,cmd | egrep tornadofs
+ps -w w -eo cmd,lstart,command | grep glusterfsd
+
+
+#  netstat
+netstat -n | grep 2181| awk '/^tcp/ {++S[$NF]} END {for (a in S) print a, S[a]}'
+netstat -ntlp
+netstat -ntp
+
+
+*文件包含
+. filename   # 注意点号(.)和文件名中间有一空格
+  或
+source filename
+
+
+top查看进程
+top -p `pgrep 程序名 | xargs | tr " " ","`
+top -p `pidof kdfs | xargs | tr " " ","`
+
+
+pgrep haproxy | awk 'NR>=0&&NR<=20{print $0}'    # 前20行
+top -p `pgrep haproxy | awk 'NR>=0&&NR<=20{print $0}' | xargs | tr " " ","`
+
+# top 1秒刷新一次
+top -d 1 >> top.log
+
+
+traceroute 10.10.10.10
+
+
