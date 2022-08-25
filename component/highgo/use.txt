@@ -1,0 +1,64 @@
+pg_ctl -m fast stop
+pg_ctl start
+卸载
+rpm -e highgodb
+
+
+groupadd -g 5866 highgo
+useradd -u 5866 -g highgo highgo
+passwd highgo
+
+mkdir -p /data/highgo/5.6.1
+chown -R highgo:highgo /data
+
+
+su - highgo
+alter user highgo with password 'Keda!Mysql_36';
+修改：
+HighGo5.6.5/data/pg_hba.conf
+host    all             highgo          172.16.83.227/24        trust
+
+
+导出
+pg_dump -d highgo -t test -f /tmp/test.sql
+导入
+psql highgo < /tmp/test.sql 
+
+pg_dumpall > back.sql
+psql -f back.sql
+
+
+
+
+
+\c dbname         # 切换数据库 
+\l                          # 列出所有的数据库
+\d                    # 列出当前数据库下的数据表
+\d tablename    # 列出指定表的所有字段
+\d+ tablename   # 查看指定表的基本情况
+\d                # 查看账号 
+
+\q  # 退出登录
+
+
+
+[root@gfs-227 midware]# rpm -ivh hgdb5.6.5-enterprise-rhel7-x86-64.rpm 
+Preparing...                                                            (100%################################# [100%]
+Updating / installing...
+   1:hgdb-enterprise-5.6.5-5.6.5-1.el7                                  (  1%################################# [100%]
+Last login: Wed Nov 25 16:16:02 CST 2020 on pts/1
+
+WARNING: enabling "trust" authentication for local connections
+You can change this by editing pg_hba.conf or using the option -A, or
+--auth-local and --auth-host, the next time you run initdb.
+Note: Forwarding request to 'systemctl enable hgdb-enterprise-5.6.5.service'.
+Created symlink from /etc/systemd/system/multi-user.target.wants/hgdb-enterprise-5.6.5.service to /usr/lib/systemd/system/hgdb-enterprise-5.6.5.service.
+Created symlink from /etc/systemd/system/graphical.target.wants/hgdb-enterprise-5.6.5.service to /usr/lib/systemd/system/hgdb-enterprise-5.6.5.service.
+
+
+
+/opt/HighGo6.0.4-cluster/bin/initdb /opt/data/highgodb/data
+Kedacom@22
+/opt/HighGo6.0.4-cluster/bin/pg_ctl -D /opt/data/highgodb/data  start
+alter user kedacom with password 'Kedacom@22';
+Mysql_36

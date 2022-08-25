@@ -1,0 +1,8 @@
+
+sed -i "s/^node_id=/node_id=2/g" postgressql_repmgr.conf
+
+sed -i "s/^node_id=.*/node_id=2/g" postgressql_repmgr.conf
+
+
+
+
