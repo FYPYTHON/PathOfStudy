@@ -46,6 +46,28 @@ gs_dump dbname -p port -n schema_name -f out.sql
 导出table
 gs_dump dbname -p port -t table_name -f out.sql
 
+查看服务器启动时间
+SELECT pg_postmaster_start_time();
+
+查看服务器hostname
+select get_hostname();
+
+#https://www.bookstack.cn/read/openGauss-2.1-zh/Developerguide-%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF%E5%87%BD%E6%95%B0.md
+
+查看wal信息
+select pg_stat_get_wal_senders();
+
+查看主备复制信息
+pg_stat_get_stream_replications();
+
+查看软锁定
+show default_transaction_read_only;
+
+查看只读，硬锁定，直接将数据库切换到恢复模式，绝对不会有写操作出现。
+show transaction_read_only;
+查看恢复进行中
+select pg_is_in_recovery();
+
 #### 元命令
 # -E 显示元命令
 gsql -U omm -p 5432 -d postgres -E
