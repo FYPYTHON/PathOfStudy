@@ -67,6 +67,7 @@ show default_transaction_read_only;
 show transaction_read_only;
 查看恢复进行中
 select pg_is_in_recovery();
+gsql -c "select pg_is_in_recovery()\x" | grep pg_is_in_recovery | grep f
 
 #### 元命令
 # -E 显示元命令
