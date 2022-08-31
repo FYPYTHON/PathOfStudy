@@ -52,6 +52,9 @@ SELECT pg_postmaster_start_time();
 查看服务器hostname
 select get_hostname();
 
+查看服务器当前运行参数
+SELECT * FROM pg_settings;
+
 #https://www.bookstack.cn/read/openGauss-2.1-zh/Developerguide-%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF%E5%87%BD%E6%95%B0.md
 
 查看wal信息
