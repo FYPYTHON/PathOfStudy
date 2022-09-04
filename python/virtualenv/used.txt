@@ -1,0 +1,12 @@
+# install virtualenv
+pip install virtualenv
+
+# create path
+virtualenv my_project_env
+
+
+# many python 
+virtualenv -p /opt/midware/python3/bin/python3 my_project_env
+
+
+
