@@ -1,0 +1,2 @@
+ lsblk -d -o name,rota
+ rota 0 固态ssd
