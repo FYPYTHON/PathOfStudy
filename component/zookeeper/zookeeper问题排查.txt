@@ -1,0 +1,1 @@
+1、zookeeper没有error没有异常，则在log4j中放开debug日志，看日志信息。
