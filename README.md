@@ -18,6 +18,7 @@
 15、vue  
 16、kafka  
 17、highgo
+18、fastDFS  
 
 
 #### python

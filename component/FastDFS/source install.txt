@@ -1,0 +1,12 @@
+安装 libfastcommon、perl依赖，下载libfastcommon-master.zip，上传到服务器的/usr目录下。
+https://github.com/happyfish100/libfastcommon
+  [root@localhost usr]# unzip libfastcommon-master.zip
+  [root@localhost usr]# cd libfastcommon-master
+  [root@localhost usr]# ./make.sh
+  [root@localhost usr]# ./make.sh install
+  [root@localhost usr]# yum install perl 
+编译安装fastdfs
+ [root@localhost usr] # tar -zxvf fastdfs-5.08.tar.gz
+  [root@localhost usr] # cd fastdfs-5.08
+  [root@localhost fastdfs-5.08] # ./make.sh
+  [root@localhost fastdfs-5.08] # ./make.sh  install
