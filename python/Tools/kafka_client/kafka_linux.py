@@ -15,7 +15,7 @@ sys.path.append(curpath)
 
 class KafkaClient(object):
     def __init__(self):
-        self.def_ip = "10.67.18.100"
+        self.def_ip = "127.0.0.1"
         self.def_port = "9092"
         # self.bk_status = False
         # self.error_msg = None
@@ -438,7 +438,7 @@ def rounte_to(self, rounte):
             print(saveinfo)
     elif rounte == -1:
         pass
-        ip = input('输入kafka服务ip>') or "10.67.18.100"
+        ip = input('输入kafka服务ip>') or "127.0.0.1"
         port = input("输入kafka port>") or "9092"
         # self.cur_broker = "{}:{}".format(ip, port)
         self.cur_broker = "{}:{}".format(ip, port)
