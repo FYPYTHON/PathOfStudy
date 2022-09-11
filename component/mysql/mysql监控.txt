@@ -1,0 +1,43 @@
+1、连接数
+show status like 'Max_used_connections';
+show status like 'Threads_connected';
+
+2、缓存
+show status like 'Innodb_buffer_pool_reads';
+show status like 'Innodb_buffer%';
+
+3、Lock
+show status like 'Innodb_row_lock_waits';
+
+show status like 'Innodb_row_lock%';
+show open tables where in_used>0;
+
+4、慢查询
+show status like 'show_query_log';
+show status like 'long_query_log=1';
+show status like 'show_query_log_file';
+
+mysqldumpslow -s at -t 10 /opt/log/slow.log
+
+5、状态
+show status like 'Com_insert';
+show status like 'Com_%';
+
+6、吞吐
+show status like 'Bytes_sent';
+show status like 'Bytes_received';
+
+7、show variables;
+
+8、优化慢查询
+不使用子查询，join代替
+
+避免函数索引YEAD(date), date > '2000-01-01'代替
+
+用in代替or
+
+like双%无法使用索引
+
+分组统计少用排序，order by
+
+
