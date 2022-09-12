@@ -19,6 +19,8 @@
 16、kafka  
 17、highgo
 18、fastDFS  
+19、echart  
+
 
 
 #### python
