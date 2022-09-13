@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# 错误日志
+top -d 1 -n 1 >> ./log.log 2>&1
+
+# su 执行命令，输出日志
+(
+su - omm <<!
+
+source /home/omm/.bashrc
+gs_ctl query -D /opt/gaussdb/single_node
+
+!
+) >> ./log.log
