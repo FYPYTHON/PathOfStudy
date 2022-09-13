@@ -2,6 +2,8 @@ psql -U pgsql -d datasync -c "\x on" -c "select * from pg_replication_slots;"
 
 psql "host=<server> port=5432 dbname=<db> user=<user> password=<password>"
 
+gsql "port=5432 user=test password=pwd host=127.0.0.1 dbname=postgres"
+
 查看密码过期
 select * from pg_user;
 

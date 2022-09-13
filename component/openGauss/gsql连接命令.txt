@@ -1,0 +1,9 @@
+
+source /home/omm/.bashrc
+
+
+gsql -r -p 5432 -U test -W test -d postgres 
+
+gsql -r "port=5432 user=test password=test host=127.0.0.1 dbname=postgres"
+
+
