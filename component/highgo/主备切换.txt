@@ -1,0 +1,7 @@
+将从库192.168.1.12提升为主库:
+pg_ctl promote -D ${hgdata}
+
+其他从库，修改配置${hgdata}/recovery.conf，重启：
+standy_mode=on
+primary_conninfo='host=192.168.1.12 port=5432 user=repl password=repl'
+recovery_target_timeline = 'latest'
