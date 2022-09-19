@@ -2,3 +2,10 @@ https://blog.csdn.net/qq_42226855?type=blog
 
 高斯命令文档
 https://www.bookstack.cn/read/openGauss-2.1-zh/Toolreference-gs_ctl.md
+
+
+openGauss/MogDB/PostgreSQL对比学习
+https://blog.csdn.net/GaussDB/article/details/122001063
+
+openGauss参数作品
+https://blog.csdn.net/gaussdb/category_11534756.html

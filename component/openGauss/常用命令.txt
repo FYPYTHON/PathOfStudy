@@ -66,6 +66,11 @@ pg_stat_get_stream_replications();
 查看复制状态
 select * from pg_stat_replication;
 
+判断当前集群中数据最新节点（重要）， 该操作的目的是为了保证数据零丢失 / 尽可能少丢失，判断方式可以通 WAL 日志的生成日期和 LCN 号等，
+也可以通过业务某些变更表来确认最新数据集群。
+postgres：select pg_current_wal_lsn();
+gauss: select pg_current_xlog_location();
+
 查看软锁定
 show default_transaction_read_only;
 
