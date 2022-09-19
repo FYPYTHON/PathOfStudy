@@ -63,6 +63,9 @@ select pg_stat_get_wal_senders();
 查看主备复制信息
 pg_stat_get_stream_replications();
 
+查看复制状态
+select * from pg_stat_replication;
+
 查看软锁定
 show default_transaction_read_only;
 
