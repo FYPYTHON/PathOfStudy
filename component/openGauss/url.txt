@@ -9,3 +9,7 @@ https://blog.csdn.net/GaussDB/article/details/122001063
 
 openGauss参数作品
 https://blog.csdn.net/gaussdb/category_11534756.html
+
+
+备份还原
+https://blog.csdn.net/qq_42226855/article/details/108351297?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-108351297-blog-108355840.pc_relevant_multi_platform_whitelistv6&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-108351297-blog-108355840.pc_relevant_multi_platform_whitelistv6&utm_relevant_index=1
