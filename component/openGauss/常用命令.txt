@@ -40,7 +40,7 @@ SELECT * FROM pg_partition;
 SELECT * FROM pg_constraint;
 
 指定用户导出数据库
-s_dump dbname -p port -f out.sql -U user_name -W password
+gs_dump dbname -p port -f out.sql -U user_name -W password
 导出schema
 gs_dump dbname -p port -n schema_name -f out.sql
 导出table
@@ -79,6 +79,11 @@ show transaction_read_only;
 查看恢复进行中
 select pg_is_in_recovery();
 gsql -c "select pg_is_in_recovery()\x" | grep pg_is_in_recovery | grep f
+
+
+查看oid
+select oid,datname from pg_database;
+select tableoid from table_xxx;
 
 #### 元命令
 # -E 显示元命令
