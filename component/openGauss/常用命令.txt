@@ -81,6 +81,16 @@ select pg_is_in_recovery();
 gsql -c "select pg_is_in_recovery()\x" | grep pg_is_in_recovery | grep f
 
 
+查看所以时区
+select * from pg_timezone_names;
+查看当前时间
+select now();
+设置时区
+set time zone 'UTC-8';
+
+查看备库落后主库多少字节
+select pg_xlog_location_diff('3/A04B708', '4/A04B708')
+
 查看oid
 select oid,datname from pg_database;
 select tableoid from table_xxx;
