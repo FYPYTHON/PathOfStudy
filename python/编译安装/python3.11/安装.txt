@@ -5,8 +5,51 @@ sqlite3下载
 https://www.sqlite.org/2022/sqlite-autoconf-3390300.tar.gz
 wget https://www.sqlite.org/2022/sqlite-autoconf-3390300.tar.gz --no-check-certificate
 
-# ./configure --prefix=/opt/midware/sqlite3 --disable-static --enable-fts5 --enable-json1 CFLAGS="-g -02 -DSQLITE_ENABLE_FTSe=1 -DSQLITE_ENABLE_FTS4=1 -DSQLITE_ENABLE_RTREE=1"
-# 报错
+1、编译sqlite3
 
-./configure --prefix=/opt/midware/sqlite3 
+./configure --prefix=/opt/midware/python3.11 
 make && make install
+
+
+2、编译openssl
+wget https://www.openssl.org/source/openssl-1.1.1g.tar.gz --no-check-certificate
+./config --prefix=/opt/midware/python3.11 
+make && make install
+
+
+3、readline
+wget -c ftp://ftp.gnu.org/gnu/readline/readline-8.0.tar.gz
+./configure --prefix=/opt/midware/python3.11 
+make && make install
+
+
+3、编译python3.11
+yum -y install readline-devel
+yum install libsqlite3x-devel.x86_64
+
+
+修改Modules/Setup:
+
+
+LD_RUN_PATH=/opt/midware/python3.11/lib ./configure LDFLAGS="-L/opt/midware/python3.11/lib" CPPFLAGS="-I/opt/midware/python3.11/include" --with-openssl=/opt/midware/python3.11 --with-readline --enable-shared --prefix=/opt/midware/python3.11
+
+LD_RUN_PATH=/opt/midware/python3.11/lib make && make install
+
+import sqlite3
+sqlite3.sqlite_version
+
+
+# 查看python的编译项
+python3 -c "import sysconfig; print(sysconfig.get_config_var('CONFIG_ARGS'))"
+
+
+
+
+4、安装uwsgi
+
+wget http://mirrors.aliyun.com/pypi/packages/24/fd/93851e4a076719199868d4c918cc93a52742e68370188c1c570a6e42a54f/uwsgi-2.0.20.tar.gz
+wget http://mirrors.aliyun.com/pypi/packages/e7/1e/3dcca007f974fe4eb369bf1b8629d5e342bb3055e2001b2e5340aaefae7a/uwsgi-2.0.18.tar.gz
+
+yum install python3-devel
+cd uwsgi-2.0.20
+make
