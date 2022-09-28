@@ -81,6 +81,11 @@ select pg_is_in_recovery();
 gsql -c "select pg_is_in_recovery()\x" | grep pg_is_in_recovery | grep f
 
 
+查看审计
+select * from pg_query_audit('2022-09-21 11:00:00','2022-09-21 16:00:00');
+# pgxc_query_audit 所有dn节点
+# pg_query_audit(start,end, audit_log)
+
 查看所以时区
 select * from pg_timezone_names;
 查看当前时间

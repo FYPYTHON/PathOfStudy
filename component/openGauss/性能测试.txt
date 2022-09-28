@@ -1,0 +1,28 @@
+1、下载
+https://osdn.net/frs/g_redir.php?m=kent&f=benchmarksql%2Fbenchmarksql-5.0.zip
+https://opengauss.obs.cn-south-1.myhuaweicloud.com/1.0.0/MOT-TPCC-Benchmark.tar.gz
+
+
+unzip benchmarksql-5.0.zip
+
+tar -zxvf MOT-TPCC-Benchmark.tar.gz 
+
+cd benchmarksql-5.0/
+\cp -r ../MOT-TPCC-Benchmark/sql.common.opengauss.mot ./run
+\cp -r ../MOT-TPCC-Benchmark/jTPCCTData.java ./src/client/jTPCCTData.java
+vi run/runDatabaseBuild.sh
+
+cd run/
+mv sql.common sql.common.orig
+ln -s sql.common.opengauss.mot sql.common
+
+
+
+sysbench
+
+1、wget https://codeload.github.com/akopytov/sysbench/tar.gz/refs/tags/1.0.20
+./configure --prefix=/home/sysbench --without-mysql
+
+sysbench_bin
+2、bin下载
+wget https://github.com/funnyzpc/sysbench_bin/archive/refs/heads/master.zip
