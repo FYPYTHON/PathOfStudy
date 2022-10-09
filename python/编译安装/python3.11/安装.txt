@@ -47,9 +47,17 @@ python3 -c "import sysconfig; print(sysconfig.get_config_var('CONFIG_ARGS'))"
 
 4、安装uwsgi
 
-wget http://mirrors.aliyun.com/pypi/packages/24/fd/93851e4a076719199868d4c918cc93a52742e68370188c1c570a6e42a54f/uwsgi-2.0.20.tar.gz
-wget http://mirrors.aliyun.com/pypi/packages/e7/1e/3dcca007f974fe4eb369bf1b8629d5e342bb3055e2001b2e5340aaefae7a/uwsgi-2.0.18.tar.gz
+# wget http://mirrors.aliyun.com/pypi/packages/24/fd/93851e4a076719199868d4c918cc93a52742e68370188c1c570a6e42a54f/uwsgi-2.0.20.tar.gz
+# wget http://mirrors.aliyun.com/pypi/packages/e7/1e/3dcca007f974fe4eb369bf1b8629d5e342bb3055e2001b2e5340aaefae7a/uwsgi-2.0.18.tar.gz
 
+python3.11需要下载github最新版本uwsgi
+
+wget https://github.com/unbit/uwsgi/archive/refs/heads/master.zip
 yum install python3-devel
-cd uwsgi-2.0.20
+mv /usr/include/openssl /usr/include/openssl_bak
+
+cd uwsgi-master/
+ln -s python3.11 /usr/bin/python3
+/opt/midware/python3.11/bin/python3 setup.py build
+/opt/midware/python3.11/bin/python3 setup.py install
 make

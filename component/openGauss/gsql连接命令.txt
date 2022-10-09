@@ -6,4 +6,7 @@ gsql -r -p 5432 -U test -W test -d postgres
 
 gsql -r "port=5432 user=test password=test host=127.0.0.1 dbname=postgres"
 
+# 查询命令后面带上\x on,按行显示
+gsql -c "select 1\x on"
+
 
