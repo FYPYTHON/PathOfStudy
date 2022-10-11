@@ -1,0 +1,10 @@
+client:
+
+
+param = {'path_list': ['1', '2', '3'], 'path': path}
+result = requests.post(url, data=param, headers=headers)
+
+
+server:
+
+path_list = request.POST.getlist("path_list")  
