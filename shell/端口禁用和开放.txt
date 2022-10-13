@@ -15,6 +15,6 @@ port=5432
 firewall-cmd --zone=public --add-port=${port}/tcp --permanent
 firewall-cmd --reload
 
-
+firewall-cmd --list-all-zones
 
 https://www.postgresql.org/download/products/1/
