@@ -8,6 +8,9 @@ redis-cli -h 127.0.0.1 -p 6379
 config get requirepass //获取当前密码
 config set requirepass "yourpassword"//设置当前密码,服务重新启动后又会置为默认，即无密码；不建议此种方式
 
+查看日志：
+127.0.0.1:6369> slowlog get
+
 查看所有key:
 keys *
 
