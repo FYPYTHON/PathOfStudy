@@ -13,6 +13,8 @@ import logging
 import logging.config
 
 # ------ local
+import sys
+sys.path.append("E:\worksapce\python\GCPDCardGame")
 import common_msg
 
 class GCPDClient(object):
@@ -106,15 +108,18 @@ class GCPDClient(object):
             self.send_msg(common_msg.json_dumps(request_msg))
         elif msg.get('response', "") == "getseat":
             rep_data = msg.get('data', {})
+            request_msg = common_msg.PACKET_REQUEST.copy()
             if not rep_data.get(self._role, False):
-                request_msg = common_msg.PACKET_REQUEST.copy()
+                self.logger.debug("role: {} is {}:".format(self._role, rep_data.get(self._role)))
                 request_msg['request'] = 'seat'
-                request_msg['role'] = self._role
-                request_msg['table'] = self._table
-                request_msg['time'] = time.time()
-                self.send_msg(common_msg.json_dumps(request_msg))
             else:
                 self.logger.error("table :{} role: {} is not empty".format(self._table, self._role))
+                request_msg['request'] = 'getseat'
+
+            request_msg['role'] = self._role
+            request_msg['table'] = self._table
+            request_msg['time'] = time.time()
+            self.send_msg(common_msg.json_dumps(request_msg))
         elif msg.get('response', "") == 'seat':
             rep_data = msg.get('data', {})
             # 座位已选, 等待开始
@@ -137,7 +142,6 @@ class GCPDClient(object):
             request_msg['time'] = time.time()
             self.send_msg(common_msg.json_dumps(request_msg))
 
-
     def run(self):
         while True:
             print('--', datetime.now(), self.gcpd_socket)
@@ -153,5 +157,11 @@ class GCPDClient(object):
 
 
 if __name__ == '__main__':
-    gspd = GCPDClient(loglevel='DEBUG')
-    gspd.run()
+
+    # gspd.run()
+    from multiprocessing import Process
+    from threading import Thread
+    role = 'player2'
+    gspd = GCPDClient(loglevel='DEBUG', role=role)
+    Thread(target=gspd.run).start()
+

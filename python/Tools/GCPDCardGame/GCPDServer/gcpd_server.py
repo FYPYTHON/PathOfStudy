@@ -145,7 +145,7 @@ class GCPDServer(object):
                     self.gspd_nodes[client_addr]['socket'] = client_socket
 
                 self.logger.debug("accept client_socket:{}, client_addr:{}".format(client_socket, client_addr))
-                self.process_client(client_socket, client_addr)
+                # self.process_client(client_socket, client_addr)
                 Thread(target=self.process_client, args=(client_socket, client_addr)).start()
             except Exception as e:
                 self.logger.debug("{}".format(e))

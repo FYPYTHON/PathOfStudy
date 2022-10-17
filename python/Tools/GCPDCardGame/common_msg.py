@@ -10,10 +10,10 @@ SOCKET_CONNECT = {'request': 'connect'}
 SOCKET_CONNECT_RESPONSE = {'response': 'connect'}
 
 PLAYERS_SEAT = {
-    'play1': False,
-    'play2': False,
-    'play3': False,
-    'play4': False
+    'player1': False,
+    'player2': False,
+    'player3': False,
+    'player4': False
 }
 
 PACKET_REQUEST = {
