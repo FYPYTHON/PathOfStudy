@@ -1,0 +1,6 @@
+1、ModuleNotFoundError: No module named '_ssl'
+    # 查看编译参数：
+	   python3 -c "import sysconfig; print(sysconfig.get_config_var('CONFIG_ARGS'))"
+	   是否有动态链接ssl库
+	# 查看lib/python3.x/lib-dynload/下
+	   _ssl.cpython-3x-x86_64-linux-gnu.so 是否存在
