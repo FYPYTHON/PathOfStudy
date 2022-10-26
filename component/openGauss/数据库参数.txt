@@ -92,7 +92,9 @@
 
 
 
-
+# 修改max_connections取值后，需对应修改undo_zone_count，取值规则为max_connections取值的4倍。
+max_connections = 10000
+undo_zone_count = 40000
 
 
 
