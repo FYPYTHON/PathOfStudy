@@ -1,0 +1,39 @@
+﻿
+Scipy库：
+
+修改cfg.site 配置
+PATH=/opt/aarch64-kedacom-linux/bin:$PATH
+export CROSS_COMPILE=aarch64-kedacom-linux-gnu-
+export CC="${CROSS_COMPILE}gcc"
+export CXX=aarch64-kedacom-linux-gnu-g++
+export LDSHARED="${CC} -shared"
+## 交叉编译出的numpy 路径/root/scl_localization/download/numpy-1.18.3/dist
+export LDFLAGS="-L/opt/midware/python3/lib -L/root/scl_localization/math/sysroot/lib -L/root/scl_localization/download/numpy-1.18.3/dist/numpy/core/lib"
+export CFLAGS="-I/opt/midware/python3/include/python3.5m -I/root/scl_localization/math/sysroot/include"
+export GFORTRAN=aarch64-kedacom-linux-gnu-gfortran
+export LAPACK=/root/scl_localization/math/sysroot/lib/libopenblas.a
+export BLAS=/root/scl_localization/math/sysroot/lib/libopenblas.a
+### 复制一份numpy 到 scipy-1.4.1/pypath 方便修改源码
+# 环境上自己的 PYTHONPATH  LD_LIBRARY_PATH 清空
+export PYTHONPATH=/root/scl_localization/download/scipy-1.4.1/pypath
+
+F90=$GFORTRAN /opt/midware/python3/bin/python3 setup.py build
+/opt/midware/python3/bin/python3 setup.py install
+
+vi /root/scl_localization/download/scipy-1.4.1/pypath/numpy/distutils/fcompiler/__init__.py  
+681行：增加判断if self.linker_so is None
+                if self.linker_so is None:
+                    linker = ["aarch64-kedacom-linux-gnu-gcc", "-shared"]
+                else:
+                    linker = self.linker_so[:]
+
+
+vi /usr/include/gnu/stubs.h
+stubs-32 32的临时改成64。去掉32相关，scipy 会include 32的
+# include <gnu/stubs-64.h>
+
+编译不过的命令基本上是使用了系统的gcc而不是交叉编译器的，手动修改：将gcc/g++ 改成 aarch64-kedacom-linux-gnu-gcc/g++
+如手动执行如下命令：
+aarch64-kedacom-linux-gnu-gcc -shared build/temp.linux-x86_64-3.5/scipy/special/cython_special.o build/temp.linux-x86_64-3.5/scipy/special/sf_error.o build/temp.linux-x86_64-3.5/build/src.linux-x86_64-3.5/scipy/special/_logit.o build/temp.linux-x86_64-3.5/scipy/special/amos_wrappers.o build/temp.linux-x86_64-3.5/scipy/special/cdf_wrappers.o build/temp.linux-x86_64-3.5/scipy/special/specfun_wrappers.o -L/root/scl_localization/math/sysroot/lib -L/root/scl_localization/download/numpy-1.18.3/dist/numpy/core/lib -L/opt/aarch64-kedacom-linux/lib/gcc/aarch64-kedacom-linux-gnu/8.3.0/../../../../aarch64-kedacom-linux-gnu/lib/../lib64 -L/opt/aarch64-kedacom-linux/lib/gcc/aarch64-kedacom-linux-gnu/8.3.0/../../../../aarch64-kedacom-linux-gnu/lib/../lib64 -Lbuild/temp.linux-x86_64-3.5 -Wl,-rpath=/root/scl_localization/math/sysroot/lib -lopenblas -lopenblas -lsc_amos -lsc_cephes -lsc_mach -lsc_cdf -lsc_specfun -lnpymath -lm -lgfortran -o build/lib.linux-x86_64-3.5/scipy/special/cython_special.cpython-35m-x86_64-linux-gnu.so -Wl,--version-script=build/temp.linux-x86_64-3.5/link-version-scipy.special.cython_special.map
+
+

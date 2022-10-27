@@ -1,0 +1,56 @@
+
+openssl:
+PATH=/opt/aarch64-kedacom-linux/bin:$PATH
+./Configure --prefix=/home/fypython/openssl --cross-compile-prefix=aarch64-kedacom-linux-gnu-  no-asm  linux-aarch64
+
+python3:
+修改：vi Modules/Setup
+ssl配置增加:
+SSL=/home/fypython/openssl
+_ssl _ssl.c \
+       -DUSE_SSL -I$(SSL)/include -I$(SSL)/include/openssl \
+       -L$(SSL)/lib -lssl -lcrypto
+
+PATH=/opt/aarch64-kedacom-linux/bin:$PATH
+CFLAG_RUNTIME_LIBRARY_PATH="/opt/sysroot64/lib" LDFLAGS="-Wl,--rpath=/opt/sysroot64/lib -Wl,--dynamic-linker=/opt/sysroot64/lib/ld-linux-aarch64.so.1" ./configure --target=aarch64-kedacom-linux-gnu --host=aarch64-kedacom-linux-gnu --build=x86_64-pc-linux-gnu --enable-ipv6 ac_cv_file__dev_ptmx=yes ac_cv_file__dev_ptc=yes CFLAGS=-fPIC --prefix=/home/fypython/python3 --with-openssl=/home/fypython/openssl
+
+find ./python3/ -name __pycache__ -type d | xargs rm -rf
+tar -zcvf py3.tar.gz python3/
+
+
+其他python库：
+   交叉编译psutil:
+cd /home/fypython/psutil-5.6.7
+PATH=/opt/aarch64-kedacom-linux/bin:$PATH
+export CROSS_COMPILE=aarch64-kedacom-linux-gnu-
+
+export CC export CC="${CROSS_COMPILE}gcc"
+
+export LDSHARED="${CC} -shared"
+
+export LDFLAGS="-L/opt/midware/python3/lib"
+
+export CFLAGS="-I/opt/midware/python3/include/python3.5m"
+
+/opt/midware/python3/bin/python3 setup.py build
+/opt/midware/python3/bin/python3 setup.py install
+
+dist目录下的为编译后的结果。
+unzip psutil-5.6.7-py3.5-linux-x86_64.egg
+
+
+编译uwsgi
+cd /home/fypython/uwsgi-2.0.18
+PATH=/opt/aarch64-kedacom-linux/bin:$PATH
+export CROSS_COMPILE=aarch64-kedacom-linux-gnu-
+export CC="${CROSS_COMPILE}gcc"
+export LDSHARED="${CC} -shared"
+export LDFLAGS="-L/opt/midware/python3/lib"
+export CFLAGS="-I/opt/midware/python3/include/python3.5m"
+
+/opt/midware/python3/bin/python3 setup.py build
+/opt/midware/python3/bin/python3 setup.py install
+
+
+
+
