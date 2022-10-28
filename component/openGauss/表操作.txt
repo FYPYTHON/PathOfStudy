@@ -1,0 +1,3 @@
+https://www.bookstack.cn/read/openGauss-2.1-zh/Developerguide-ALTER-TABLE.md
+
+CLUSTER ON index_name 为将来的CLUSTER（聚簇）操作选择默认索引。实际上并没有重新盘簇化处理该表。
