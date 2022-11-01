@@ -48,3 +48,20 @@ DATADIR
 -?, —help
 
 打印帮助信息。
+
+
+
+
+
+
+#### 
+xlog_file_size = 549755813888   # 512GB
+xlog_file_size=1073741824   # 1GB
+
+# 查看oid xid
+pg_controldata -D /data/postgresql/data
+pg_resetxlog -o 24579 -x 58288 -f /data/postgresql/data
+
+
+
+
