@@ -1,0 +1,28 @@
+
+http://www.wjhsh.net/space-place-p-5475004.html
+https://blog.csdn.net/weixin_39715187/article/details/111812442
+https://www.cnblogs.com/space-place/p/5475004.html
+
+在数据库postgresql中，一个客户端到服务器连接实际上是一个tcp socket连接，tcp连接是虚连接，一方非正常退出（如断电），另一方会继续维持这个连接。
+ 
+举个例子，一个客户端电脑正常连上服务器后，强行拔掉电源造成人为断电，重新启动电脑，再此连上服务器。用SQL语句select * from pg_stat_activily 查看服务器的所有连接，会发现本客户端的连接除了本次外，断电前的连接还在。因为服务器根本不知道客户端的断电行为，还以为那连接正在空闲状态。
+ 
+然而这个死连接不会永远存在，2个小时后，服务器上的这个连接会自动切掉，因为postgresql支持TCP_KEEPLIVE机制。有三个 系统变量tcp_keepalives_idle，tcp_keepalives_interval ，tcp_keepalives_count 来设 置postgresql如何处理死连接。
+ 
+对于每个连接，postgresql会对这个连接空闲tcp_keepalives_idle秒后，主动发送tcp_keeplive包给客户 端，以侦探客户端是否还活着 ，当发送tcp_keepalives_count个侦探包，每个侦探包在tcp_keepalives_interval 秒内没有回应，postgresql就认为这个连接是死的。于是切断这个死连接。
+ 
+在postgresql, 这三个参数都设为0将使用操作系统的默认值，在linux下，tcp_keepalives_idle一般是2个小时，也就是2个小时后，服务器才可以自动关掉死连接。在实际应运中，可以自行调整以上参数。
+ 
+然而，单单依靠服务器以此方法来切掉死连接，是永远不够。假设有一个连接，在运行以下交互式命令中突然断电
+begin transaction;
+lock table xxx in exclusive mode;
+-- 突然断电，这种可能很小，但肯定存在
+。。。
+commit
+ 
+由于这个连接还保留着，且这个transaction还没结束（本来上1秒之内的事务，现在变成至少要2个小时），所以这个表的锁一直存在着，导致系统的并发性严重降低。
+ 
+所以必需有手工杀掉连接的语句来切掉此连接，以释放锁。不幸的是，直到8.3，postgresql还没有此语句，源代码是有pg_terminate_query函数,因为有bug, 被屏蔽掉，必须到8.4才有。
+ 
+所以只能用操作系统的命令杀掉此连接，或者重启服务器。 在linux下，杀掉此连接的命令是：
+kill -s SIGTERM 进程号。
