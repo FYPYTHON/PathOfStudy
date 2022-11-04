@@ -63,5 +63,16 @@ pg_controldata -D /data/postgresql/data
 pg_resetxlog -o 24579 -x 58288 -f /data/postgresql/data
 
 
+# xlog清理
+pg_controldata /opt/data/gaussdb
+pg_archivecleanup -d /opt/data/gaussdb/data_business/single_node/pg_xlog/ 000000010000000200000049
+
+https://blog.csdn.net/dazuiba008/article/details/100659749
+
+
+# 参数
+max_size_for_xlog_prune
+# This param set by user is used for xlog to be recycled when not all are connected and the param enable_xlog_prune is on.
+
 
 

@@ -1,7 +1,12 @@
+高斯文档：
+https://docs.opengauss.org/zh/docs/3.1.0/docs/Developerguide/%E6%A3%80%E6%9F%A5%E7%82%B9.html
+
+
 https://blog.csdn.net/qq_42226855?type=blog
 
 高斯命令文档
 https://www.bookstack.cn/read/openGauss-2.1-zh/Toolreference-gs_ctl.md
+
 
 
 openGauss/MogDB/PostgreSQL对比学习
