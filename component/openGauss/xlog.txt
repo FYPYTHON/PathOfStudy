@@ -58,6 +58,11 @@ DATADIR
 xlog_file_size = 549755813888   # 512GB
 xlog_file_size=1073741824   # 1GB
 
+max_redo_log_size = 1GB
+max_size_for_xlog_prune = 2GB
+
+( 2 + checkpoint_completion_target ) * checkpoint_segments + 1
+
 # 查看oid xid
 pg_controldata -D /data/postgresql/data
 pg_resetxlog -o 24579 -x 58288 -f /data/postgresql/data
@@ -73,6 +78,4 @@ https://blog.csdn.net/dazuiba008/article/details/100659749
 # 参数
 max_size_for_xlog_prune
 # This param set by user is used for xlog to be recycled when not all are connected and the param enable_xlog_prune is on.
-
-
 
