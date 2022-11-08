@@ -25,3 +25,11 @@ select * from pg_create_logical_replication_slot('slot_2_databasename', 'mppdb_d
 # 删除
 
 select * from pg_drop_replication_slot('slot_movision');
+
+
+# 使用
+SELECT pg_current_xlog_location();         #  获取lsn
+select data from pg_logical_get_area_changes('1B/82CB51D8',NULL,NULL,'mppdb_decoding',NULL);
+
+select * from pg_logical_slot_peek_changes('slot_movision', NULL ,4);
+select * from pg_logical_slot_get_changes('slot_movision', NULL ,4);

@@ -59,7 +59,7 @@ xlog_file_size = 549755813888   # 512GB
 xlog_file_size=1073741824   # 1GB
 
 max_redo_log_size = 1GB
-max_size_for_xlog_prune = 2GB
+max_size_for_xlog_prune = 10GB
 
 ( 2 + checkpoint_completion_target ) * checkpoint_segments + 1
 
