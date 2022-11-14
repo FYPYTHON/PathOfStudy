@@ -1,0 +1,68 @@
+﻿
+qt文档:
+https://doc.qt.io/qt.html
+
+qt 下载：
+https://download.qt.io/
+
+qt-everywhere-src-6.4.0.tar.xz
+
+qt creator 下载:
+https://download.qt.io/official_releases/qtcreator/8.0/8.0.2/
+
+
+
+#### 最终在线安装
+https://blog.csdn.net/memorywithyou/article/details/126607163
+1、https://www.qt.io/download-open-source
+2、找到download the qt online installer
+3、Your download should start automatically. If it doesn’t, click here.
+4、qt-unified-windows-x64-4.5.0-online.exe
+5、安装选择项
+Qt 
+  MSVC2019 64-bit
+  MinGW 11.2.0 64-biy
+  Additional Libraries
+  Developer and Designer Tool
+    Qt creator 8.0.1
+	Qt creator plugin
+    Debugger Tools for Windows
+    Qt Design Studio 3.5.0
+    MinGW 11.2.0 64-bit
+    CMake 3.23.2
+    Ninja 1.10.2
+    OpenSSL 1.1.1j Toolkit
+      OpenSSL 64-bit binaries	
+
+6、PATH 增加
+   C:\Qt\6.4.0\mingw_64\plugins\platforms
+QT_QPA_PLATFORM_PLUGIN_PATH
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
