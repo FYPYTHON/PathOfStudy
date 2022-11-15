@@ -1,0 +1,10 @@
+qt creator This application failed to start
+https://blog.csdn.net/summer_9527/article/details/120173433
+
+
+MinGW-w64
+https://www.mingw-w64.org/downloads/
+
+https://www.msys2.org/
+
+msys2-x86_64-20221028.exe
