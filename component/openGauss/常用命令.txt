@@ -109,6 +109,14 @@ gsql -U omm -p 5432 -d postgres -E
 \du  -- 用户和角色
 \db  -- 表空间
 \dn  -- schema信息
+# set current_schema to sch_chameleon;
+# 查看schema的所有者
+SELECT s.nspname,u.usename AS nspowner FROM pg_namespace s, pg_user u WHERE nspname='public' AND s.nspowner = u.usesysid;
+# 查看schema下的所有表
+SELECT distinct(tablename),schemaname from pg_tables where schemaname = 'public';
+# 修改schema名称
+ALTER SCHEMA test RENAME TO test1;
+https://docs.opengauss.org/zh/docs/3.1.0/docs/BriefTutorial/SCHEMA.html
 \d   -- 数据库对象信息
 \d tablename
 \dt  -- 数据库所有表
