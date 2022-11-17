@@ -8,8 +8,9 @@ https://download.qt.io/
 qt-everywhere-src-6.4.0.tar.xz
 
 qt creator 下载:
-https://download.qt.io/official_releases/qtcreator/8.0/8.0.2/
+https://download.qt.io/official_releases/qtcreator/8.0/8.0.2/      --安装启动报错
 
+https://download.qt.io/official_releases/qtcreator/7.0/7.0.2/installer_source/windows_x64/
 
 
 #### 最终在线安装
@@ -24,8 +25,6 @@ Qt
   MinGW 11.2.0 64-biy
   Additional Libraries
   Developer and Designer Tool
-    Qt creator 8.0.1
-	Qt creator plugin
     Debugger Tools for Windows
     Qt Design Studio 3.5.0
     MinGW 11.2.0 64-bit
@@ -34,9 +33,8 @@ Qt
     OpenSSL 1.1.1j Toolkit
       OpenSSL 64-bit binaries	
 
-6、PATH 增加
-   C:\Qt\6.4.0\mingw_64\plugins\platforms
-QT_QPA_PLATFORM_PLUGIN_PATH
+6、替换7.0.2版本qtcreator
+   https://download.qt.io/official_releases/qtcreator/7.0/7.0.2/installer_source/windows_x64/qtcreator.7z
 
 
 
