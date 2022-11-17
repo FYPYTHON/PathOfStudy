@@ -1,0 +1,12 @@
+﻿https://blog.csdn.net/CutelittleBo/article/details/123275385
+
+1、zookeeper启动后默认会开一个端口用来支持jmx调用，所以导致开启了非预期的随机端口。
+2、zookeeper 中有个内嵌的管理控制台是通过jetty启动，会占用8080 端口
+
+
+-- 1、在bin/zkServer.sh最开始增加
+export JMXDISABLE=true
+
+-- 2、在cfg配置中增加
+admin.enableServer=false
+
