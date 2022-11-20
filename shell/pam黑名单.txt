@@ -1,3 +1,3 @@
-pam_abl #查看黑名单列表   
+﻿pam_abl #查看黑名单列表   
 cat /etc/security/pam_abl.conf  #查看黑名单 规则       
 rm -f /var/lib/abl/hosts.db #删除黑名单
