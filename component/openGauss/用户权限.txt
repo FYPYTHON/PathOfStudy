@@ -1,6 +1,8 @@
 参考
 https://blog.csdn.net/qq_42226855/article/details/109535734?spm=1001.2014.3001.5502
 
+https://docs.opengauss.org/zh/docs/3.1.0/docs/Developerguide/CREATE-USER.html
+
 
 1、用户分类
 GaussDB的用户可分为两类：系统管理员和普通用户。
@@ -38,6 +40,12 @@ CREATE USER syssao WITH AUDITADMIN IDENTIFIED BY "TEST@2022";
 CREATE ROLE gtest IDENTIFIED BY "TEST@2022";
 GRANT SELECT ON TABLE films TO gtest;
 CREATE USER gtest2 IN ROLE gtest PASSWORD "TEST2@2022";
+
+
+赋予权限
+# SYSADMIN、CREATEDB、CREATEROLE、AUDITADMIN、MONADMIN、OPRADMIN、POLADMIN和LOGIN，Replication
+# 如赋予审计权限： alter user audit AUDITADMIN;
+# 收回权限： alter user audit NOAUDITADMIN;
 
 
 ### 命令
