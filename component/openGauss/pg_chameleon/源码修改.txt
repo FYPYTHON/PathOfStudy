@@ -1,0 +1,4 @@
+
+https://blog.csdn.net/qq_35235032/article/details/105032462
+
+https://stackoverflow.com/questions/13922597/multiprocessing-freeze-support

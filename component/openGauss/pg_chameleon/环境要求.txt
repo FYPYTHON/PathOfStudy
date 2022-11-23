@@ -1,0 +1,1 @@
+https://docs.opengauss.org/zh/docs/3.1.0/docs/DataMigration/%E5%85%A8%E9%87%8F%E8%BF%81%E7%A7%BB.htmlhttps://opengauss.obs.cn-south-1.myhuaweicloud.com/latest/chameleon/chameleon-3.1.0-py3-none-any.whl在python310\Lib下增加fcntl.py

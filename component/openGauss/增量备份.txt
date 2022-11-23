@@ -1,0 +1,95 @@
+
+https://docs.opengauss.org/zh/docs/3.1.0/docs/Administratorguide/备份与恢复.html#物理备份恢复
+
+
+备份流程
+
+1、初始化备份目录。在指定的目录下创建backups/和wal/子目录，分别用于存放备份文件和WAL文件。
+gs_probackup init -B backup_dir
+
+2、添加一个新的备份实例。gs_probackup可以在同一个备份目录下存放多个数据库实例的备份。
+gs_probackup add-instance -B backup_dir -D data_dir --instance instance_name
+
+3、创建指定实例的备份。在进行增量备份之前，必须至少创建一次全量备份。
+gs_probackup backup -B backup_dir --instance instance_name -b backup_mode
+
+4、从指定实例的备份中恢复数据。
+gs_probackup restore -B backup_dir --instance instance_name -D pgdata-path -i backup_id
+
+
+# 修改
+
+# gsql
+set enable_cbm_tracking=on;
+
+# 初始化备份路径_backup-path_中的备份目录
+gs_probackup init -B back-path
+
+# 始化一个新的备份实例，并生成pg_probackup.conf配置文件
+gs_probackup add-instance -B backup-path -D pgdata-path --instance=instance_xxx
+
+# 删除指定实例相关的备份内容
+gs_probackup del-instance -B backup-path -D pgdata-path --instance=instance_xxx
+
+# 将指定的连接、压缩、日志等相关设置添加到pg_probackup.conf配置文件
+gs_probackup set-config -B backup-path -D pgdata-path --instance=instance_name
+
+# 备份相关设置添加到backup.control配置文件
+gs_probackup set-backup -B backup-path -D pgdata-path --instance=instance_name -i backup-id
+
+# 显示备份目录的内容
+gs_probackup show-config -B backup-path -D pgdata-path --instance=instance_name --format=json
+
+# 创建指定实例的备份
+# -b: -b FULL , 全量, -b PTRACK , 增量
+gs_probackup backup -B backup-path -D pgdata-path --instance=instance_name -b backup-mode
+
+
+
+# 恢复指定实例
+gs_probackup restore -B backup-path --instance=instance_name
+[-D pgdata-path] [-i backup_id] [-j threads_num] [--progress] [--force] [--no-sync] [--no-validate] 
+[--skip-block-validation]
+[--external-mapping=OLDDIR=NEWDIR] [-T OLDDIR=NEWDIR] [--skip-external-dirs] [-I incremental_mode]
+[recovery_options] [remote_options] [logging_options]
+[--help]
+
+# 删除指定备份，或删除不满足当前保留策略的备份
+gs_probackup delete -B backup-path --instance=instance_name
+[-i backup-id | --delete-expired | --merge-expired | --status=backup_status]
+[--delete-wal] [-j threads_num] [--progress]
+[--retention-redundancy=retention-redundancy] [--retention-window=retention-window]
+[--wal-depth=wal-depth] [--dry-run]
+[logging_options]
+[--help]
+
+
+password=123456
+port=5432
+eg:
+gs_probackup init -B /opt/data/gaussdb/backup_data/business/probackup/
+gs_probackup add-instance -B /opt/data/gaussdb/backup_data/business/probackup -D /opt/data/gaussdb/data_business/single_node/ --instance=business
+
+gs_probackup set-config -B /opt/data/gaussdb/backup_data/business/probackup -D /opt/data/gaussdb/data_business/single_node/ --instance=business
+
+
+
+
+gs_probackup backup -B /opt/data/gaussdb/backup_data/business/probackup/ --instance=business -b FULL -U omm -p ${port} -W ${password} -d postgres
+gs_probackup backup -B /opt/data/gaussdb/backup_data/business/probackup/ --instance=business -b PTRACK -U omm -p ${port} -W ${password} -d postgres
+
+# memeory:1.5G  cpu:11.3% - 26%
+
+gs_probackup show -B /opt/data/gaussdb/backup_data/business/probackup/
+gs_probackup delete -B /opt/data/gaussdb/backup_data/business/probackup/ --instance=business -i RLQQYL
+
+gs_probackup restore -B /opt/data/gaussdb/backup_data/business/probackup/ --instance=business -i RLQQYL
+
+
+
+
+
+
+
+
+
