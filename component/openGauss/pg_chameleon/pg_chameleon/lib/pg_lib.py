@@ -525,7 +525,8 @@ class pgsql_source(object):
 
 class pg_engine(object):
     def __init__(self):
-        python_lib=python_lib=os.path.dirname(os.path.realpath(__file__))
+        # python_lib = os.path.dirname(os.path.realpath(__file__))
+        python_lib = os.path.dirname(os.path.realpath(sys.argv[0]))
         self.sql_dir = "%s/../sql/" % python_lib
         self.sql_upgrade_dir = "%s/upgrade/" % self.sql_dir
         self.table_ddl={}
@@ -661,11 +662,17 @@ class pg_engine(object):
             This method's connection and cursors are widely used in the procedure except for the replay process which uses a
             dedicated connection and cursor.
         """
+        self.logger.info("{} {}".format(self.dest_conn, self.pgsql_conn))
+        self.logger.info("{} {}".format(self.sql_dir, self.sql_upgrade_dir))
         if self.dest_conn and not self.pgsql_conn:
+            import sys
+            self.logger.info("{}".format(sys.path))
             strconn = "opengauss://%(host)s:%(port)s/%(database)s" % self.dest_conn
             self.pgsql_conn = py_opengauss.open(strconn, user=self.dest_conn["user"], password=self.dest_conn["password"], sslmode="disable")
+            self.logger.info("{}".format(__file__))
             self.pgsql_conn.settings['client_encoding']=self.dest_conn["charset"]
             self.pgsql_conn.execute("set session_timeout = 0;")
+            self.logger.info("execute ok")
         elif not self.dest_conn:
             self.logger.error("Undefined database connection string. Exiting now.")
             sys.exit()

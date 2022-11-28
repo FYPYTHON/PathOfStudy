@@ -1660,7 +1660,9 @@ class SqlTranslator():
         This method sets the value of lib_dir to the absolute path of the lib directory.
 
         """
-        self.lib_dir = os.path.dirname(os.path.realpath(__file__))
+        # self.lib_dir = os.path.dirname(os.path.realpath(__file__))
+        import sys
+        self.lib_dir = os.path.dirname(os.path.realpath(sys.argv[0]))
 
     def mysql_to_opengauss(self, raw_sql):
         """

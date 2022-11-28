@@ -1,3 +1,4 @@
+#!C:\softDe\python310\python10.exe
 import logging
 import multiprocessing as mp
 import os
@@ -94,24 +95,42 @@ class replica_engine(object):
 
     """
 
-    def __init__(self, args):
+    def __init__(self, args, logger=None):
         """
             Class constructor.
         """
+        if logger is None:
+            logger = print
+            self.logger_c = print
+        else:
+            self.logger_c = logger
+
         if os.getppid() == 0:
             print("pg_chameleon cannot be run as root")
             sys.exit(10)
+        logger.info(args._get_kwargs())
+        try:
+            self.path = args.path
+        except Exception as e:
+            self.path = "\\opt\\data"
 
+        logger.info("{}".format(self.path))
         self.catalog_version = '2.0.7'
         self.upgradable_version = '1.7'
         self.lst_yes = ['yes', 'Yes', 'y', 'Y']
-        python_lib = os.path.dirname(os.path.realpath(__file__))
-
+        # python_lib = os.path.dirname(os.path.realpath(__file__))
+        python_lib = os.path.dirname(os.path.realpath(sys.argv[0]))
+        # print("python_lib:", python_lib)
+        logger.info("python_lib: {}".format(python_lib))
         # cham_dir = "%s/.pg_chameleon" % os.path.expanduser('~')
-        cham_dir = ".\\pg_chameleon"
+        cham_dir = "{}\\pg_chameleon".format(self.path)
+
+        logger.info("cham_dir: {}".format(cham_dir))
 
         local_conf = "%s\\configuration\\" % cham_dir
-        self.global_conf_example = '%s\\..\\configuration\\config-example.yml' % python_lib
+        # self.global_conf_example = '%s\\..\\configuration\\config-example.yml' % python_lib
+        # self.local_conf_example = '%s\\config-example.yml' % local_conf
+        self.global_conf_example = '%s\\default.yml' % self.path
         self.local_conf_example = '%s\\config-example.yml' % local_conf
 
         local_logs = "%s\\logs\\" % cham_dir
@@ -131,24 +150,31 @@ class replica_engine(object):
         self.source = self.args.source
         if self.args.command == 'set_configuration_files':
             self.set_configuration_files()
-            sys.exit()
+            # sys.exit()
+            self.logger.info("set_configuration_files run...")
+            return
 
         self.__set_conf_permissions(cham_dir)
 
         self.load_config()
-        log_list = self.__init_logger("global")
-        self.logger = log_list[0]
-        self.logger_fds = log_list[1]
+        # logger 改成ui传入
+        # log_list = self.__init_logger("global")
+        # self.logger = log_list[0]
+        # self.logger_fds = log_list[1]
+        self.logger = logger
+        self.logger_fds = logger
 
         # notifier configuration
         self.notifier = rollbar_notifier(self.config["rollbar_key"], self.config["rollbar_env"],
                                          self.args.rollbar_level, self.logger)
 
         # pg_engine instance initialisation
+        self.logger_c.info("pg_engine instance initialisation")
         self.pg_engine = pg_engine()
         self.pg_engine.pid_file = pid_file_name
         self.pg_engine.dest_conn = self.config["pg_conn"]
-        self.pg_engine.logger = self.logger
+        # self.pg_engine.logger = self.logger
+        self.pg_engine.logger = self.logger_c
         self.pg_engine.source = self.args.source
         self.pg_engine.full = self.args.full
         self.pg_engine.type_override = self.config["type_override"]
@@ -160,29 +186,41 @@ class replica_engine(object):
             self.pg_engine.migrate_default_value = True
 
         # mysql_source instance initialisation
+        self.logger_c.info("mysql_source instance initialisation")
         self.mysql_source = mysql_source()
         self.mysql_source.source = self.args.source
         self.mysql_source.tables = self.args.tables
         self.mysql_source.schema = self.args.schema.strip()
         self.mysql_source.pg_engine = self.pg_engine
-        self.mysql_source.logger = self.logger
+        # self.mysql_source.logger = self.logger
+        self.mysql_source.logger = self.logger_c
         self.mysql_source.sources = self.config["sources"]
         self.mysql_source.type_override = self.config["type_override"]
         self.mysql_source.notifier = self.notifier
 
         # pgsql_source instance initialisation
+        self.logger_c.info("pgsql_source instance initialisation")
         self.pgsql_source = pgsql_source()
         self.pgsql_source.source = self.args.source
         self.pgsql_source.tables = self.args.tables
         self.pgsql_source.schema = self.args.schema.strip()
         self.pgsql_source.pg_engine = self.pg_engine
-        self.pgsql_source.logger = self.logger
+        # self.pgsql_source.logger = self.logger
+        self.pgsql_source.logger = self.logger_c
         self.pgsql_source.sources = self.config["sources"]
         self.pgsql_source.type_override = self.config["type_override"]
         self.pgsql_source.notifier = self.notifier
 
+        self.logger.info("connect_db")
+        try:
+            self.pg_engine.connect_db()
+        except Exception as e:
+            self.logger_c.error("{}".format(e))
+        self.logger.info("get_catalog_version")
         catalog_version = self.pg_engine.get_catalog_version()
+        # catalog_version = '2.0.7'
         # safety checks
+        self.logger.info("safety checks")
         if self.args.command == 'upgrade_replica_schema':
             self.pg_engine.sources = self.config["sources"]
             print(
@@ -196,7 +234,9 @@ class replica_engine(object):
                 if self.catalog_version != catalog_version:
                     print("FATAL, replica catalogue version mismatch. Expected %s, got %s" % (
                     self.catalog_version, catalog_version))
-                    sys.exit()
+                    # sys.exit()
+                    self.logger_c.error("FATAL, replica catalogue version mismatch. ")
+                    return
 
         if self.args.source != '*' and self.args.command != 'add_source':
             self.pg_engine.connect_db()
@@ -204,7 +244,21 @@ class replica_engine(object):
             self.pg_engine.disconnect_db()
             if source_count == 0:
                 print("FATAL, The source %s is not registered. Please add it add_source" % (self.args.source))
-                sys.exit()
+                # sys.exit()
+                self.logger_c.error("FATAL, The source %s is not registered. Please add it add_source" % (self.args.source))
+                return
+
+        if self.args.command == "create_replica_schema":
+            self.logger_c.info("go create_replica_schema")
+            self.create_replica_schema()
+
+        if self.args.command == "add_source":
+            self.logger_c.info("go add_source")
+            self.add_source()
+
+        if self.args.command == "init_replica":
+            self.logger_c.info("go init_replica")
+            self.init_replica()
 
     def terminate_replica(self, signal, frame):
         """
@@ -215,7 +269,9 @@ class replica_engine(object):
         self.replay_daemon.terminate()
         self.pg_engine.connect_db()
         self.pg_engine.set_source_status("stopped")
-        sys.exit(0)
+        self.logger_c.info("terminate_replica stopped")
+        return
+        # sys.exit(0)
 
     def set_configuration_files(self):
         """
@@ -237,18 +293,24 @@ class replica_engine(object):
             print("updating configuration example with %s" % self.local_conf_example)
         else:
             print("copying configuration  example in %s" % self.local_conf_example)
-        copy(self.global_conf_example, self.local_conf_example)
+        self.logger_c.info("copy yaml")
+        try:
+            copy(self.global_conf_example, self.local_conf_example)
+        except Exception as e:
+            self.logger_c.error("{}".format(e))
 
     def load_config(self):
         """
             The method loads the configuration from the file specified in the args.config parameter.
         """
-        local_confdir = ".\\pg_chameleon\\configuration\\"
+        local_confdir = "{}\\pg_chameleon\\configuration\\".format(self.path)
         self.config_file = '%s\\%s.yml' % (local_confdir, self.args.config)
 
         if not os.path.isfile(self.config_file):
             print("**FATAL - configuration file missing. Please ensure the file %s is present." % (self.config_file))
-            sys.exit()
+            # sys.exit()
+            self.logger_c.error("**FATAL - configuration file missing. Please ensure the file %s is present." % (self.config_file))
+            return
 
         config_file = open(self.config_file, 'r')
         self.config = yaml.load(config_file.read(), Loader=yaml.FullLoader)
@@ -300,6 +362,7 @@ class replica_engine(object):
             The method creates the replica schema in the destination database.
         """
         self.logger.info("Trying to create replica schema")
+        # self.logger_c.info("Trying to create replica schema")
         self.pg_engine.create_replica_schema()
 
     def drop_replica_schema(self):
@@ -317,6 +380,7 @@ class replica_engine(object):
             print("You must specify a source name with the argument --source")
         else:
             self.logger.info("Trying to add a new source")
+            self.logger_c.info("Trying to add a new source")
             self.pg_engine.add_source()
 
     def drop_source(self):
@@ -361,7 +425,9 @@ class replica_engine(object):
                 source_type = self.config["sources"][self.args.source]["type"]
             except KeyError:
                 print("The source %s doesn't exists." % (self.args.source))
-                sys.exit()
+                # sys.exit()
+                self.logger_c.error("The source %s doesn't exists." % (self.args.source))
+                return
             self.__stop_replica()
             if source_type == "mysql":
                 self.__init_mysql_replica()
@@ -483,7 +549,9 @@ class replica_engine(object):
         catalog_version = self.pg_engine.get_catalog_version()
         if catalog_version == self.catalog_version:
             print("The replica catalogue is already up to date.")
-            sys.exit()
+            # sys.exit()
+            self.logger_c.error("The replica catalogue is already up to date.")
+            return
         else:
             if catalog_version == self.upgradable_version:
                 upg_msg = 'Upgrading the catalogue %s to the version %s.\n Are you sure? YES/No\n' % (
@@ -501,7 +569,9 @@ class replica_engine(object):
                 self.pg_engine.upgrade_catalogue_v20()
             else:
                 print('Wrong starting version. Expected %s, got %s' % (catalog_version, self.upgradable_version))
-                sys.exit()
+                # sys.exit()
+                self.logger_c.error('Wrong starting version. Expected %s, got %s' % (catalog_version, self.upgradable_version))
+                return
 
     def update_schema_mappings(self):
         """
@@ -1239,7 +1309,9 @@ class replica_engine(object):
             fh = TimedRotatingFileHandler(log_file, when="d", interval=1, backupCount=log_days_keep)
         else:
             print("Invalid log_dest value: %s" % log_dest)
-            sys.exit()
+            # sys.exit()
+            self.logger.error("Invalid log_dest value: %s" % log_dest)
+            return
 
         if debug_mode:
             log_level = 'debug'
@@ -1266,7 +1338,8 @@ class replica_engine(object):
                 source_type = self.config["sources"][self.args.source]["type"]
             except KeyError:
                 self.logger.error("The source %s doesn't exists." % (self.args.source,))
-                sys.exit()
+                # sys.exit()
+                return
 
             if source_type == "mysql":
                 self.__start_mysql_database_object_replica(db_object_type)
