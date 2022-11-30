@@ -79,3 +79,25 @@ https://blog.csdn.net/dazuiba008/article/details/100659749
 max_size_for_xlog_prune
 # This param set by user is used for xlog to be recycled when not all are connected and the param enable_xlog_prune is on.
 
+
+DDL语句:常用来操作数据库、数据库表
+用到的语句：create,show,alter,drop
+DML:增删改表中数据
+用到的语句：insert,delete,update
+
+
+# wal log查看
+
+-rwx------ 1 omm dbgroup  16M 11月 23 23:17 000000010000000000000001
+-rwx------ 1 omm dbgroup  16M 11月 23 23:18 000000010000000000000002
+
+pg_waldump -n 400 -p ./ -f -s 0/2000000
+
+# pg_waldump 源文件名
+hexdump -n 16 000000010000000000000019
+https://cdn.modb.pro/db/480838
+
+http://t.zoukankan.com/kuang17-p-6831144.html
+
+
+
