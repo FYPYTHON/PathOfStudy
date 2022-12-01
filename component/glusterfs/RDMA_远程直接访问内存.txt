@@ -1,0 +1,34 @@
+
+https://blog.csdn.net/bandaoyu/article/details/112859853
+
+
+gluster volume create help
+
+Usage:
+volume create <NEW-VOLNAME> [stripe <COUNT>] [[replica <COUNT> [arbiter <COUNT>]]|[replica 2 thin-arbiter 1]] [disperse [<COUNT>]] [disperse-data <COUNT>] [redundancy <COUNT>] [transport <tcp|rdma|tcp,rdma>] <NEW-BRICK> <TA-BRICK>... [force]
+
+
+# 使用rdma
+gluster volume create test transport tcp,rdma 127.0.0.1:/mnt/test force
+gluster volume add-brick test replica 2 127.0.0.1:/opt/test force
+
+dd if=/dev/sda bs=10M count=300 of=test.bin
+记录了300+0 的读入
+记录了300+0 的写出
+3145728000字节（3.1 GB，2.9 GiB）已复制，39.8241 s，79.0 MB/s
+3145728000字节（3.1 GB，2.9 GiB）已复制，43.6884 s，72.0 MB/s
+
+# 不适用rdma
+dd if=/dev/sda bs=10M count=300 of=test.bin
+记录了300+0 的读入
+记录了300+0 的写出
+3145728000字节（3.1 GB，2.9 GiB）已复制，45.3091 s，69.4 MB/s
+3145728000字节（3.1 GB，2.9 GiB）已复制，48.5451 s，64.8 MB/s
+
+
+    传统的TCP/IP技术在数据包处理过程中，要经过操作系统及其他软件层，需要占用大量的服务器资源和内存总线带宽，数据在系统内存、处理器缓存和网络控制器缓存之间来回进行复制移动，给服务器的CPU和内存造成了沉重负担。尤其是网络带宽、处理器速度与内存带宽三者的严重"不匹配性"，更加剧了网络延迟效应。
+RDMA技术，最大的突破是将网络层和传输层放到了硬件中（服务器的网卡上）来实现，数据报文进入网卡后，在网卡硬件上就完成四层解析，直接上送到应用层软件，四层解析CPU无需干预.
+    RDMA是一种新的直接内存访问技术，RDMA让计算机可以直接存取其他计算机的内存，而不需要经过处理器的处理。RDMA将数据从一个系统快速移动到远程系统的内存中，而不对操作系统造成任何影响。
+————————————————
+版权声明：本文为CSDN博主「bandaoyu」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/bandaoyu/article/details/112859853
