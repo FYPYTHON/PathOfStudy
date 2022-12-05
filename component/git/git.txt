@@ -6,6 +6,12 @@ hosts文件中增加：
 2、global
 git config --global user.name "bryan sun"
 git config --global user.email "hitsjt@gmail.com"
+# 颜色
+git config --global color.status.auto
+git config --global color.diff.auto
+git config --global color.branch.auto
+git config --global color.interactive.auto
+
 git config -l # 查看
 ssh-keygen
 cat /c/Users/{username}/.ssh/id_rsa.pub     #获取公钥
