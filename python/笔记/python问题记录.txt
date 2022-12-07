@@ -4,3 +4,8 @@
 	   是否有动态链接ssl库
 	# 查看lib/python3.x/lib-dynload/下
 	   _ssl.cpython-3x-x86_64-linux-gnu.so 是否存在
+
+2、print 打印换行
+   print("asdf\nsdfsf", end="\n")
+
+
