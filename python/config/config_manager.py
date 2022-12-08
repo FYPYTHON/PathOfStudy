@@ -159,12 +159,13 @@ class YamlConfig(object):
             import yaml
         except ModuleNotFoundError as e:
             raise ModuleNotFoundError(e)
-        
+
         with open(self.yaml_file, 'w') as yf:
             yf.write(yaml.dump(self.yaml_config, default_flow_style=False))
 
     def set_value(self, node, value):
         self.yaml_config.setdefault(node, value)
+        self.write()
 
     def get_value(self, node):
         value = self.yaml_config.get(node, {})
