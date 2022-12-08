@@ -1,0 +1,26 @@
+
+名称	        描述
+PG_VERSION	pg服务器主版本号文件
+base/	数据库目录都在此目录下
+global/	数据库集簇范围的表（比如pg_database, 类似mysql的performance_schema）
+pg_commit_ts/	事物提交的时间戳数据
+pg_dynshmem/	动态共享内存子系统中使用的文件
+pg_hba.conf	控制pg客户端认证配置的文件
+pg_ident.conf	pg用户映射文件
+pg_logical/	逻辑解码的状态数据
+pg_multixact/	多事务状态数据
+pg_notify/	Listen/Notify状态数据
+pg_replslot/	复制槽数据
+pg_serial/	已提交的可串行化事务相关信息
+pg_snapshots/	快照信息
+pg_stat/	统计子系统的永久文件
+pg_stat_tmp/	统计子系统的临时文件
+pg_subtrans/	子事务状态数据
+pg_tblspc/	指向表空间的符号链接
+pg_twophase/	两阶段事务的状态文件
+pg_wal/	WAL文件
+pg_xact/	事务提交状态数据
+postgresql.auto.conf	存储使用alter system修改的配置
+postgresql.conf	配置文件
+postmaster.opts	记录服务器上一次启动的命令行选项
+postmaster.pid	服务器pid文件
