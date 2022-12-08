@@ -1,6 +1,8 @@
 
 https://docs.opengauss.org/zh/docs/3.1.0/docs/Administratorguide/备份与恢复.html#物理备份恢复
 
+# 参考
+https://zhuanlan.zhihu.com/p/395764705
 
 备份流程
 
