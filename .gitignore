@@ -5,3 +5,4 @@ __pycache__/
 *.db
 *.pyc
 *.idea
+__pycache__
