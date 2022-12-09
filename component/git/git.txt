@@ -50,6 +50,9 @@ git branch
 8、删除文件
 git rm test.file
 git commit -m "删除文件"
+
+9、未push修改commit描述
+git commit --amend
 #恢复
 git checkout -- test.file
 
