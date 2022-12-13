@@ -15,6 +15,9 @@ from rpyc.utils.server import ThreadedServer, ThreadPoolServer
 
 
 class RpycServer(Service):
+    NO_ERROR = 0
+    HAS_ERROR = 1
+
     def __init__(self):
         pass
 
@@ -36,6 +39,15 @@ class RpycServer(Service):
         # finally:
             timer.cancel()
             return -1, "error"
+
+    def on_connect(self, conn):
+        print("on_connect: {}".format(conn))
+
+    def on_disconnect(self, conn):
+        print("on_disconnect: {}".format(conn))
+
+    def exposed_status(self):
+        return self.NO_ERROR, 'ok'
 
     def exposed_cmd(self, cmd, timeout=10):
         code, msg = self.subcommand(cmd, timeout=timeout)
