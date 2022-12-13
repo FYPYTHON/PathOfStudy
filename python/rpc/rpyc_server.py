@@ -33,7 +33,7 @@ class RpycServer(Service):
                 return return_code, stdout.decode('utf-8')
         except Exception as e:
             print(e)
-        finally:
+        # finally:
             timer.cancel()
             return -1, "error"
 
