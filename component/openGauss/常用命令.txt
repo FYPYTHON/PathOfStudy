@@ -102,6 +102,11 @@ select pg_xlog_location_diff('3/A04B708', '4/A04B708')
 select oid,datname from pg_database;
 select tableoid from table_xxx;
 
+#慢查询
+#omm user
+#https://docs.opengauss.org/zh/docs/3.1.0/docs/Developerguide/STATEMENT_HISTORY-25.html
+select * from DBE_PERF.statement_history;
+
 #### 元命令
 # -E 显示元命令
 gsql -U omm -p 5432 -d postgres -E
