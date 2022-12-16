@@ -30,3 +30,9 @@ https://www.bookstack.cn/read/openGauss-2.1-zh/Developerguide-%E7%94%A8SSL%E8%BF
 
 密码复杂度
 https://docs.opengauss.org/zh/docs/3.1.0/docs/Developerguide/设置密码安全策略.html
+
+
+高斯启动不了
+https://cdn.modb.pro/db/479742
+https://gitee.com/opengauss/openGauss-server/issues/I43YYS?_from=gitee_search
+
