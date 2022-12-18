@@ -54,6 +54,15 @@ class RpycClient(object):
         return self.NO_ERROR
 
 
+def threads_run(cmds):
+    client = RpycClient(host=host)
+    size = len(cmds)
+    pool = ThreadPool(size)
+    results = pool.map(client, cmds)
+    pool.close()
+    pool.join()
+    
+    
 def main(host):
     client = RpycClient(host=host)
     print(client.rpyc_client.root)
