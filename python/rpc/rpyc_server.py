@@ -1,4 +1,7 @@
 #!python3
+"""
+使用装饰器(@rpyc.service, @rpyc.exposed), 可以直接使用不带exposed_前缀 ???
+"""
 import os
 import sys
 cur_file = os.path.realpath(sys.argv[0])
@@ -48,6 +51,14 @@ class RpycServer(Service):
 
     def exposed_status(self):
         return self.NO_ERROR, 'ok'
+
+    def exposed_hostname(self):
+        cmd = "hostname"
+        code, msg = self.subcommand(cmd)
+        if code == 0:
+            return msg
+        else:
+            return ""
 
     def exposed_cmd(self, cmd, timeout=10):
         code, msg = self.subcommand(cmd, timeout=timeout)

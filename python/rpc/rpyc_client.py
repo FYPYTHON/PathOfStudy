@@ -20,13 +20,14 @@ class RpycClient(object):
 
     def __init__(self, host="127.0.0.1", port=9251):
         print("connect to {} {} ...".format(host, port))
+        self.port = port
         self.rpyc_client = rpyc.connect(host=host, port=port)
 
     def cmd(self, str_cmd, result_list=None):
         if result_list is None:
             result_list = []
         if str_cmd == "":
-            code, data = self.rpyc_client.root.cmd("hostname && ps -ef | grep supervisord")
+            code, data = self.rpyc_client.root.cmd("netstat -tnlp | grep {}".format(self.port))
         else:
             code, data = self.rpyc_client.root.cmd(str_cmd)
         result_list.append((str_cmd, code))
@@ -66,9 +67,11 @@ def threads_run(cmds):
 def main(host):
     client = RpycClient(host=host)
     print(client.rpyc_client.root)
+    print("remote status: {}".format(client.rpyc_client.root.status()))
+    print("remote hostname: {}".format(client.rpyc_client.root.hostname()))
     client.cmd("")
 
-    cmds = ["ps -ef | grep -v grep | grep kdfs", "ps -ef | grep -v grep | grep sshd"]
+    cmds = ["ps -ef | grep firewalld | grep -v grep", "df ."]
     clients = []
     # client.cmds(cmds)
     for _ in cmds:
