@@ -17,14 +17,35 @@ from rpyc import Service
 from rpyc.utils.server import ThreadedServer, ThreadPoolServer
 
 
+# logger
+import logging
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+console_handler = logging.StreamHandler()
+file_handler = logging.FileHandler("./server.log")
+fmt = logging.Formatter('[%(levelname)s]%(asctime)s %(filename)10s[%(lineno)s]- %(message)s')
+console_handler.setFormatter(fmt)
+file_handler.setFormatter(fmt)
+logger.addHandler(console_handler)
+logger.addHandler(file_handler)
+logger.info("client start ...")
+# logger
+
+
 class RpycServer(Service):
     NO_ERROR = 0
     HAS_ERROR = 1
 
     def __init__(self):
-        pass
+        self.logger = logger
 
     def subcommand(self, cmd, timeout=10):
+        """
+        print("cmd:%s.error code is %d, output is %s" % (cmd, return_code, stderr.decode('utf-8')), end="\n")
+        :param cmd:
+        :param timeout:
+        :return:
+        """
         child = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         timer = Timer(timeout, lambda process: process.kill(), [child])
         try:
@@ -32,22 +53,22 @@ class RpycServer(Service):
             stdout, stderr = child.communicate()
             return_code = child.returncode
             if 0 != return_code:
-                print("cmd:%s.error code is %d, output is %s" % (cmd, return_code, stderr.decode('utf-8')), end="\n")
+                self.logger.info("cmd:%s.error code is %d, output is %s" % (cmd, return_code, stderr.decode('utf-8')))
                 return return_code, stderr.decode('utf-8')
             else:
-                print(stdout.decode('utf-8'), end="\n")
+                self.logger.error(stdout.decode('utf-8'))
                 return return_code, stdout.decode('utf-8')
         except Exception as e:
-            print(e)
+            self.logger.error(e)
         # finally:
             timer.cancel()
             return -1, "error"
 
     def on_connect(self, conn):
-        print("on_connect: {}".format(conn))
+        self.logger.info("on_connect: {}".format(conn))
 
     def on_disconnect(self, conn):
-        print("on_disconnect: {}".format(conn))
+        self.logger.info("on_disconnect: {}".format(conn))
 
     def exposed_status(self):
         return self.NO_ERROR, 'ok'
