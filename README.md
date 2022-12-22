@@ -20,7 +20,11 @@
 17、highgo
 18、fastDFS  
 19、echart  
-
+20、qt  
+21、seaweedfs  
+22、gstreamer
+23、FastDFS  
+24、caddy  
 
 
 #### python
@@ -29,7 +33,11 @@
 3、进程监控管理模块supervisord  
 4、Tools小工具  
 5、service  
-5、机器学习    
+6、机器学习    
+7、django  
+8、pyinstaller  
+9、rpc   
+
 
 
 #### java
