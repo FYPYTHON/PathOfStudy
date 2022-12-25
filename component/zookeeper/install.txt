@@ -6,6 +6,9 @@ java -version
 ÐÞ¸ÄÅäÖÃ£º
 cp conf/zoo_sample.cfg conf/zoo-1.cfg
 
+#¿¿¿¿
+#https://dlcdn.apache.org/zookeeper/zookeeper-3.8.0/apache-zookeeper-3.8.0-bin.tar.gz
+#https://www.apache.org/dyn/closer.lua/zookeeper/zookeeper-3.8.0/apache-zookeeper-3.8.0-bin.tar.gz
 
 # vim conf/zoo-1.cfg
 dataDir=/tmp/zookeeper-1
