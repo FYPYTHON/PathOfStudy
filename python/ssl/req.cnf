@@ -1,0 +1,47 @@
+[ca]
+default_ca = CA_own
+[CA_own]
+dir = .
+cert = ./cert
+new_certs_dir = ./ca.db.certs
+database = ./ca.db.index
+serial = ./ca.db.serial
+private_key = ./ca.key
+certificate=./ca.crt
+default_days = 365
+default_crl_days = 30
+default_md = sha256
+preserve = no
+policy = policy_anything
+[policy_anything]
+countryName = CN
+stateOrProvinceName = Shanghai
+organizationName = fy
+commonName = fy
+emailAddress = fy
+distinguished_name = fy
+[req]
+distinguished_name = req_distinguished_name
+x509_extensions = v3_req
+prompt = no
+
+[req_distinguished_name]
+C = CN
+ST = Shanghai
+L = Shanghai
+O = fy
+OU = fy
+CN = 127.0.0.1
+
+[v3_req]
+keyUsage = critical, digitalSignature, keyAgreement
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = oyz.com
+DNS.2 = *.oyz.com
+DNS.3 = www.flymot.com
+DNS.4 = *.oyz.com
+IP.1 = 192.168.1.1
+IP.2 = 192.168.1.2
