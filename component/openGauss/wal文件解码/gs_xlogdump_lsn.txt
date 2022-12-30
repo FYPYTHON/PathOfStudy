@@ -1,0 +1,5 @@
+
+https://docs.opengauss.org/zh/docs/3.1.0/docs/Developerguide/%E5%85%B6%E5%AE%83%E5%87%BD%E6%95%B0.html
+
+select gs_xlogdump_lsn('566D6700','0/566D67A0');
+
