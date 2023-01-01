@@ -1,11 +1,12 @@
 #!/bin/bash
 #auth: 1823218990@qq.com
 #time: 2022-12-29
+#
+
 
 curdir=$(dirname $0)
 curpath=$(pwd $curdir)
 cd $curpath
-
 
 
 myPwd="pass:123456"
