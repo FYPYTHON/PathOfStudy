@@ -1,28 +1,29 @@
+#
 awk -v RS=';'  'END {print --NR}'
-# -v ��������RS�����зָ���� NR��awk���ñ�����Number of Records����д����ʾ��ǰ��¼�������ļ���������
+# -v 带参数，RS定义行分割符， NR是awk内置变量，Number of Records的缩写，表示当前记录条数（文件行数）；
 
 awk 'NR==1{print $1}' file
-# NR==1 ��λ��file�ĵ�һ��   print $1 ��ʾ��һ������
+# NR==1 定位在file的第一行   print $1 显示第一列内容
 
-����Ŀ¼�°������ݵ��ļ�
+查找目录下包含内容的文件
 grep -r "test"  /data/reports
 
-�ϴο���ʱ�䣺
+上次开机时间：
 date -d "$(awk -F. '{print $1}' /proc/uptime) second ago" +"%Y-%m-%d %H:%M:%S"
 
-rpm�鿴��Ϣ��
+rpm查看信息：
 rpm -qpi ****.rpm  | head
 
 
-history ��ʾʱ�䣬ip
+history 显示时间，ip
 USER_IP=`who -u am i 2>/dev/null| awk '{print $NF}'|sed -e 's/[()]//g'`
 export HISTTIMEFORMAT="%F %T <$USER_IP>:`whoami` "
-# ֻ��ʱ��
+# 只看时间
 # export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S  "
 history
 
 
-# ps�鿴��������ʱ��
+# ps查看进程启动时间
 ps -eo pid,lstart,etime,cmd | egrep tornadofs
 ps -w w -eo cmd,lstart,command | grep glusterfsd
 
@@ -33,24 +34,40 @@ netstat -ntlp
 netstat -ntp
 
 
-*�ļ�����
-. filename   # ע����(.)���ļ����м���һ�ո�
-  ��
+*文件包含
+. filename   # 注意点号(.)和文件名中间有一空格
+  或
 source filename
 
 
-top�鿴����
-top -p `pgrep ������ | xargs | tr " " ","`
+top查看进程
+top -p `pgrep 程序名 | xargs | tr " " ","`
 top -p `pidof kdfs | xargs | tr " " ","`
 
 
-pgrep haproxy | awk 'NR>=0&&NR<=20{print $0}'    # ǰ20��
+pgrep haproxy | awk 'NR>=0&&NR<=20{print $0}'    # 前20行
 top -p `pgrep haproxy | awk 'NR>=0&&NR<=20{print $0}' | xargs | tr " " ","`
 
-# top 1��ˢ��һ��
+# top 1秒刷新一次
 top -d 1 >> top.log
 
 
 traceroute 10.10.10.10
 
 
+###Linux文件查看
+  0）cat xx.txt
+  1）diff   xx.txt xx.txt
+  2）more / less
+  将文件从第一行开始，根据输出窗口的大小，适当的输出文件内容
+  more的语法：more 文件名
+  Enter 向下n行，需要定义，默认为1行；
+  Ctrl f 向下滚动一屏；
+  空格键 向下滚动一屏；
+  Ctrl b 返回上一屏；
+  = 输出当前行的行号；
+  :f 输出文件名和当前行的行号；
+  v 调用vi编辑器；
+  ! 命令 调用Shell，并执行命令；
+  q 退出more
+  3）head / tail
