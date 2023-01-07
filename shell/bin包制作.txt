@@ -1,0 +1,11 @@
+# 2022
+打包文件
+tar -zxvf install.tar.gz
+安装脚本
+vi install.sh
+生成BIN安装包
+在终端窗口运行指令：
+cat install.sh install.tar.gz > install.bin
+
+
+
