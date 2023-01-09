@@ -1,0 +1,10 @@
+#
+
+# https://cdn.modb.pro/db/44304
+ 
+replconninfo1=localhost=192.168.0.1 localport=5432 localheartbeatport=5434 localservice=5435 remotehost=192.168.1.2 remoteport=5432 remoteheartbeatport=5434 remoteservice=5435
+## localport          --> 同步日志传输端口
+## localheartbeatport --> 集群心跳端口
+## localservice       --> 主备通讯端口
+
+
