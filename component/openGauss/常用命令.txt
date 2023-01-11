@@ -107,6 +107,42 @@ select tableoid from table_xxx;
 #https://docs.opengauss.org/zh/docs/3.1.0/docs/Developerguide/STATEMENT_HISTORY-25.html
 select * from DBE_PERF.statement_history;
 
+#删除库 有连接
+clean connection to all force for database test;drop database test;
+drop database test;
+
+#查看客户端编码
+show client_encoding;
+#查看服务端编码
+show server_encoding;
+
+#查看并发数
+select datname,count(*) from pg_stat_activity where state='idle' group by datname;
+
+#查看连接数
+select datname,count(*) from pg_stat_activity group by 1 order by 2 desc;
+
+#查看动态内存使用
+select p1.nodename, p1.memorytype, p2.memorytype, p1.memorymbytes/p2.memorymbytes as percent
+from pg_total_memory_detail p1, pg_total_memory_detail p2
+where p1.nodename=p2.nodename
+and p1.memorytype='dynamic_used_memory'
+and p2.memorytype='max_dynamic_memory'
+order by p1.nodename;
+
+#查看运行中sql状态
+select pid,query_id,datname,usename,current_timestamp-query_start as duration,substr(query,0,100) as sub_query from pg_stat_activity where state= 'active' and datname = 'postgres' and usename = 'omm' order by duration desc;
+
+#查看当前语句排队情况
+select datname,usename,current_timestamp-query_start as duration, enqueue,query_id,query,pid
+from pg_stat_activity
+where enqueue is not null and state='idle'
+and usename = 'omm' order by duration desc;
+
+#查看线程等待状态
+select * from pg_thread_wait_status limit 1;
+
+
 #### 元命令
 # -E 显示元命令
 gsql -U omm -p 5432 -d postgres -E
