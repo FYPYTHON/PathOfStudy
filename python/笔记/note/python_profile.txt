@@ -1,0 +1,9 @@
+python 内置了丰富的性能分析工具，如 profile,cProfile 与 hotshot
+1、profile.run("b()")
+2、python -m cProfile test.py
+3、python -m cProfile -o result test.py
+4、from app import main
+   import cProfile
+   profile = cProfile.Profile()
+   profile.runcall(main)
+   profile.print_stats()

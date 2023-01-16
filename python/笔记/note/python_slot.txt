@@ -1,0 +1,67 @@
+槽（slots）可以使用__slots_属性来为自定的类设置以一个静态属性列表，并在类的每个实例中跳过__dict__字典的创建过程，可以提高访问速度，节省内存消耗
+
+由于Python是动态语言，任何实例在运行期都可以动态地添加属性。
+如果要限制添加的属性，例如，Student类只允许添加 name、gender和score 这3个属性，就可以利用Python的一个特殊的__slots__来实现
+
+class Student(object):
+    __slots__ = ('name', 'gender', 'score')
+    def __init__(self, name, gender, score):
+        self.name = name
+        self.gender = gender
+        self.score = score
+　　创建实例，并向其中新增属性
+
+>>> s = Student('Bob', 'male', 59)
+>>> s.name = 'Tim' # OK
+>>> s.score = 99 # OK
+>>> s.grade = 'A'
+　　新增属性grade执行后，抛异常【AttributeError: 'student' object has no attribute 'gride'】
+
+ 当一个Student类定义了__slots__ = ('name', 'age')，Studen.name就是一个有__get__和__set__方法的member_descriptor
+__slots__的目的是限制当前类所能拥有的属性，如果不需要添加任意动态的属性，使用__slots__也能节省内存。
+
+__slots__两大特性
+
+更快的属性访问速度
+默认情况下，访问一个实例的属性是通过访问该实例的__dict__来实现的。如访问s.name就相当于访问s.__dict__['name']。为了便于理解，我粗略地将它拆分为四步：s.name  >> s.__dict__ >>. s.__dict__['name'] >>. 结果
+
+从__slots__的实现可以得知，定义了__slots__的类会为每个属性创建一个描述器。访问属性时就直接调用这个描述器。在这里我将它拆分为三步：b.x >>. member decriptor >>. 结果
+
+我在上文提到，访问__dict__和描述器的速度是相近的，而通过__dict__访问属性多了s.__dict__['name']字典访值一步（一个哈希函数的消耗）。由此可以推断出，使用了__slots__的类的属性访问速度比没有使用的要快。下面用一个例子验证：
+
+from timeit import repeat
+ 
+class A(object): pass
+ 
+class B(object): __slots__ = ('x')
+ 
+def get_set_del_fn(obj):
+    def get_set_del():
+        obj.x = 1
+        obj.x
+        del obj.x
+    return get_set_del
+ 
+a = A()
+b = B()
+ta = min(repeat(get_set_del_fn(a)))
+tb = min(repeat(get_set_del_fn(b)))
+print("%.2f%%" % ((ta/tb - 1)*100))
+　　在本人电脑上测试速度有0-25%左右的提升。
+
+减少内存消耗
+python内置的字典本质是一个哈希表，它是一种用空间换时间的数据结构。为了解决冲突的问题，当字典使用量超过2/3时，Python会根据情况进行2-4倍的扩容。由此可预见，取消__dict__的使用可以大幅减少实例的空间消耗。
+
+关于slots的继承问题
+在一般情况下，使用slots的类需要直接继承object，如class Foo(object): __slots__ = ()
+
+在继承自己创建的类时，我根据子类父类是否定义了__slots__，将它细分为三种情况:（暂未列出多父类的情况）
+
+父类有，子类没有:子类的实例还是会自动创建__dict__来存储属性，不过父类__slots__已有的属性不受影响。
+父类没有，子类有：虽然子类取消了__dict__，但继承父类后它会继续生成。同上面一样，__slots__已有的属性不受影响。
+父类有，子类有：只有子类的__slots__有效，访问父类有子类没有的属性依然会报错
+因此：为了正确使用__slots__，最好直接继承object。如有需要用到其他父类，则父类和子类都要定义slots，还要记得子类的slots会覆盖父类的slots。
+除非所有父类的slots都为空，否则不要使用多继承。
+
+在特殊情况下，可以在__slots__里添加__dict__来获取与普通实例同样的动态特性。
+当一个类需要创建大量实例时，可以使用__slots__来减少内存消耗。如果对访问属性的速度有要求，也可以酌情使用。另外可以利用slots的特性来限制实例的属性。而用在普通类身上时，使用__slots__后会丧失动态添加属性和弱引用的功能，进而引起其他错误，所以在一般情况下不要使用它。
