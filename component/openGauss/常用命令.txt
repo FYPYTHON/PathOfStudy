@@ -108,6 +108,7 @@ select tableoid from table_xxx;
 select * from DBE_PERF.statement_history;
 
 #删除库 有连接
+#断开连接
 clean connection to all force for database test;drop database test;
 drop database test;
 
