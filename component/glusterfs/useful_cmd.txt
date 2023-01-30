@@ -6,12 +6,17 @@
 /usr/local/glusterfsd/sbin/glusterfs --volfile-id=common_app --volfile-server=gfs-223 /mnt/files
 
 
-查看gfs设置
-/usr/local/glusterfsd/sbin/gluster volume set help
+查看gfs所有设置
+gluster volume set help
+
+# 查看单项设置
+gluster volume get common_app storage.health-check-timeout
 
 设置属性
-/usr/local/glusterfsd/sbin/gluster volume set <key> <value>
+gluster volume set <VOLNAME> <key> <value>
 
+# 设置超时30s
+# gluster volume set common_app storage.health-check-timeout 30
 
 远程查看
 /usr/local/glusterfsd/sbin/gluster --remote-host=gfs-227 --mode=script
@@ -24,6 +29,9 @@ mount -t glusterfs -o backupvolfile-server=volfile_server2 ,fetch-attempts=2,log
 
 # backupvolfile-server=gluster2
 # backup-volfile-servers=gluster2:gluster3:gluster4
+
+
+
 
 
 
