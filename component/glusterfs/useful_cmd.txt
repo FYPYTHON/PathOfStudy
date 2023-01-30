@@ -22,6 +22,8 @@ gluster volume set <VOLNAME> <key> <value>
 /usr/local/glusterfsd/sbin/gluster --remote-host=gfs-227 --mode=script
 --remote-host 这个命令对读请求可以执行，所有写操作无法执行。
 
+
+mount命令挂载
 backupvolfile-server
 mount -t glusterfs -o backupvolfile-server=volfile_server2 ,fetch-attempts=2,log-level=WARNING,log-file=/var/log/gluster.logserver1:/test-volume /mnt/glusterfs
 

@@ -1,0 +1,38 @@
+
+time ll -R | wc -l
+
+### 来源
+http://blog.gluster.org/announcing-gluster-3-9/#
+
+Small file improvements in Gluster with md-cache (Experimental)
+Notes for users:
+With this release, metadata cache on the client side is integrated with the
+cache-invalidation feature so that the clients can cache longer without
+compromising on consistency. By enabling, the metadata cache and cache
+invalidation feature and extending the cache timeout to 600s, we have seen
+performance improvements in metadata operation like creates, ls/stat, chmod,
+rename, delete. The perf improvements is significant in SMB access of gluster
+volume, but as a cascading effect the improvements is also seen on FUSE/Native
+access and NFS access.
+
+Use the below options in the order mentioned, to enable the features:
+
+gluster volume set <volname> features.cache-invalidation on
+gluster volume set <volname> features.cache-invalidation-timeout 600
+gluster volume set <volname> performance.stat-prefetch on
+gluster volume set <volname> performance.cache-invalidation on
+gluster volume set <volname> performance.cache-samba-metadata on   # Only for SMB access
+gluster volume set <volname> performance.md-cache-timeout 600
+
+
+### 来源 
+https://docs.gluster.org/en/latest/Administrator-Guide/Performance-Tuning/
+
+gluster volume set <volname> network.inode-lru-limit <n>
+
+# Small file Read operations
+gluster volume set <volname> performance.qr-cache-timeout 600 # 10 min recommended setting
+gluster volume set <volname> cache-invalidation-timeout 600 # 10 min recommended setting
+gluster volume set <volname> cache-size <size>
+gluster volume set <volname> performance.cache-max-file-size <size>
+# size eg: 64KB 2MB 
