@@ -450,7 +450,8 @@ class MysqlDBRead():
 
         # get master status
         self.logger.debug("collecting the master's coordinates for table `%s`.`%s`" % (schema, table))
-        master_status = self.get_master_coordinates(cursor_buffered)
+        # master_status = self.get_master_coordinates(cursor_buffered)
+        master_status = ''
 
         select_columns = self.generate_select_statements(schema, table, cursor_buffered)
         sql_csv = "SELECT /*+ MAX_EXECUTION_TIME(%d) */ %s as data FROM `%s`.`%s`;" % \
