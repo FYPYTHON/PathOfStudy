@@ -5,12 +5,10 @@ import functools
 import logging
 import json
 import pika
-HOST = '172.16.185.193'
-# HOST = "10.67.18.100"
-PORT = '6676'
-# PORT = "5872"
+HOST = '127.0.0.1'
+PORT = '5672'
 USER = 'dev'
-PAWD = 'KedaRmq!Dev_56'
+PAWD = 'test'
 DEBUG = True
 LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) '
               '-35s %(lineno) -5d: %(message)s')

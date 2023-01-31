@@ -13,7 +13,7 @@ chown -R highgo:highgo /data
 
 
 su - highgo
-alter user highgo with password 'Keda!Mysql_36';
+alter user highgo with password 'test_123';
 ÐÞ¸Ä£º
 HighGo5.6.5/data/pg_hba.conf
 host    all             highgo          172.16.83.227/24        trust
@@ -58,7 +58,7 @@ Created symlink from /etc/systemd/system/graphical.target.wants/hgdb-enterprise-
 
 
 /opt/HighGo6.0.4-cluster/bin/initdb /opt/data/highgodb/data
-Kedacom@22
+Test@22
 /opt/HighGo6.0.4-cluster/bin/pg_ctl -D /opt/data/highgodb/data  start
-alter user kedacom with password 'Kedacom@22';
-Mysql_36
+alter user test with password 'Test@22';
+

@@ -1,9 +1,9 @@
-export HOST=aarch64-kedacom-linux-gnu
+export HOST=aarch64-linux-gnu
 
 交叉编译freetype:
 cd /home/fypython/matplotlib-3.3.4/build/freetype-2.6.1
-PATH=/opt/aarch64-kedacom-linux/bin:$PATH
-CFLAG_RUNTIME_LIBRARY_PATH="/opt/sysroot64/lib" LDFLAGS="-Wl,--rpath=/opt/sysroot64/lib -Wl,--dynamic-linker=/opt/sysroot64/lib/ld-linux-aarch64.so.1" ./configure --with-zlib=no --with-bzip2=no --with-png=no --with-harfbuzz=no --enable-static --host=aarch64-kedacom-linux-gnu --enable-shared
+PATH=/opt/aarch64-linux/bin:$PATH
+CFLAG_RUNTIME_LIBRARY_PATH="/opt/sysroot64/lib" LDFLAGS="-Wl,--rpath=/opt/sysroot64/lib -Wl,--dynamic-linker=/opt/sysroot64/lib/ld-linux-aarch64.so.1" ./configure --with-zlib=no --with-bzip2=no --with-png=no --with-harfbuzz=no --enable-static --host=aarch64-linux-gnu --enable-shared
 make
 
 
@@ -12,8 +12,8 @@ make
 交叉编译matplotlib:
 # /home/fypython/freetype 为freetype make install后的目录
 cd /home/fypython/matplotlib-3.3.4
-PATH=/opt/aarch64-kedacom-linux/bin:$PATH
-export CROSS_COMPILE=aarch64-kedacom-linux-gnu-
+PATH=/opt/aarch64-linux/bin:$PATH
+export CROSS_COMPILE=aarch64-linux-gnu-
 export CC export CC="${CROSS_COMPILE}gcc"
 export LDSHARED="${CC} -shared"
 export LDFLAGS="-L/home/fypython/python36/lib -L/home/fypython/freetype/lib"
@@ -26,31 +26,31 @@ unzip matplotlib-3.3.4-py3.6-linux-x86_64.egg
 
 编译不过的库，手动执行：
 _backend_agg:
-aarch64-kedacom-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.5m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/checkdep_freetype2.o build/temp.linux-x86_64-3.6/src/mplutils.o build/temp.linux-x86_64-3.6/src/py_converters.o build/temp.linux-x86_64-3.6/src/_backend_agg.o build/temp.linux-x86_64-3.6/src/_backend_agg_wrapper.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_bezier_arc.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_curves.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_image_filters.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_trans_affine.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_contour.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_dash.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_stroke.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vpgen_segmentator.o build/freetype-2.6.1/objs/.libs/libfreetype.a -o build/lib.linux-x86_64-3.6/matplotlib/backends/_backend_agg.cpython-36m-x86_64-linux-gnu.so
+aarch64-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.5m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/checkdep_freetype2.o build/temp.linux-x86_64-3.6/src/mplutils.o build/temp.linux-x86_64-3.6/src/py_converters.o build/temp.linux-x86_64-3.6/src/_backend_agg.o build/temp.linux-x86_64-3.6/src/_backend_agg_wrapper.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_bezier_arc.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_curves.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_image_filters.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_trans_affine.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_contour.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_dash.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_stroke.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vpgen_segmentator.o build/freetype-2.6.1/objs/.libs/libfreetype.a -o build/lib.linux-x86_64-3.6/matplotlib/backends/_backend_agg.cpython-36m-x86_64-linux-gnu.so
 
 _contour:
-aarch64-kedacom-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.5m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/_contour.o build/temp.linux-x86_64-3.6/src/_contour_wrapper.o build/temp.linux-x86_64-3.6/src/py_converters.o -o build/lib.linux-x86_64-3.6/matplotlib/_contour.cpython-36m-x86_64-linux-gnu.so
+aarch64-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.5m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/_contour.o build/temp.linux-x86_64-3.6/src/_contour_wrapper.o build/temp.linux-x86_64-3.6/src/py_converters.o -o build/lib.linux-x86_64-3.6/matplotlib/_contour.cpython-36m-x86_64-linux-gnu.so
 
 ft2font:
-#aarch64-kedacom-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.5m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/checkdep_freetype2.o build/temp.linux-x86_64-3.6/src/ft2font.o build/temp.linux-x86_64-3.6/src/ft2font_wrapper.o build/temp.linux-x86_64-3.6/src/mplutils.o build/temp.linux-x86_64-3.6/src/py_converters.o build/freetype-2.6.1/objs/.libs/libfreetype.a -o build/lib.linux-x86_64-3.6/matplotlib/ft2font.cpython-36m-x86_64-linux-gnu.so
+#aarch64-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.5m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/checkdep_freetype2.o build/temp.linux-x86_64-3.6/src/ft2font.o build/temp.linux-x86_64-3.6/src/ft2font_wrapper.o build/temp.linux-x86_64-3.6/src/mplutils.o build/temp.linux-x86_64-3.6/src/py_converters.o build/freetype-2.6.1/objs/.libs/libfreetype.a -o build/lib.linux-x86_64-3.6/matplotlib/ft2font.cpython-36m-x86_64-linux-gnu.so
 
-aarch64-kedacom-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.5m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/checkdep_freetype2.o build/temp.linux-x86_64-3.6/src/ft2font.o build/temp.linux-x86_64-3.6/src/ft2font_wrapper.o build/temp.linux-x86_64-3.6/src/mplutils.o build/temp.linux-x86_64-3.6/src/py_converters.o build/freetype-2.6.1/objs/.libs/libfreetype.so -o build/lib.linux-x86_64-3.6/matplotlib/ft2font.cpython-36m-x86_64-linux-gnu.so
+aarch64-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.5m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/checkdep_freetype2.o build/temp.linux-x86_64-3.6/src/ft2font.o build/temp.linux-x86_64-3.6/src/ft2font_wrapper.o build/temp.linux-x86_64-3.6/src/mplutils.o build/temp.linux-x86_64-3.6/src/py_converters.o build/freetype-2.6.1/objs/.libs/libfreetype.so -o build/lib.linux-x86_64-3.6/matplotlib/ft2font.cpython-36m-x86_64-linux-gnu.so
 
 _image:
-aarch64-kedacom-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.6m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/_image.o build/temp.linux-x86_64-3.6/src/mplutils.o build/temp.linux-x86_64-3.6/src/_image_wrapper.o build/temp.linux-x86_64-3.6/src/py_converters.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_bezier_arc.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_curves.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_image_filters.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_trans_affine.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_contour.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_dash.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_stroke.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vpgen_segmentator.o -o build/lib.linux-x86_64-3.6/matplotlib/_image.cpython-36m-x86_64-linux-gnu.so
+aarch64-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.6m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/_image.o build/temp.linux-x86_64-3.6/src/mplutils.o build/temp.linux-x86_64-3.6/src/_image_wrapper.o build/temp.linux-x86_64-3.6/src/py_converters.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_bezier_arc.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_curves.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_image_filters.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_trans_affine.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_contour.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_dash.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_stroke.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vpgen_segmentator.o -o build/lib.linux-x86_64-3.6/matplotlib/_image.cpython-36m-x86_64-linux-gnu.so
 
 _path:
-aarch64-kedacom-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.6m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/py_converters.o build/temp.linux-x86_64-3.6/src/_path_wrapper.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_bezier_arc.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_curves.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_image_filters.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_trans_affine.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_contour.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_dash.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_stroke.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vpgen_segmentator.o -o build/lib.linux-x86_64-3.6/matplotlib/_path.cpython-36m-x86_64-linux-gnu.so
+aarch64-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.6m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/py_converters.o build/temp.linux-x86_64-3.6/src/_path_wrapper.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_bezier_arc.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_curves.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_image_filters.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_trans_affine.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_contour.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_dash.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vcgen_stroke.o build/temp.linux-x86_64-3.6/extern/agg24-svn/src/agg_vpgen_segmentator.o -o build/lib.linux-x86_64-3.6/matplotlib/_path.cpython-36m-x86_64-linux-gnu.so
 
 _tkagg:
-aarch64-kedacom-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.6m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/_tkagg.o -ldl -o build/lib.linux-x86_64-3.6/matplotlib/backends/_tkagg.cpython-36m-x86_64-linux-gnu.so
+aarch64-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.6m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/_tkagg.o -ldl -o build/lib.linux-x86_64-3.6/matplotlib/backends/_tkagg.cpython-36m-x86_64-linux-gnu.so
 
 _tri:
-aarch64-kedacom-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.6m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/tri/_tri.o build/temp.linux-x86_64-3.6/src/tri/_tri_wrapper.o build/temp.linux-x86_64-3.6/src/mplutils.o -o build/lib.linux-x86_64-3.6/matplotlib/_tri.cpython-36m-x86_64-linux-gnu.so
+aarch64-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.6m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/tri/_tri.o build/temp.linux-x86_64-3.6/src/tri/_tri_wrapper.o build/temp.linux-x86_64-3.6/src/mplutils.o -o build/lib.linux-x86_64-3.6/matplotlib/_tri.cpython-36m-x86_64-linux-gnu.so
 
 _ttconv:
-aarch64-kedacom-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.6m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/_ttconv.o build/temp.linux-x86_64-3.6/extern/ttconv/pprdrv_tt.o build/temp.linux-x86_64-3.6/extern/ttconv/pprdrv_tt2.o build/temp.linux-x86_64-3.6/extern/ttconv/ttutil.o -o build/lib.linux-x86_64-3.6/matplotlib/_ttconv.cpython-36m-x86_64-linux-gnu.so
+aarch64-linux-gnu-g++ -shared -L/home/fypython/python36/lib -L/home/fypython/freetype/lib -I/home/fypython/python36/include/python3.6m -I/home/fypython/freetype/include/freetype2/ build/temp.linux-x86_64-3.6/src/_ttconv.o build/temp.linux-x86_64-3.6/extern/ttconv/pprdrv_tt.o build/temp.linux-x86_64-3.6/extern/ttconv/pprdrv_tt2.o build/temp.linux-x86_64-3.6/extern/ttconv/ttutil.o -o build/lib.linux-x86_64-3.6/matplotlib/_ttconv.cpython-36m-x86_64-linux-gnu.so
 
-aarch64-kedacom-linux-gnu-g++
+aarch64-linux-gnu-g++
 
-aarch64-kedacom-linux-gnu-g++
+aarch64-linux-gnu-g++

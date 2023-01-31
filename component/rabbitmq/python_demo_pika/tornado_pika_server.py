@@ -12,10 +12,10 @@ import pika
 from pika.adapters import tornado_connection
 
 
-HOST = '172.16.185.193`'
-PORT = '6676'
+HOST = '127.0.0.1'
+PORT = '5672'
 USER = 'dev'
-PAWD = 'KedaRmq!Dev_56'
+PAWD = 'test'
 MQ_QUEUE = 'text'
 EXCHANGE = 'v1'
 EXCHANGE_TYPE = 'topic'
