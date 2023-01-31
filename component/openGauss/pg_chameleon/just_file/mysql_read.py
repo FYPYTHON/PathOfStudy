@@ -687,9 +687,9 @@ class MysqlDBRead():
 
 if __name__ == '__main__':
     pass
-    user = 'kedacom'
-    host = '172.16.80.191'
-    port = 3320
-    password = 'Keda!Mysql_36'
+    user = 'test'
+    host = '127.0.0.1'
+    port = 3306
+    password = 'test'
     sql_ch = MysqlDBRead(host=host, password=password, user=user, port=port)
     sql_ch.run()

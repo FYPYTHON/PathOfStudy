@@ -856,9 +856,9 @@ class pg_engine(object):
 
 
 if __name__ == '__main__':
-    user = 'kedacom'
-    host = '172.16.80.191'
-    port = 9242
-    password = 'Keda!Mysql_36'
+    user = 'test'
+    host = '127.0.0.1'
+    port = 5432 
+    password = ''
     pg = pg_engine(host=host, user=user, port=port, password=password)
     pg.run()
