@@ -3,6 +3,7 @@
 """
 https://stackoverflow.com/questions/30081961/multiprocessing-works-in-ubuntu-doesnt-in-windows
 """
+import os
 import sys
 import logging
 import time
@@ -10,10 +11,14 @@ import multiprocessing
 import threading
 from queue import Queue
 MIN_QUEUE_SIZE = 5
+TEST_NUM = 300
 
 
 def test_func(*args, **kwargs):
     print("test_func run args is:", len(args), kwargs.keys())
+    sum = 0
+    for i in range(10000000):
+        sum += i/4
     time.sleep(1)
 
 
@@ -83,8 +88,8 @@ class ThreadQueueTask(object):
             p_worker.start()
 
     def gen_task(self):
-        for i in range(30):
-            task = MyTask("test", test_func, [i for i in range(i)], key=i, value=i+1)
+        for i in range(TEST_NUM):
+            task = MyTask("test", test_func, [i], key=i, value=i+1)
             self.task_queue.put(task, block=True)
 
     def execute_task(self):
@@ -93,7 +98,7 @@ class ThreadQueueTask(object):
             if task is None:
                 self.task_queue.put(task, block=True)
                 break
-            self.logger.info("{} task is: {}".format(threading.current_thread().name, task))
+            self.logger.info("{} pid:{} task is: {}".format(threading.current_thread().name, os.getpid(), task))
             if isinstance(task, MyTask):
                 my_func = task.func
                 args = task.args
@@ -111,7 +116,7 @@ class ThreadQueueTask(object):
             if task is None:
                 task_queue.put(task, block=True)
                 break
-            logger.info("{} task is: {}".format(threading.current_thread().name, task))
+            logger.info("{} pid:{} task is: {}".format(threading.current_thread().name, os.getpid(), task))
             if isinstance(task, MyTask):
                 my_func = task.func
                 args = task.args
@@ -130,12 +135,14 @@ class ThreadQueueTask(object):
         t_start = time.time()
         self.init_workers()
         self.logger.info("init_workers ok...")
+        init_used = time.time()
         self.gen_task()
         self.logger.info("gen_task ok...")
         self.task_queue.put(None, block=True)
         self.logger.info("set end flag ok...")
         self.wait_for_finish()
         self.logger.info("wait_for_finish ok...")
+        self.logger.info("init used: {}".format(init_used - t_start))
         self.logger.info("used time: {}".format(time.time() - t_start))
 
 
@@ -178,8 +185,8 @@ class ProcessQueueTask(object):
             p_worker.start()
 
     def gen_task(self):
-        for i in range(30):
-            task = MyTask("test", test_func, [i for i in range(i)], key=i, value=i+1)
+        for i in range(TEST_NUM):
+            task = MyTask("test", test_func, [i], key=i, value=i+1)
             self.task_queue.put(task, block=True)
 
     def execute_task(self):
@@ -188,7 +195,7 @@ class ProcessQueueTask(object):
             if task is None:
                 self.task_queue.put(task, block=True)
                 break
-            self.logger.info("{} task is: {}".format(multiprocessing.current_process().name, task))
+            self.logger.info("{} pid:{} task is: {}".format(multiprocessing.current_process().name, os.getpid(), task))
             if isinstance(task, MyTask):
                 my_func = task.func
                 args = task.args
@@ -205,7 +212,7 @@ class ProcessQueueTask(object):
             if task is None:
                 task_queue.put(task, block=True)
                 break
-            logger.info("{} task is: {}".format(multiprocessing.current_process().name, task))
+            logger.info("{} pid:{} task is: {}".format(multiprocessing.current_process().name, os.getpid(), task))
             if isinstance(task, MyTask):
                 my_func = task.func
                 args = task.args
@@ -225,18 +232,32 @@ class ProcessQueueTask(object):
         t_start = time.time()
         self.init_workers()
         self.logger.info("init_workers ok...")
+        init_used = time.time()
         self.gen_task()
         self.logger.info("gen_task ok...")
         self.task_queue.put(None, block=True)
         self.logger.info("set end flag ok...")
         self.wait_for_finish()
         self.logger.info("wait_for_finish ok...")
+        self.logger.info("init used: {}".format(init_used - t_start))
         self.logger.info("used time: {}".format(time.time() - t_start))
 
 
 if __name__ == '__main__':
-    s = ThreadQueueTask()
-    s.job_run()
-
-    # t = ProcessQueueTask()
-    # t.job_run()
+    """
+    NUM=300 workers=30 cpu=6
+    # Thread run time and thread_init time
+    t = 181.73478722572327
+    ts = 0.0050618648529052734
+    # Process run time and process_init time
+    p = 31.042616605758667
+    ps = 0.19946765899658203
+    """
+    flag = False
+    workers = 30
+    if flag:
+        s = ThreadQueueTask(workers=workers)
+        s.job_run()
+    else:
+        t = ProcessQueueTask(workers=workers)
+        t.job_run()
