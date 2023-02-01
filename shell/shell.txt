@@ -1,3 +1,7 @@
+# 标准错误重定向到标准输出
+2>&1
+
+
 #
 awk -v RS=';'  'END {print --NR}'
 # -v 带参数，RS定义行分割符， NR是awk内置变量，Number of Records的缩写，表示当前记录条数（文件行数）；
