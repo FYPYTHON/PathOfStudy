@@ -1,4 +1,8 @@
 # coding=utf-8
+"""
+io密集型:网络、磁盘 IO （与DB、缓存）
+"""
+
 from threading import Thread
 from multiprocessing import Process
 import requests
