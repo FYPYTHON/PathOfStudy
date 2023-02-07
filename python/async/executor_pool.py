@@ -34,10 +34,11 @@ class ExecutorTask(object):
         return "ExecutorTask({}, {}, {}, {})".format(self.name, self.func, self.args, self.kwargs)
 
 
-class ConcurrentExecuter(object):
+class ConcurrentExecutor(object):
     def __init__(self, pool_executor='thread', max_workers=5):
         self.pool_executor = pool_executor
-        self.max_workers = max_workers
+        # at less 5 workers , most 32
+        self.max_workers = max_workers if 5 <= max_workers < 32 else 32 if max_workers >= 32 else max_workers
         self.executor = None
         self.init_executor()
 
@@ -70,7 +71,7 @@ class ConcurrentExecuter(object):
 
 
 if __name__ == '__main__':
-    my_executor = ConcurrentExecuter()
-    # my_executor = ConcurrentExecuter('process')
+    # my_executor = ConcurrentExecutor()
+    my_executor = ConcurrentExecutor('process')
     my_executor.gene_task(func_test)
     my_executor.wait_on_future()
