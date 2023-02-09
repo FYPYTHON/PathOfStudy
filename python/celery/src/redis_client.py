@@ -5,11 +5,19 @@
 # @File    : redis_client.py
 # @Software: Pycharm
 import sys
-sys.path.append("/opt/midware/celery_main")
-sys.path.append("/opt/midware/celery_main/lib/python3.8/site-packages")
-from src.config import REDIS_HOST, REDIS_PASSWORD, REDIS_PORT
+import os
+cur_path = os.path.dirname(os.path.realpath(sys.argv[0]))
+CELERY_DIR = os.path.dirname(cur_path)
+
+# print(CELERY_DIR)
+sys.path.insert(0, CELERY_DIR)
+sys.path.insert(1, os.path.join(CELERY_DIR, 'lib/python3.8/site-packages'))
+
+print(sys.path)
+
+from src.config import redis_host, redis_password, redis_port
 import redis
-# Ä¬ÈÏredisÈë¿â±àÂëÊÇutf-8£¬Èç¹ûÒªĞŞ¸ÄµÄ»°£¬ĞèÒªÖ¸Ã÷ charset ºÍ decode_responsers ÎªTrue
+# é»˜è®¤rediså…¥åº“ç¼–ç æ˜¯utf-8ï¼Œå¦‚æœè¦ä¿®æ”¹çš„è¯ï¼Œéœ€è¦æŒ‡æ˜ charset å’Œ decode_responsers ä¸ºTrue
 # r = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=0, password=REDIS_PASSWORD,
 #                       socket_timeout=None, connection_pool=None, charset='utf-8', errors='strict',
 #                       decode_responses=False, unix_socket_path=None)
@@ -18,7 +26,7 @@ REDIS_TYPE_MAP = {
     "set": b"set"
 }
 
-pool = redis.ConnectionPool(host=REDIS_HOST, password=REDIS_PASSWORD, port=REDIS_PORT, db=0)
+pool = redis.ConnectionPool(host=redis_host, password=redis_password, port=redis_port, db=0)
 r = redis.StrictRedis(connection_pool=pool)
 pipe = r.pipeline()
 keys = r.keys()
@@ -73,6 +81,8 @@ for key in keys:
             if r.type(str_key) == b'set':
                 rset = r.smembers(str_key)
                 print("redis set:", rset)
+            continue
+        if not key.startswith(b"celery-task-meta"):
             continue
         data = r.get(str_key)
         str_data = data.decode('utf-8')
