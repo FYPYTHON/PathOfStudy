@@ -12,7 +12,22 @@ CELERY_DIR = os.path.dirname(cur_path)
 
 sys.path.insert(0, CELERY_DIR)
 from src.mycelery import app
+from celery import Task
 
+
+class MyTask(Task):
+
+    # 任务失败时执行
+    def on_failure(self, exc, task_id, args, kwargs, einfo):
+        print('{0!r} on_failure: {1!r}'.format(task_id, exc))
+
+    # 任务成功时执行
+    def on_success(self, retval, task_id, args, kwargs):
+        print("{} {} on_success".format(task_id, retval))
+
+    # 任务重试时执行
+    def on_retry(self, exc, task_id, args, kwargs, einfo):
+        print("{} {} on_retry".format(task_id, exe))
 
 @app.task
 def cal_sum(count):
@@ -28,7 +43,7 @@ def mytask(x, y):
     return x**2 + y**2 + 1
 
 
-@app.task(name='timedtask')
+@app.task(name='timedtask', base=MyTask)
 def timedtask():
     """
     config中使用 name指定的任务名
