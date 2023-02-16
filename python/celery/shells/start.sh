@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # celery -A tasks worker --loglevel=info
+# -D  : 后台启动
+# -c  : 并发数
 
 curdir=$(dirname $0)
 cd $curdir

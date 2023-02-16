@@ -4,9 +4,12 @@
 # @Author  : 1823218990@qq.com
 # @File    : readme.py
 # @Software: Pycharm
+"""
+celery -A xxx
+会记录xxx中的所有@celery.task装饰的任务
+"""
 
-
-""""
+"""
 # Group:
 A group calls a list of tasks in parallel, and it returns a special result instance that lets you inspect the results as a group, and retrieve the return values in order.
 

@@ -30,7 +30,7 @@ from src import config
 app = Celery()
 app.config_from_object(config)
 app.conf.setdefault("include", ['src.tasks'])
-print(app.conf)
+# print(app.conf)
 # app.conf.timezone = 'Asia/Shanghai'
 # app.conf.enable_utc = False
 #app.start()

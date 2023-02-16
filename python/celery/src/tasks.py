@@ -26,3 +26,16 @@ def cal_sum(count):
 @app.task(name='mytask')
 def mytask(x, y):
     return x**2 + y**2 + 1
+
+
+@app.task(name='timedtask')
+def timedtask():
+    """
+    config中使用 name指定的任务名
+    :return:
+    """
+    import random
+    mysum = 0
+    for i in range(random.randint(10,1000)):
+        mysum += i ** 2 - 2 * i + 4
+    return mysum

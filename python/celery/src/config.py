@@ -37,14 +37,23 @@ celery_annotations = {
 task_serializer = 'json'
 # task_serializer
 result_serializer = 'json'
-accept_content=['json']
-result_expires  = timedelta(minutes=30)  # 1小时
+accept_content = ['json']
+result_expires = timedelta(minutes=30)  # 1小时
 # celery_task_result_expires = 60 * 2
 
 
-timezone = 'asia/shanghai'
+timezone = 'Asia/Shanghai'
 enable_utc = False
 # 该方式修改时区对延时任务不生效
 # print(broker_url)
 
 
+# 定时任务
+beat_schedule = {
+    'deal-every-60s':
+        {
+            'task': 'timedtask',   # task name = @app.task(name='timedtask')
+            'schedule': timedelta(seconds=60),
+            'args': []
+        }
+}
