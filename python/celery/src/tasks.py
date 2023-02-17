@@ -47,10 +47,16 @@ def mytask(x, y):
 def timedtask():
     """
     config中使用 name指定的任务名
+    * 定时任务会产生一个celerybeat-schedule文件：
+        该文件用于存放上次执行结果：
+        　　1、如果存在  celerybeat-schedule文件，那么读取后根据上一次执行的时间，继续执行。
+        　　2、如果不存在celerybeat-schedule文件，那么会立即执行一次。
+        　　3、如果存在  celerybeat-schedule文件，读取后，发现间隔时间已过，那么会立即执行。
     :return:
     """
     import random
     mysum = 0
-    for i in range(random.randint(10,1000)):
+    for i in range(random.randint(10, 1000)):
         mysum += i ** 2 - 2 * i + 4
+    sleep(random.randint(3, 6))
     return mysum

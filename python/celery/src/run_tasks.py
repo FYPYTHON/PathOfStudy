@@ -36,6 +36,7 @@ print(res3.id)
 tz = datetime.utcnow()
 res1 = cal_sum.apply_async((10,), eta=tz, utc=True)
 print(res1.id)
+
 async_result = AsyncResult(res1.id, app=app)
 data1 = async_result.get()    # 阻塞等待结果
 print("data1: {}".format(data1))
