@@ -53,6 +53,7 @@ git commit -m "删除文件"
 
 9、未push修改commit描述
 git commit --amend
+git commit --amend --only -m "new comment"
 #恢复
 git checkout -- test.file
 
@@ -62,4 +63,16 @@ git remote -v
 git remote get-url [--push] [--all] <name>
 git remote set-url [--push] <name> <newurl> [<oldurl>]
 # 
+
+10、commit后查看修改
+git show
+
+11、从一个提交中移除某个文件
+git checkout HEAD^ myfile
+git add -A
+git commit --amend
+
+12、删除最后一次提交
+git reset HEAD^ --hard
+git push -f origin master
 
