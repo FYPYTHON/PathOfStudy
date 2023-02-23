@@ -1,4 +1,4 @@
-node -v
+ï»¿node -v
 npm install -g vue-cli
 vue init webpack bms_web
 npm run dev
@@ -7,28 +7,28 @@ npm install -g cnpm --registry=https://registry.npm.taobao.org
 "C:\Program Files\nodejs\node.exe" "C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js" install --scripts-prepend-node-path=auto
 
 used:
-1¡¢Vue ÊµÀı»¹Ìá¹©ÁËÒ»Ğ©ÓĞÓÃµÄÊµÀıÊôĞÔÓë·½·¨¡£ËüÃÇ¶¼ÓĞÇ°×º $£¬ÒÔ±ãÓëÓÃ»§¶¨ÒåµÄÊôĞÔÇø·Ö¿ªÀ´
+1ã€Vue å®ä¾‹è¿˜æä¾›äº†ä¸€äº›æœ‰ç”¨çš„å®ä¾‹å±æ€§ä¸æ–¹æ³•ã€‚å®ƒä»¬éƒ½æœ‰å‰ç¼€ $ï¼Œä»¥ä¾¿ä¸ç”¨æˆ·å®šä¹‰çš„å±æ€§åŒºåˆ†å¼€æ¥
      var vm = new Vue({
          el: '#vue_det',
         data: data})
 
      document.write(vm.$data === data) // true
-2¡¢v-html 
-     Ö¸ÁîÓÃÓÚÊä³ö html 
-     message: '<h1>²ËÄñ½Ì³Ì</h1>'
-3¡¢v-bind     -- ËõĞ´ £º
-     HTML ÊôĞÔÖĞµÄÖµÓ¦Ê¹ÓÃ v-bind Ö¸Áî
+2ã€v-html 
+     æŒ‡ä»¤ç”¨äºè¾“å‡º html 
+     message: '<h1>èœé¸Ÿæ•™ç¨‹</h1>'
+3ã€v-bind     -- ç¼©å†™ ï¼š
+     HTML å±æ€§ä¸­çš„å€¼åº”ä½¿ç”¨ v-bind æŒ‡ä»¤
      <div v-bind:class="{'class1': use}">
      use:false
-     <pre><a v-bind:href="url">²ËÄñ½Ì³Ì</a></pre>
+     <pre><a v-bind:href="url">èœé¸Ÿæ•™ç¨‹</a></pre>
      href = "www.baidu.com"
     
     <div class="static"
      v-bind:class="{ active: isActive, 'text-danger': hasError }">
     </div>
-  ¶à¸öÊôĞÔ£º
+  å¤šä¸ªå±æ€§ï¼š
     <div id="app">
-   <div v-bind:style="[baseStyles, overridingStyles]">²ËÄñ½Ì³Ì</div>
+   <div v-bind:style="[baseStyles, overridingStyles]">èœé¸Ÿæ•™ç¨‹</div>
    </div>
 data: {
     baseStyles: {
@@ -40,8 +40,8 @@ data: {
     }
   }
 
-4¡¢v-if
-<p v-if="seen">ÏÖÔÚÄã¿´µ½ÎÒÁË</p>
+4ã€v-if
+<p v-if="seen">ç°åœ¨ä½ çœ‹åˆ°æˆ‘äº†</p>
 
 <div id="app">
     <div v-if="type === 'A'">
@@ -62,36 +62,36 @@ data: {
 
 seen: true
 
-5¡¢v-on    -- ËõĞ´ @
-     v-on Ö¸Áî£¬ËüÓÃÓÚ¼àÌı DOM ÊÂ¼ş
+5ã€v-on    -- ç¼©å†™ @
+     v-on æŒ‡ä»¤ï¼Œå®ƒç”¨äºç›‘å¬ DOM äº‹ä»¶
     <a v-on:click="doSomething">
     <form v-on:submit.prevent="onSubmit"></form>
 
    <button v-on:click="say('hi')">Say hi</button>
 
-6¡¢v-model
-     input¡¢select¡¢textarea¡¢checkbox¡¢radio µÈ±íµ¥¿Ø¼şÔªËØÉÏ´´½¨Ë«ÏòÊı¾İ°ó¶¨£¬¸ù¾İ±íµ¥ÉÏµÄÖµ£¬×Ô¶¯¸üĞÂ°ó¶¨µÄÔªËØµÄÖµ¡£
+6ã€v-model
+     inputã€selectã€textareaã€checkboxã€radio ç­‰è¡¨å•æ§ä»¶å…ƒç´ ä¸Šåˆ›å»ºåŒå‘æ•°æ®ç»‘å®šï¼Œæ ¹æ®è¡¨å•ä¸Šçš„å€¼ï¼Œè‡ªåŠ¨æ›´æ–°ç»‘å®šçš„å…ƒç´ çš„å€¼ã€‚
 
-7¡¢v-show
+7ã€v-show
      <h1 v-show="ok">Hello!</h1>
 
-8¡¢computed vs method
+8ã€computed vs method
 computed vs methods
-ÎÒÃÇ¿ÉÒÔÊ¹ÓÃ methods À´Ìæ´ú computed£¬Ğ§¹ûÉÏÁ½¸ö¶¼ÊÇÒ»ÑùµÄ£¬
-µ«ÊÇ computed ÊÇ»ùÓÚËüµÄÒÀÀµ»º´æ£¬Ö»ÓĞÏà¹ØÒÀÀµ·¢Éú¸Ä±äÊ±²Å»áÖØĞÂÈ¡Öµ¡£
-¶øÊ¹ÓÃ methods £¬ÔÚÖØĞÂäÖÈ¾µÄÊ±ºò£¬º¯Êı×Ü»áÖØĞÂµ÷ÓÃÖ´ĞĞ¡£
-¿ÉÒÔËµÊ¹ÓÃ computed ĞÔÄÜ»á¸üºÃ£¬µ«ÊÇÈç¹ûÄã²»Ï£Íû»º´æ£¬Äã¿ÉÒÔÊ¹ÓÃ methods ÊôĞÔ¡£
+æˆ‘ä»¬å¯ä»¥ä½¿ç”¨ methods æ¥æ›¿ä»£ computedï¼Œæ•ˆæœä¸Šä¸¤ä¸ªéƒ½æ˜¯ä¸€æ ·çš„ï¼Œ
+ä½†æ˜¯ computed æ˜¯åŸºäºå®ƒçš„ä¾èµ–ç¼“å­˜ï¼Œåªæœ‰ç›¸å…³ä¾èµ–å‘ç”Ÿæ”¹å˜æ—¶æ‰ä¼šé‡æ–°å–å€¼ã€‚
+è€Œä½¿ç”¨ methods ï¼Œåœ¨é‡æ–°æ¸²æŸ“çš„æ—¶å€™ï¼Œå‡½æ•°æ€»ä¼šé‡æ–°è°ƒç”¨æ‰§è¡Œã€‚
+å¯ä»¥è¯´ä½¿ç”¨ computed æ€§èƒ½ä¼šæ›´å¥½ï¼Œä½†æ˜¯å¦‚æœä½ ä¸å¸Œæœ›ç¼“å­˜ï¼Œä½ å¯ä»¥ä½¿ç”¨ methods å±æ€§ã€‚
 
 {{message}}
 {{reversedMessage}}
 computed: {
-    // ¼ÆËãÊôĞÔµÄ getter
+    // è®¡ç®—å±æ€§çš„ getter
     reversedMessage: function () {
-      // `this` Ö¸Ïò vm ÊµÀı
+      // `this` æŒ‡å‘ vm å®ä¾‹
       return this.message.split('').reverse().join('')
     }
   }
-ÊôĞÔ£ºset ,get
+å±æ€§ï¼šset ,get
 {{site}}
 computed: {
     site: {
@@ -108,10 +108,10 @@ computed: {
     }
   }
 
-9¡¢¼àÌıÊôĞÔ -- watch
+9ã€ç›‘å¬å±æ€§ -- watch
 <div id = "computed_props">
-    Ç§Ã× : <input type = "text" v-model = "kilometers">
-    Ã× : <input type = "text" v-model = "meters">
+    åƒç±³ : <input type = "text" v-model = "kilometers">
+    ç±³ : <input type = "text" v-model = "meters">
 </div>
 <p id="info"></p>
 <script type = "text/javascript">
@@ -136,39 +136,39 @@ computed: {
         }
     }
     });
-    // $watch ÊÇÒ»¸öÊµÀı·½·¨
+    // $watch æ˜¯ä¸€ä¸ªå®ä¾‹æ–¹æ³•
     vm.$watch('kilometers', function (newValue, oldValue) {
-    // Õâ¸ö»Øµ÷½«ÔÚ vm.kilometers ¸Ä±äºóµ÷ÓÃ
-    document.getElementById ("info").innerHTML = "ĞŞ¸ÄÇ°ÖµÎª: " + oldValue + "£¬ĞŞ¸ÄºóÖµÎª: " + newValue;
+    // è¿™ä¸ªå›è°ƒå°†åœ¨ vm.kilometers æ”¹å˜åè°ƒç”¨
+    document.getElementById ("info").innerHTML = "ä¿®æ”¹å‰å€¼ä¸º: " + oldValue + "ï¼Œä¿®æ”¹åå€¼ä¸º: " + newValue;
 })
 </script>
 
-10¡¢ÊÂ¼şĞŞÊÎ·û
-ÊÂ¼şĞŞÊÎ·û
-Vue.js Îª v-on Ìá¹©ÁËÊÂ¼şĞŞÊÎ·ûÀ´´¦Àí DOM ÊÂ¼şÏ¸½Ú£¬Èç£ºevent.preventDefault() »ò event.stopPropagation()¡£
-Vue.jsÍ¨¹ıÓÉµã(.)±íÊ¾µÄÖ¸Áîºó×ºÀ´µ÷ÓÃĞŞÊÎ·û¡£
-.stop £¬.prevent£¬.capture£¬.self£¬.once
-<!-- ×èÖ¹µ¥»÷ÊÂ¼şÃ°Åİ -->
+10ã€äº‹ä»¶ä¿®é¥°ç¬¦
+äº‹ä»¶ä¿®é¥°ç¬¦
+Vue.js ä¸º v-on æä¾›äº†äº‹ä»¶ä¿®é¥°ç¬¦æ¥å¤„ç† DOM äº‹ä»¶ç»†èŠ‚ï¼Œå¦‚ï¼ševent.preventDefault() æˆ– event.stopPropagation()ã€‚
+Vue.jsé€šè¿‡ç”±ç‚¹(.)è¡¨ç¤ºçš„æŒ‡ä»¤åç¼€æ¥è°ƒç”¨ä¿®é¥°ç¬¦ã€‚
+.stop ï¼Œ.preventï¼Œ.captureï¼Œ.selfï¼Œ.once
+<!-- é˜»æ­¢å•å‡»äº‹ä»¶å†’æ³¡ -->
 <a v-on:click.stop="doThis"></a>
-<!-- Ìá½»ÊÂ¼ş²»ÔÙÖØÔØÒ³Ãæ -->
+<!-- æäº¤äº‹ä»¶ä¸å†é‡è½½é¡µé¢ -->
 <form v-on:submit.prevent="onSubmit"></form>
-<!-- ĞŞÊÎ·û¿ÉÒÔ´®Áª  -->
+<!-- ä¿®é¥°ç¬¦å¯ä»¥ä¸²è”  -->
 <a v-on:click.stop.prevent="doThat"></a>
-<!-- Ö»ÓĞĞŞÊÎ·û -->
+<!-- åªæœ‰ä¿®é¥°ç¬¦ -->
 <form v-on:submit.prevent></form>
-<!-- Ìí¼ÓÊÂ¼şÕìÌıÆ÷Ê±Ê¹ÓÃÊÂ¼ş²¶»ñÄ£Ê½ -->
+<!-- æ·»åŠ äº‹ä»¶ä¾¦å¬å™¨æ—¶ä½¿ç”¨äº‹ä»¶æ•è·æ¨¡å¼ -->
 <div v-on:click.capture="doThis">...</div>
-<!-- Ö»µ±ÊÂ¼şÔÚ¸ÃÔªËØ±¾Éí£¨¶ø²»ÊÇ×ÓÔªËØ£©´¥·¢Ê±´¥·¢»Øµ÷ -->
+<!-- åªå½“äº‹ä»¶åœ¨è¯¥å…ƒç´ æœ¬èº«ï¼ˆè€Œä¸æ˜¯å­å…ƒç´ ï¼‰è§¦å‘æ—¶è§¦å‘å›è°ƒ -->
 <div v-on:click.self="doThat">...</div>
 
-<!-- click ÊÂ¼şÖ»ÄÜµã»÷Ò»´Î£¬2.1.4°æ±¾ĞÂÔö -->
+<!-- click äº‹ä»¶åªèƒ½ç‚¹å‡»ä¸€æ¬¡ï¼Œ2.1.4ç‰ˆæœ¬æ–°å¢ -->
 <a v-on:click.once="doThis"></a>
-°´¼üĞŞÊÎ·û
+æŒ‰é”®ä¿®é¥°ç¬¦
 <input v-on:keyup.enter="submit">
-È«²¿µÄ°´¼ü±ğÃû£º
+å…¨éƒ¨çš„æŒ‰é”®åˆ«åï¼š
 .enter
 .tab
-.delete (²¶»ñ "É¾³ı" ºÍ "ÍË¸ñ" ¼ü)
+.delete (æ•è· "åˆ é™¤" å’Œ "é€€æ ¼" é”®)
 .esc
 .space
 .up
@@ -180,10 +180,10 @@ Vue.jsÍ¨¹ıÓÉµã(.)±íÊ¾µÄÖ¸Áîºó×ºÀ´µ÷ÓÃĞŞÊÎ·û¡£
 .shift
 .meta
 
-11¡¢v-model¶àÏò°ó¶¨
-<p>textarea ÔªËØ£º</p>
+11ã€v-modelå¤šå‘ç»‘å®š
+<p>textarea å…ƒç´ ï¼š</p>
   <p style="white-space: pre">{{ message2 }}</p>
-  <textarea v-model="message2" placeholder="¶àĞĞÎÄ±¾ÊäÈë¡­¡­"></textarea>
+  <textarea v-model="message2" placeholder="å¤šè¡Œæ–‡æœ¬è¾“å…¥â€¦â€¦"></textarea>
 
 <input type="checkbox" id="runoob" value="Runoob" v-model="checkedNames">
   <label for="runoob">Runoob</label>
@@ -193,19 +193,19 @@ Vue.jsÍ¨¹ıÓÉµã(.)±íÊ¾µÄÖ¸Áîºó×ºÀ´µ÷ÓÃĞŞÊÎ·û¡£
   <label for="taobao">taobao</label>
 
 <select v-model="selected" name="fruit">
-    <option value="">Ñ¡ÔñÒ»¸öÍøÕ¾</option>
+    <option value="">é€‰æ‹©ä¸€ä¸ªç½‘ç«™</option>
     <option value="www.runoob.com">Runoob</option>
     <option value="www.google.com">Google</option>
   </select>
 
 .lazy
-ÔÚÄ¬ÈÏÇé¿öÏÂ£¬ v-model ÔÚ input ÊÂ¼şÖĞÍ¬²½ÊäÈë¿òµÄÖµÓëÊı¾İ£¬µ«Äã¿ÉÒÔÌí¼ÓÒ»¸öĞŞÊÎ·û lazy £¬´Ó¶ø×ª±äÎªÔÚ change ÊÂ¼şÖĞÍ¬²½
+åœ¨é»˜è®¤æƒ…å†µä¸‹ï¼Œ v-model åœ¨ input äº‹ä»¶ä¸­åŒæ­¥è¾“å…¥æ¡†çš„å€¼ä¸æ•°æ®ï¼Œä½†ä½ å¯ä»¥æ·»åŠ ä¸€ä¸ªä¿®é¥°ç¬¦ lazy ï¼Œä»è€Œè½¬å˜ä¸ºåœ¨ change äº‹ä»¶ä¸­åŒæ­¥
 .number
-Èç¹ûÏë×Ô¶¯½«ÓÃ»§µÄÊäÈëÖµ×ªÎª Number ÀàĞÍ£¨Èç¹ûÔ­ÖµµÄ×ª»»½á¹ûÎª NaN Ôò·µ»ØÔ­Öµ£©£¬¿ÉÒÔÌí¼ÓÒ»¸öĞŞÊÎ·û number ¸ø v-model À´´¦ÀíÊäÈëÖµ
+å¦‚æœæƒ³è‡ªåŠ¨å°†ç”¨æˆ·çš„è¾“å…¥å€¼è½¬ä¸º Number ç±»å‹ï¼ˆå¦‚æœåŸå€¼çš„è½¬æ¢ç»“æœä¸º NaN åˆ™è¿”å›åŸå€¼ï¼‰ï¼Œå¯ä»¥æ·»åŠ ä¸€ä¸ªä¿®é¥°ç¬¦ number ç»™ v-model æ¥å¤„ç†è¾“å…¥å€¼
 .trim
-Èç¹ûÒª×Ô¶¯¹ıÂËÓÃ»§ÊäÈëµÄÊ×Î²¿Õ¸ñ£¬¿ÉÒÔÌí¼Ó trim ĞŞÊÎ·ûµ½ v-model ÉÏ¹ıÂËÊäÈë£ºv-model.trim="istring"
+å¦‚æœè¦è‡ªåŠ¨è¿‡æ»¤ç”¨æˆ·è¾“å…¥çš„é¦–å°¾ç©ºæ ¼ï¼Œå¯ä»¥æ·»åŠ  trim ä¿®é¥°ç¬¦åˆ° v-model ä¸Šè¿‡æ»¤è¾“å…¥ï¼šv-model.trim="istring"
 
-12¡¢Prop
-prop ÊÇ¸¸×é¼şÓÃÀ´´«µİÊı¾İµÄÒ»¸ö×Ô¶¨ÒåÊôĞÔ¡£
+12ã€Prop
+prop æ˜¯çˆ¶ç»„ä»¶ç”¨æ¥ä¼ é€’æ•°æ®çš„ä¸€ä¸ªè‡ªå®šä¹‰å±æ€§ã€‚
 
-¸¸×é¼şµÄÊı¾İĞèÒªÍ¨¹ı props °ÑÊı¾İ´«¸ø×Ó×é¼ş£¬×Ó×é¼şĞèÒªÏÔÊ½µØÓÃ props Ñ¡ÏîÉùÃ÷ "prop"£º
+çˆ¶ç»„ä»¶çš„æ•°æ®éœ€è¦é€šè¿‡ props æŠŠæ•°æ®ä¼ ç»™å­ç»„ä»¶ï¼Œå­ç»„ä»¶éœ€è¦æ˜¾å¼åœ°ç”¨ props é€‰é¡¹å£°æ˜ "prop"ï¼š

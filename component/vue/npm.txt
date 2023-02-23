@@ -1,22 +1,22 @@
-npm install -g vue-cli
+ï»¿npm install -g vue-cli
 vue init webpack yourname
 npm run build
 npm run dev
 
-ldfs /  jdb_web must run build:test¡£(use ./*/js path to load static file¡£)
+ldfs /  jdb_web must run build:testã€‚(use ./*/js path to load static fileã€‚)
 npm run build:test
 
 
 
 
-npm ±¨´íThis is probably not a problem with npm. There is likely additional logging output above.
-¿ÉÄÜÊÇ°æ±¾µÄÎÊÌâ
+npm æŠ¥é”™This is probably not a problem with npm. There is likely additional logging output above.
+å¯èƒ½æ˜¯ç‰ˆæœ¬çš„é—®é¢˜
 
-ÖØĞÂ npm install
-È»ºó npm i -D webpack-dev-server@3.0.0
-ÔÙ npm run dev
+é‡æ–° npm install
+ç„¶å npm i -D webpack-dev-server@3.0.0
+å† npm run dev
 
-ÖØĞÂ°²×°Ò»´Î£¬Èç¹û»¹ÊÇ²»¿ÉÒÔµÄ»°£¬ÔÚ°ÑÖ®Ç°×°µÄ¶¼Çå¿Õ
+é‡æ–°å®‰è£…ä¸€æ¬¡ï¼Œå¦‚æœè¿˜æ˜¯ä¸å¯ä»¥çš„è¯ï¼Œåœ¨æŠŠä¹‹å‰è£…çš„éƒ½æ¸…ç©º
 
 rm -rf node_modules
 rm package-lock.json

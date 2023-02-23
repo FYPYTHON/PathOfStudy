@@ -1,6 +1,6 @@
-https://www.cnblogs.com/grt322/p/8564437.html
+ï»¿https://www.cnblogs.com/grt322/p/8564437.html
 
 $msgbox(options)
-$alert(message, title, options) »ò $alert(message, options)
-$confirm(message, title, options) »ò $confirm(message, options)
-$prompt(message, title, options) »ò $prompt(message, options)
+$alert(message, title, options) æˆ– $alert(message, options)
+$confirm(message, title, options) æˆ– $confirm(message, options)
+$prompt(message, title, options) æˆ– $prompt(message, options)
