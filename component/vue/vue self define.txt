@@ -1,47 +1,47 @@
-Vue.js �Զ���ָ��
-����Ĭ�����õĺ���ָ��( v-model �� v-show ), Vue Ҳ����ע���Զ���ָ�
+﻿Vue.js 自定义指令
+除了默认设置的核心指令( v-model 和 v-show ), Vue 也允许注册自定义指令。
 
-��������ע��һ��ȫ��ָ�� v-focus, ��ָ��Ĺ�������ҳ�����ʱ��Ԫ�ػ�ý��㣺
+下面我们注册一个全局指令 v-focus, 该指令的功能是在页面加载时，元素获得焦点：
 
-ʵ��
+实例
 <div id="app">
-    <p>ҳ������ʱ��input Ԫ���Զ���ȡ���㣺</p>
+    <p>页面载入时，input 元素自动获取焦点：</p>
     <input v-focus>
 </div>
  
 <script>
-// ע��һ��ȫ���Զ���ָ�� v-focus
+// 注册一个全局自定义指令 v-focus
 Vue.directive('focus', {
-  // ����Ԫ�ز��뵽 DOM �С�
+  // 当绑定元素插入到 DOM 中。
   inserted: function (el) {
-    // �۽�Ԫ��
+    // 聚焦元素
     el.focus()
   }
 })
-// ������ʵ��
+// 创建根实例
 new Vue({
   el: '#app'
 })
 </script>
 
-����Ҳ������ʵ��ʹ�� directives ѡ����ע��ֲ�ָ�����ָ��ֻ�������ʵ����ʹ�ã�
+我们也可以在实例使用 directives 选项来注册局部指令，这样指令只能在这个实例中使用：
 
-ʵ��
+实例
 <div id="app">
-  <p>ҳ������ʱ��input Ԫ���Զ���ȡ���㣺</p>
+  <p>页面载入时，input 元素自动获取焦点：</p>
   <input v-focus>
 </div>
  
 <script>
-// ������ʵ��
+// 创建根实例
 new Vue({
   el: '#app',
   directives: {
-    // ע��һ���ֲ����Զ���ָ�� v-focus
+    // 注册一个局部的自定义指令 v-focus
     focus: {
-      // ָ��Ķ���
+      // 指令的定义
       inserted: function (el) {
-        // �۽�Ԫ��
+        // 聚焦元素
         el.focus()
       }
     }
