@@ -1,4 +1,4 @@
-redis desktop manage
+ï»¿redis desktop manage
 
 centos:
 wget http://download.redis.io/releases/redis-5.0.5.tar.gz
@@ -13,23 +13,23 @@ make
 ./redis-cli
 auth "yourpass"
 
-ÅäÖÃÆô¶¯£º
+é…ç½®å¯åŠ¨ï¼š
 cd redis-5.0.5/utils
 cp redis_init_script /etc/init.d/redis_6379
 mkdir -p /etc/redis
 mkdir -p /var/redis/6379
-redis-5.0.5/redis.conf ¸´ÖÆµ½/etc/redis Ä¿Â¼ÖĞ£¬ÒÔ¶Ë¿ÚºÅÃüÃû£¨Èç¡°6379.conf¡±£©
+redis-5.0.5/redis.conf å¤åˆ¶åˆ°/etc/redis ç›®å½•ä¸­ï¼Œä»¥ç«¯å£å·å‘½åï¼ˆå¦‚â€œ6379.confâ€ï¼‰
 
-daemonize	yes	Ê¹RedisÒÔÊØ»¤½ø³ÌÄ£Ê½ÔËĞĞ
-pidfile	/var/run/redis_¶Ë¿ÚºÅ.pid	ÉèÖÃRedisµÄPIDÎÄ¼şÎ»ÖÃ
-port	¶Ë¿ÚºÅ	ÉèÖÃRedis¼àÌıµÄ¶Ë¿ÚºÅ
-dir	/var/redis/¶Ë¿ÚºÅ	ÉèÖÃ³Ö¾Ã»¯ÎÄ¼ş´æ·ÅÎ»ÖÃ
+daemonize	yes	ä½¿Redisä»¥å®ˆæŠ¤è¿›ç¨‹æ¨¡å¼è¿è¡Œ
+pidfile	/var/run/redis_ç«¯å£å·.pid	è®¾ç½®Redisçš„PIDæ–‡ä»¶ä½ç½®
+port	ç«¯å£å·	è®¾ç½®Redisç›‘å¬çš„ç«¯å£å·
+dir	/var/redis/ç«¯å£å·	è®¾ç½®æŒä¹…åŒ–æ–‡ä»¶å­˜æ”¾ä½ç½®
 
 vim /etc/init.d/redis_6379
-ÔÚ´ò¿ªµÄredis³õÊ¼»¯½Å±¾ÎÄ¼şÍ·²¿µÚËÄĞĞµÄÎ»ÖÃ£¬×·¼ÓÏÂÃæÁ½¾ä
+åœ¨æ‰“å¼€çš„redisåˆå§‹åŒ–è„šæœ¬æ–‡ä»¶å¤´éƒ¨ç¬¬å››è¡Œçš„ä½ç½®ï¼Œè¿½åŠ ä¸‹é¢ä¸¤å¥
 # chkconfig: 2345 90 10 
 # description: Redis is a persistent key-value database
-//ÉèÖÃ¿ª»úÖ´ĞĞredis½Å±¾
+//è®¾ç½®å¼€æœºæ‰§è¡Œredisè„šæœ¬
 chkconfig redis_6379 on
 
 service redis_6379 start

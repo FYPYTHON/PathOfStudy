@@ -1,22 +1,22 @@
-redis-cli
-redis-cli --raw   #������������
-Զ�̣�redis-cli -h host -p port -a password
+﻿redis-cli
+redis-cli --raw   #避免中文乱码
+远程：redis-cli -h host -p port -a password
           redis-cli -h 127.0.0.1 -p 6379 -a "mypass"
-�������룺
+设置密码：
 redis-cli -h 127.0.0.1 -p 6379
-�޸�redisĿ¼�µ�conf�ļ� ��requirepass yourpassword
-config get requirepass //��ȡ��ǰ����
-config set requirepass "yourpassword"//���õ�ǰ����,���������������ֻ���ΪĬ�ϣ��������룻��������ַ�ʽ
+修改redis目录下的conf文件 ：requirepass yourpassword
+config get requirepass //获取当前密码
+config set requirepass "yourpassword"//设置当前密码,服务重新启动后又会置为默认，即无密码；不建议此种方式
 
-�鿴����־��
+查看慢日志：
 127.0.0.1:6369> slowlog get
 
-�鿴����key:
+查看所有key:
 keys *
 
-ɾ����
+删除：
 del key
-string��
+string：
 SET name "runoob"
 GET name
 
@@ -30,7 +30,7 @@ lpush runoob redis
 lpush runoob mongodb
 lpush runoob rabitmq
 lrange runoob 0 10
-�б����ɴ洢 232 - 1 Ԫ�� (4294967295, ÿ���б��ɴ洢40����)��
+列表最多可存储 232 - 1 元素 (4294967295, 每个列表可存储40多亿)。
 
 set:
 sadd key member
@@ -38,324 +38,324 @@ sadd runoob redis
 lpush runoob mongodb
 lpush runoob rabitmq
 sadd runoob rabitmq
-���������ĳ�Ա��Ϊ 232 - 1(4294967295, ÿ�����Ͽɴ洢40���ڸ���Ա)
+集合中最大的成员数为 232 - 1(4294967295, 每个集合可存储40多亿个成员)
 
 zset:
 zadd key score member 
 
 
 
-                Redis keys ����
-�±��������� Redis ����صĻ������
-���	�������
+                Redis keys 命令
+下表给出了与 Redis 键相关的基本命令：
+序号	命令及描述
 1	DEL key
-������������ key ����ʱɾ�� key��
+该命令用于在 key 存在时删除 key。
 2	DUMP key 
-���л����� key �������ر����л���ֵ��
+序列化给定 key ，并返回被序列化的值。
 3	EXISTS key 
-������ key �Ƿ���ڡ�
+检查给定 key 是否存在。
 4	EXPIRE key seconds
-Ϊ���� key ���ù���ʱ�䣬����ơ�
+为给定 key 设置过期时间，以秒计。
 5	EXPIREAT key timestamp 
-EXPIREAT �����ú� EXPIRE ���ƣ�������Ϊ key ���ù���ʱ�䡣 ��ͬ���� EXPIREAT ������ܵ�ʱ������� UNIX ʱ���(unix timestamp)��
+EXPIREAT 的作用和 EXPIRE 类似，都用于为 key 设置过期时间。 不同在于 EXPIREAT 命令接受的时间参数是 UNIX 时间戳(unix timestamp)。
 6	PEXPIRE key milliseconds 
-���� key �Ĺ���ʱ���Ժ���ơ�
+设置 key 的过期时间以毫秒计。
 7	PEXPIREAT key milliseconds-timestamp 
-���� key ����ʱ���ʱ���(unix timestamp) �Ժ����
+设置 key 过期时间的时间戳(unix timestamp) 以毫秒计
 8	KEYS pattern 
-�������з��ϸ���ģʽ( pattern)�� key ��
+查找所有符合给定模式( pattern)的 key 。
 9	MOVE key db 
-����ǰ���ݿ�� key �ƶ������������ݿ� db ���С�
+将当前数据库的 key 移动到给定的数据库 db 当中。
 10	PERSIST key 
-�Ƴ� key �Ĺ���ʱ�䣬key ���־ñ��֡�
+移除 key 的过期时间，key 将持久保持。
 11	PTTL key 
-�Ժ���Ϊ��λ���� key ��ʣ��Ĺ���ʱ�䡣
+以毫秒为单位返回 key 的剩余的过期时间。
 12	TTL key 
-����Ϊ��λ�����ظ��� key ��ʣ������ʱ��(TTL, time to live)��
+以秒为单位，返回给定 key 的剩余生存时间(TTL, time to live)。
 13	RANDOMKEY 
-�ӵ�ǰ���ݿ����������һ�� key ��
+从当前数据库中随机返回一个 key 。
 14	RENAME key newkey 
-�޸� key ������
+修改 key 的名称
 15	RENAMENX key newkey 
-���� newkey ������ʱ���� key ����Ϊ newkey ��
+仅当 newkey 不存在时，将 key 改名为 newkey 。
 16	TYPE key 
-���� key �������ֵ�����͡�
+返回 key 所储存的值的类型。
 
 
-               Redis �ַ�������
-�±��г��˳��õ� redis �ַ������
+               Redis 字符串命令
+下表列出了常用的 redis 字符串命令：
 
-���	�������
+序号	命令及描述
 1	SET key value 
-����ָ�� key ��ֵ
+设置指定 key 的值
 2	GET key 
-��ȡָ�� key ��ֵ��
+获取指定 key 的值。
 3	GETRANGE key start end 
-���� key ���ַ���ֵ�����ַ�
+返回 key 中字符串值的子字符
 4	GETSET key value
-������ key ��ֵ��Ϊ value �������� key �ľ�ֵ(old value)��
+将给定 key 的值设为 value ，并返回 key 的旧值(old value)。
 5	GETBIT key offset
-�� key ��������ַ���ֵ����ȡָ��ƫ�����ϵ�λ(bit)��
+对 key 所储存的字符串值，获取指定偏移量上的位(bit)。
 6	MGET key1 [key2..]
-��ȡ����(һ������)���� key ��ֵ��
+获取所有(一个或多个)给定 key 的值。
 7	SETBIT key offset value
-�� key ��������ַ���ֵ�����û����ָ��ƫ�����ϵ�λ(bit)��
+对 key 所储存的字符串值，设置或清除指定偏移量上的位(bit)。
 8	SETEX key seconds value
-��ֵ value ������ key ������ key �Ĺ���ʱ����Ϊ seconds (����Ϊ��λ)��
+将值 value 关联到 key ，并将 key 的过期时间设为 seconds (以秒为单位)。
 9	SETNX key value
-ֻ���� key ������ʱ���� key ��ֵ��
+只有在 key 不存在时设置 key 的值。
 10	SETRANGE key offset value
-�� value ������д���� key ��������ַ���ֵ����ƫ���� offset ��ʼ��
+用 value 参数覆写给定 key 所储存的字符串值，从偏移量 offset 开始。
 11	STRLEN key
-���� key ��������ַ���ֵ�ĳ��ȡ�
+返回 key 所储存的字符串值的长度。
 12	MSET key value [key value ...]
-ͬʱ����һ������ key-value �ԡ�
+同时设置一个或多个 key-value 对。
 13	MSETNX key value [key value ...] 
-ͬʱ����һ������ key-value �ԣ����ҽ������и��� key �������ڡ�
+同时设置一个或多个 key-value 对，当且仅当所有给定 key 都不存在。
 14	PSETEX key milliseconds value
-�������� SETEX �������ƣ������Ժ���Ϊ��λ���� key ������ʱ�䣬�������� SETEX ��������������Ϊ��λ��
+这个命令和 SETEX 命令相似，但它以毫秒为单位设置 key 的生存时间，而不是像 SETEX 命令那样，以秒为单位。
 15	INCR key
-�� key �д��������ֵ��һ��
+将 key 中储存的数字值增一。
 16	INCRBY key increment
-�� key �������ֵ���ϸ���������ֵ��increment�� ��
+将 key 所储存的值加上给定的增量值（increment） 。
 17	INCRBYFLOAT key increment
-�� key �������ֵ���ϸ����ĸ�������ֵ��increment�� ��
+将 key 所储存的值加上给定的浮点增量值（increment） 。
 18	DECR key
-�� key �д��������ֵ��һ��
+将 key 中储存的数字值减一。
 19	DECRBY key decrement
-key �������ֵ��ȥ�����ļ���ֵ��decrement�� ��
+key 所储存的值减去给定的减量值（decrement） 。
 20	APPEND key value
-��� key �Ѿ����ڲ�����һ���ַ����� APPEND ���ָ���� value ׷�ӵ��� key ԭ��ֵ��value����ĩβ��
+如果 key 已经存在并且是一个字符串， APPEND 命令将指定的 value 追加到该 key 原来值（value）的末尾。
 
 
-Redis hash ����
-�±��г��� redis hash ������������
+Redis hash 命令
+下表列出了 redis hash 基本的相关命令：
 
-���	�������
+序号	命令及描述
 1	HDEL key field1 [field2] 
-ɾ��һ��������ϣ���ֶ�
+删除一个或多个哈希表字段
 2	HEXISTS key field 
-�鿴��ϣ�� key �У�ָ�����ֶ��Ƿ���ڡ�
+查看哈希表 key 中，指定的字段是否存在。
 3	HGET key field 
-��ȡ�洢�ڹ�ϣ����ָ���ֶε�ֵ��
+获取存储在哈希表中指定字段的值。
 4	HGETALL key 
-��ȡ�ڹ�ϣ����ָ�� key �������ֶκ�ֵ
+获取在哈希表中指定 key 的所有字段和值
 5	HINCRBY key field increment 
-Ϊ��ϣ�� key �е�ָ���ֶε�����ֵ�������� increment ��
+为哈希表 key 中的指定字段的整数值加上增量 increment 。
 6	HINCRBYFLOAT key field increment 
-Ϊ��ϣ�� key �е�ָ���ֶεĸ�����ֵ�������� increment ��
+为哈希表 key 中的指定字段的浮点数值加上增量 increment 。
 7	HKEYS key 
-��ȡ���й�ϣ���е��ֶ�
+获取所有哈希表中的字段
 8	HLEN key 
-��ȡ��ϣ�����ֶε�����
+获取哈希表中字段的数量
 9	HMGET key field1 [field2] 
-��ȡ���и����ֶε�ֵ
+获取所有给定字段的值
 10	HMSET key field1 value1 [field2 value2 ] 
-ͬʱ����� field-value (��-ֵ)�����õ���ϣ�� key �С�
+同时将多个 field-value (域-值)对设置到哈希表 key 中。
 11	HSET key field value 
-����ϣ�� key �е��ֶ� field ��ֵ��Ϊ value ��
+将哈希表 key 中的字段 field 的值设为 value 。
 12	HSETNX key field value 
-ֻ�����ֶ� field ������ʱ�����ù�ϣ���ֶε�ֵ��
+只有在字段 field 不存在时，设置哈希表字段的值。
 13	HVALS key 
-��ȡ��ϣ��������ֵ
+获取哈希表中所有值
 14	HSCAN key cursor [MATCH pattern] [COUNT count] 
-������ϣ���еļ�ֵ�ԡ�
+迭代哈希表中的键值对。
 
-Redis �б�����
-�±��г����б���صĻ������
+Redis 列表命令
+下表列出了列表相关的基本命令：
 
-���	�������
+序号	命令及描述
 1	BLPOP key1 [key2 ] timeout 
-�Ƴ�����ȡ�б��ĵ�һ��Ԫ�أ� ����б�û��Ԫ�ػ������б�ֱ���ȴ���ʱ���ֿɵ���Ԫ��Ϊֹ��
+移出并获取列表的第一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。
 2	BRPOP key1 [key2 ] timeout 
-�Ƴ�����ȡ�б������һ��Ԫ�أ� ����б�û��Ԫ�ػ������б�ֱ���ȴ���ʱ���ֿɵ���Ԫ��Ϊֹ��
+移出并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。
 3	BRPOPLPUSH source destination timeout 
-���б��е���һ��ֵ����������Ԫ�ز��뵽����һ���б��в��������� ����б�û��Ԫ�ػ������б�ֱ���ȴ���ʱ���ֿɵ���Ԫ��Ϊֹ��
+从列表中弹出一个值，将弹出的元素插入到另外一个列表中并返回它； 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。
 4	LINDEX key index 
-ͨ��������ȡ�б��е�Ԫ��
+通过索引获取列表中的元素
 5	LINSERT key BEFORE|AFTER pivot value 
-���б���Ԫ��ǰ���ߺ����Ԫ��
+在列表的元素前或者后插入元素
 6	LLEN key 
-��ȡ�б�����
+获取列表长度
 7	LPOP key 
-�Ƴ�����ȡ�б��ĵ�һ��Ԫ��
+移出并获取列表的第一个元素
 8	LPUSH key value1 [value2] 
-��һ������ֵ���뵽�б�ͷ��
+将一个或多个值插入到列表头部
 9	LPUSHX key value 
-��һ��ֵ���뵽�Ѵ��ڵ��б�ͷ��
+将一个值插入到已存在的列表头部
 10	LRANGE key start stop 
-��ȡ�б�ָ����Χ�ڵ�Ԫ��
+获取列表指定范围内的元素
 11	LREM key count value 
-�Ƴ��б�Ԫ��
+移除列表元素
 12	LSET key index value 
-ͨ�����������б�Ԫ�ص�ֵ
+通过索引设置列表元素的值
 13	LTRIM key start stop 
-��һ���б������޼�(trim)������˵�����б�ֻ����ָ�������ڵ�Ԫ�أ�����ָ������֮�ڵ�Ԫ�ض�����ɾ����
+对一个列表进行修剪(trim)，就是说，让列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除。
 14	RPOP key 
-�Ƴ��б������һ��Ԫ�أ�����ֵΪ�Ƴ���Ԫ�ء�
+移除列表的最后一个元素，返回值为移除的元素。
 15	RPOPLPUSH source destination 
-�Ƴ��б������һ��Ԫ�أ�������Ԫ�����ӵ���һ���б�������
+移除列表的最后一个元素，并将该元素添加到另一个列表并返回
 16	RPUSH key value1 [value2] 
-���б�������һ������ֵ
+在列表中添加一个或多个值
 17	RPUSHX key value 
-Ϊ�Ѵ��ڵ��б�����ֵ
+为已存在的列表添加值
 
 
-Redis ��������
-�±��г��� Redis ���ϻ������
+Redis 集合命令
+下表列出了 Redis 集合基本命令：
 
-���	�������
+序号	命令及描述
 1	SADD key member1 [member2] 
-�򼯺�����һ��������Ա
+向集合添加一个或多个成员
 2	SCARD key 
-��ȡ���ϵĳ�Ա��
+获取集合的成员数
 3	SDIFF key1 [key2] 
-���ظ������м��ϵĲ
+返回给定所有集合的差集
 4	SDIFFSTORE destination key1 [key2] 
-���ظ������м��ϵĲ���洢�� destination ��
+返回给定所有集合的差集并存储在 destination 中
 5	SINTER key1 [key2] 
-���ظ������м��ϵĽ���
+返回给定所有集合的交集
 6	SINTERSTORE destination key1 [key2] 
-���ظ������м��ϵĽ������洢�� destination ��
+返回给定所有集合的交集并存储在 destination 中
 7	SISMEMBER key member 
-�ж� member Ԫ���Ƿ��Ǽ��� key �ĳ�Ա
+判断 member 元素是否是集合 key 的成员
 8	SMEMBERS key 
-���ؼ����е����г�Ա
+返回集合中的所有成员
 9	SMOVE source destination member 
-�� member Ԫ�ش� source �����ƶ��� destination ����
+将 member 元素从 source 集合移动到 destination 集合
 10	SPOP key 
-�Ƴ������ؼ����е�һ�����Ԫ��
+移除并返回集合中的一个随机元素
 11	SRANDMEMBER key [count] 
-���ؼ�����һ�����������
+返回集合中一个或多个随机数
 12	SREM key member1 [member2] 
-�Ƴ�������һ��������Ա
+移除集合中一个或多个成员
 13	SUNION key1 [key2] 
-�������и������ϵĲ���
+返回所有给定集合的并集
 14	SUNIONSTORE destination key1 [key2] 
-���и������ϵĲ����洢�� destination ������
+所有给定集合的并集存储在 destination 集合中
 15	SSCAN key cursor [MATCH pattern] [COUNT count] 
-���������е�Ԫ��
+迭代集合中的元素
 
-Redis ���򼯺�����
-�±��г��� redis ���򼯺ϵĻ�������:
+Redis 有序集合命令
+下表列出了 redis 有序集合的基本命令:
 
-���	�������
+序号	命令及描述
 1	ZADD key score1 member1 [score2 member2] 
-�����򼯺�����һ��������Ա�����߸����Ѵ��ڳ�Ա�ķ���
+向有序集合添加一个或多个成员，或者更新已存在成员的分数
 2	ZCARD key 
-��ȡ���򼯺ϵĳ�Ա��
+获取有序集合的成员数
 3	ZCOUNT key min max 
-���������򼯺���ָ����������ĳ�Ա��
+计算在有序集合中指定区间分数的成员数
 4	ZINCRBY key increment member 
-���򼯺��ж�ָ����Ա�ķ����������� increment
+有序集合中对指定成员的分数加上增量 increment
 5	ZINTERSTORE destination numkeys key [key ...] 
-���������һ���������򼯵Ľ�������������洢���µ����򼯺� key ��
+计算给定的一个或多个有序集的交集并将结果集存储在新的有序集合 key 中
 6	ZLEXCOUNT key min max 
-�����򼯺��м���ָ���ֵ������ڳ�Ա����
+在有序集合中计算指定字典区间内成员数量
 7	ZRANGE key start stop [WITHSCORES] 
-ͨ���������䷵�����򼯺ϳ�ָ�������ڵĳ�Ա
+通过索引区间返回有序集合成指定区间内的成员
 8	ZRANGEBYLEX key min max [LIMIT offset count] 
-ͨ���ֵ����䷵�����򼯺ϵĳ�Ա
+通过字典区间返回有序集合的成员
 9	ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT] 
-ͨ�������������򼯺�ָ�������ڵĳ�Ա
+通过分数返回有序集合指定区间内的成员
 10	ZRANK key member 
-�������򼯺���ָ����Ա������
+返回有序集合中指定成员的索引
 11	ZREM key member [member ...] 
-�Ƴ����򼯺��е�һ��������Ա
+移除有序集合中的一个或多个成员
 12	ZREMRANGEBYLEX key min max 
-�Ƴ����򼯺��и������ֵ���������г�Ա
+移除有序集合中给定的字典区间的所有成员
 13	ZREMRANGEBYRANK key start stop 
-�Ƴ����򼯺��и�����������������г�Ա
+移除有序集合中给定的排名区间的所有成员
 14	ZREMRANGEBYSCORE key min max 
-�Ƴ����򼯺��и����ķ�����������г�Ա
+移除有序集合中给定的分数区间的所有成员
 15	ZREVRANGE key start stop [WITHSCORES] 
-����������ָ�������ڵĳ�Ա��ͨ�������������Ӹߵ���
+返回有序集中指定区间内的成员，通过索引，分数从高到底
 16	ZREVRANGEBYSCORE key max min [WITHSCORES] 
-����������ָ�����������ڵĳ�Ա�������Ӹߵ�������
+返回有序集中指定分数区间内的成员，分数从高到低排序
 17	ZREVRANK key member 
-�������򼯺���ָ����Ա�����������򼯳�Ա������ֵ�ݼ�(�Ӵ�С)����
+返回有序集合中指定成员的排名，有序集成员按分数值递减(从大到小)排序
 18	ZSCORE key member 
-���������У���Ա�ķ���ֵ
+返回有序集中，成员的分数值
 19	ZUNIONSTORE destination numkeys key [key ...] 
-���������һ���������򼯵Ĳ��������洢���µ� key ��
+计算给定的一个或多个有序集的并集，并存储在新的 key 中
 20	ZSCAN key cursor [MATCH pattern] [COUNT count] 
-�������򼯺��е�Ԫ�أ�����Ԫ�س�Ա��Ԫ�ط�ֵ��
+迭代有序集合中的元素（包括元素成员和元素分值）
 
 
-                Redis ������������
-�±��г��� redis �������ĳ������
+                Redis 发布订阅命令
+下表列出了 redis 发布订阅常用命令：
 
-���	�������
+序号	命令及描述
 1	PSUBSCRIBE pattern [pattern ...] 
-����һ���������ϸ���ģʽ��Ƶ����
+订阅一个或多个符合给定模式的频道。
 2	PUBSUB subcommand [argument [argument ...]] 
-�鿴�����뷢��ϵͳ״̬��
+查看订阅与发布系统状态。
 3	PUBLISH channel message 
-����Ϣ���͵�ָ����Ƶ����
+将信息发送到指定的频道。
 4	PUNSUBSCRIBE [pattern [pattern ...]] 
-�˶����и���ģʽ��Ƶ����
+退订所有给定模式的频道。
 5	SUBSCRIBE channel [channel ...] 
-���ĸ�����һ������Ƶ������Ϣ��
+订阅给定的一个或多个频道的信息。
 6	UNSUBSCRIBE [channel [channel ...]] 
-ָ�˶�������Ƶ����
+指退订给定的频道。
 
-               Redis ��������
-�±��г��� redis �����������
+               Redis 事务命令
+下表列出了 redis 事务的相关命令：
 
-���	�������
+序号	命令及描述
 1	DISCARD 
-ȡ�����񣬷���ִ��������ڵ��������
+取消事务，放弃执行事务块内的所有命令。
 2	EXEC 
-ִ������������ڵ����
+执行所有事务块内的命令。
 3	MULTI 
-���һ�������Ŀ�ʼ��
+标记一个事务块的开始。
 4	UNWATCH 
-ȡ�� WATCH ��������� key �ļ��ӡ�
+取消 WATCH 命令对所有 key 的监视。
 5	WATCH key [key ...] 
-����һ��(����) key �����������ִ��֮ǰ���(����Щ) key �������������Ķ�����ô���񽫱���ϡ�
+监视一个(或多个) key ，如果在事务执行之前这个(或这些) key 被其他命令所改动，那么事务将被打断。
 
 
-                Redis ��������
-�±��г��� redis ���ӵĻ������
-���	�������
+                Redis 连接命令
+下表列出了 redis 连接的基本命令：
+序号	命令及描述
 1	AUTH password 
-��֤�����Ƿ���ȷ
+验证密码是否正确
 2	ECHO message 
-��ӡ�ַ���
+打印字符串
 3	PING 
-�鿴�����Ƿ�����
+查看服务是否运行
 4	QUIT 
-�رյ�ǰ����
+关闭当前连接
 5	SELECT index 
-�л���ָ�������ݿ�
+切换到指定的数据库
 
 
-�Ƿ��������룺CONFIG get requirepass
-�������룺CONFIG set requirepass "runoob"
-������֤��AUTH password
+是否设置密码：CONFIG get requirepass
+设置密码：CONFIG set requirepass "runoob"
+密码验证：AUTH password
 
-���ܲ��ԣ�
-ִ��10000������
+性能测试：
+执行10000个请求
 redis-benchmark -n 10000  -q
 redis-benchmark -h 127.0.0.1 -p 6379 -t set,lpush -n 10000 -q
 
-�ͻ��ˣ�
-�����������config get maxclients
-���������������redis-server --maxclients 100000
+客户端：
+最大连接数：config get maxclients
+设置最大连接数：redis-server --maxclients 100000
 CLIENT LIST
-CLIENT SETNAME	���õ�ǰ���ӵ�����
-CLIENT GETNAME	��ȡͨ�� CLIENT SETNAME �������õķ�������
-CLIENT PAUSE	����ͻ������ӣ�ָ�������ʱ���Ժ����
-CLIENT KILL	�رտͻ�������
+CLIENT SETNAME	设置当前连接的名称
+CLIENT GETNAME	获取通过 CLIENT SETNAME 命令设置的服务名称
+CLIENT PAUSE	挂起客户端连接，指定挂起的时间以毫秒计
+CLIENT KILL	关闭客户端连接
 
 
 
-���ݱ����뻹ԭ��
-SAVE ���������ڴ�����ǰ���ݿ�ı���
-BGSAVE�� �����ļ�����������ں�ִ̨�С�
+数据备份与还原：
+SAVE ：命令用于创建当前数据库的备份
+BGSAVE： 备份文件命令，该命令在后台执行。
 
-ֻ�轫�����ļ� (dump.rdb) �ƶ��� redis ��װĿ¼���������񼴿�
-��ȡrediĿ¼��CONFIG GET dir
+只需将备份文件 (dump.rdb) 移动到 redis 安装目录并启动服务即可
+获取redi目录：CONFIG GET dir
 
 
 

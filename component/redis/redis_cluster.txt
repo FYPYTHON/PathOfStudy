@@ -1,4 +1,4 @@
-mkdir redis_cluster
+ï»¿mkdir redis_cluster
 cd redis_cluster
 mkdir 7000 7001 7002
 cd ../
@@ -7,24 +7,24 @@ cp 6379.conf redis_cluster/7001/7001.conf
 cp 6379.conf redis_cluster/7002/7002.conf
 
 cd src
-cp redis-trib.rb /usr/local/bin/¡¡
+cp redis-trib.rb /usr/local/bin/ã€€
 yum -y install ruby ruby-devel rubygems rpm-build
 gem install redis
 redis-trib.rb  create  --replicas  1  192.168.31.245:7000 192.168.31.245:7001  192.168.31.245:7002 192.168.31.210:7003  192.168.31.210:7004  192.168.31.210:7005
 
 redis-cli:
 redis-cli --cluster create 192.168.3.223:7000 192.168.3.223:7001 192.168.3.223:7002 192.168.3.224:7004 192.168.3.224:7005 192.168.3.224:7006 --cluster-replicas 1
-ÔÚµÚÒ»Ì¨»úÆ÷ÉÏÁ¬½Ó¼¯ÈºµÄ7002¶Ë¿ÚµÄ½Úµã£¬ÔÚÁíÍâÒ»Ì¨Á¬½Ó7005½Úµã£¬
-Á¬½Ó·½Ê½Îª redis-cli -h 192.168.31.245 -c -p 7002  ,¼Ó²ÎÊı -C ¿ÉÁ¬½Óµ½¼¯Èº£¬
-ÒòÎªÉÏÃæ redis.conf ½« bind ¸ÄÎªÁËipµØÖ·£¬ËùÒÔ -h ²ÎÊı²»¿ÉÒÔÊ¡ÂÔ¡£
+åœ¨ç¬¬ä¸€å°æœºå™¨ä¸Šè¿æ¥é›†ç¾¤çš„7002ç«¯å£çš„èŠ‚ç‚¹ï¼Œåœ¨å¦å¤–ä¸€å°è¿æ¥7005èŠ‚ç‚¹ï¼Œ
+è¿æ¥æ–¹å¼ä¸º redis-cli -h 192.168.31.245 -c -p 7002  ,åŠ å‚æ•° -C å¯è¿æ¥åˆ°é›†ç¾¤ï¼Œ
+å› ä¸ºä¸Šé¢ redis.conf å°† bind æ”¹ä¸ºäº†ipåœ°å€ï¼Œæ‰€ä»¥ -h å‚æ•°ä¸å¯ä»¥çœç•¥ã€‚
 set hello world
 
-Ö÷´Ó£º
-ÔÚconfÖĞÅäÖÃ
+ä¸»ä»ï¼š
+åœ¨confä¸­é…ç½®
 masterauth yourpass
-½â³ı£º
+è§£é™¤ï¼š
 ./redis-cli -h 192.168.3.222 -a fy123456 slaveof no one  
 ./redis-cli -h 192.168.3.222 -a fy123456 slaveof 192.168.3.227 6379
 
-²é¿´Ö÷´Ó¹ØÏµ£º
+æŸ¥çœ‹ä¸»ä»å…³ç³»ï¼š
 info replication
