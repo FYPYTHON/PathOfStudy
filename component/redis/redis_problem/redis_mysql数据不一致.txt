@@ -1,3 +1,7 @@
+来源：https://blog.csdn.net/weixin_51214902/article/details/124007778
+      https://blog.51cto.com/u_15848894/5800406
+      https://blog.csdn.net/jayxujia123/article/details/124557086
+
 
 mysql与redis数据一致问题:
 先写缓存，再写数据库

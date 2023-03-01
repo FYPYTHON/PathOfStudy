@@ -59,6 +59,9 @@ top -d 1 >> top.log
 traceroute 10.10.10.10
 
 
+# 去掉字符中的颜色
+new_str=$(echo $mystr | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g")
+
 ###Linux文件查看
   0）cat xx.txt
   1）diff   xx.txt xx.txt

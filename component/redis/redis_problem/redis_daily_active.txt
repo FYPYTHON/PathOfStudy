@@ -1,0 +1,24 @@
+
+https://blog.csdn.net/jayxujia123/article/details/124557086
+
+1、redis set
+Redis 的 Set 是 String 类型的无序集合。集合成员是唯一的，这就意味着集合中不能出现重复的数据。
+
+* scard 查询成员总数
+
+2、redis setbit
+位操作: 把某个位标记为1或者0
+总量sum, user_id与sum取余得到offset
+set dailyactive 100 1
+set dailyactive 101 1
+bitcount dailyactive 
+# 2
+
+3、redis HyperLogLog
+HLL
+一种用于基数计算的概率数据结构，通俗的说就是支持集合中不重复元素的统计。
+pfadd dailyactive u1
+pfadd dailyactive u2
+pfcount dailyactive
+# 2
+

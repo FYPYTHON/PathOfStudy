@@ -11,7 +11,10 @@ cp redis-trib.rb /usr/local/bin/　
 yum -y install ruby ruby-devel rubygems rpm-build
 gem install redis
 redis-trib.rb  create  --replicas  1  192.168.31.245:7000 192.168.31.245:7001  192.168.31.245:7002 192.168.31.210:7003  192.168.31.210:7004  192.168.31.210:7005
+# redis 5 以前使用上面的命令
 
+-------------------------------
+# 至少3个节点，且主节点至少有一个从
 redis-cli:
 redis-cli --cluster create 192.168.3.223:7000 192.168.3.223:7001 192.168.3.223:7002 192.168.3.224:7004 192.168.3.224:7005 192.168.3.224:7006 --cluster-replicas 1
 在第一台机器上连接集群的7002端口的节点，在另外一台连接7005节点，
@@ -19,7 +22,8 @@ redis-cli --cluster create 192.168.3.223:7000 192.168.3.223:7001 192.168.3.223:7
 因为上面 redis.conf 将 bind 改为了ip地址，所以 -h 参数不可以省略。
 set hello world
 
-主从：
+------------------------------
+两节点主从
 在conf中配置
 masterauth yourpass
 解除：

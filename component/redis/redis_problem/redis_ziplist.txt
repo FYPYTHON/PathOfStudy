@@ -1,0 +1,35 @@
+原文链接：https://blog.csdn.net/solo_jm/article/details/118520888
+
+ziplist(压缩链表)：满足以下两个条件的时候
+元素数量少于128的时候
+每个元素的长度小于64字节
+
+结构：
+zlbytpes zltail zllen entry ... entry zlend
+
+--------------------  --------------  ----
+
+zlbytes：记录整个ziplist的大小。
+zltail：ziplist开始指针与最后一个entry之间的偏移量，通过该偏移量可以获得最后一个entry。
+zllen：entry数量。
+entry：存储具体数据的节点。
+zlend：ziplist结尾标识。
+
+entry结构：
+previous_entry_length   encoding  content
+previous_entry_length：上一个entry的大小。
+encoding：记录content的类型以及长度。
+content：一个整形或者字节数组
+
+previous_entry_length保存上一个entry的长度，当上一个entry长度小于等于263字节时，previous_entry_length只占一个字节；大于263字节时，previous_entry_length占5个字节。
+可以通过previous_entry_length得到上一个entry，ziplist就是这样实现从尾到头的检索。
+
+
+ziplist连续更新
+假如现在ziplist中每一个entry的大小都是263字节，那么每一个entry的previous_entry_length都只占一个字节。假如此时在ziplist头部插入一个大于263的entry，那么，该entry往后的entry要把previous_entry_length修改为5个字节，而此时修改之后entry长度变为267，那么再下一个entry也要修改previous_entry_length的长度，以此类推。。。
+删除节点的时候也会出现连续更新的情况。
+虽然，发生连续更新时，ziplist的性能会大大的降低，但是实际情况下，极少会发生连续更新，而且ziplist都是存储少量的节点，哪怕发生一整个ziplist的更新，也不会占用大量时间。
+
+
+
+
