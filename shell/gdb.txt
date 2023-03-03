@@ -1,0 +1,10 @@
+
+### gdb
+
+PYTHONPATH=/lib/python3/site-packages gdb python3
+
+# set args -c "import MySQLdb;db=MySQLdb.connect(host='127.0.0.1', port=3306, password='mypass')"
+# r
+# bt
+
+

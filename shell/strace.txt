@@ -1,0 +1,36 @@
+
+
+
+
+
+strace -ttt -T -e trace=all ./uwsgi -i uwsgi.ini 
+-- 日志看不出的问题可以用strace调试看
+
+-f: 除了跟踪当前进程外，还跟踪其子进程
+-o: 输出文件
+-T: 打印每个系统调用耗费的时间
+-t: 打印绝对时间戳
+-tt: 打印绝对时间戳 us
+-s: 将打印字符串长度限制字符
+
+-e trace=file     跟踪和文件访问相关的调用(参数中有文件名)
+-e trace=process  和进程管理相关的调用，比如fork/exec/exit_group
+-e trace=network  和网络通信相关的调用，比如socket/sendto/connect
+-e trace=signal    信号发送和处理相关，比如kill/sigaction
+-e trace=desc  和文件描述符相关，比如write/read/select/epoll等
+-e trace=ipc 跟踪所有与进程通讯有关的系统调用，比如shmget等
+
+
+strace -f -tt -s 128 -o log.log
+
+
+strace -ttt -T -e trace=all -o ./strace.log
+
+
+# 子进程
+
+strace -ttt -T -e trace=all -f -s 1024 -o ./starce.log
+
+# connect
+strace -ttt -T -e trace=connect -f -F -o log.log
+

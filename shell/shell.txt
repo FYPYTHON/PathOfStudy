@@ -9,6 +9,10 @@ awk -v RS=';'  'END {print --NR}'
 awk 'NR==1{print $1}' file
 # NR==1 定位在file的第一行   print $1 显示第一列内容
 
+eg:json.tt =     "type": "machine_4000",
+-F 以 正则表达式 为分割
+(grep type json.tt | awk -F[\"] '{print $4}')
+
 查找目录下包含内容的文件
 grep -r "test"  /data/reports
 

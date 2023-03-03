@@ -4,4 +4,5 @@ ssh-keygen -t rsa
 
 ssh-copy-id root@192.168.3.2
 
-ËùÓĞ»·¾³ sshd ÖØÆô
+æ‰€æœ‰ç¯å¢ƒ sshd é‡å¯
+

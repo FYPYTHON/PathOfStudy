@@ -1,22 +1,23 @@
-1¡¢mdadm   RAIDÃüÁî
--C   ´´½¨Ä£Ê½
--l    RAID¼¶±ğ
--n   Éè±¸¸öÊı
--a  yes|no ×Ô¶¯´´½¨±¸·İÎÄ¼ş
--c   Êı¾İ¿é´óĞ¡£¨64K£©
--x   ¿ÕÏĞÅÌ¸öÊı
+1ã€mdadm   RAIDå‘½ä»¤
+-C   åˆ›å»ºæ¨¡å¼
+-l    RAIDçº§åˆ«
+-n   è®¾å¤‡ä¸ªæ•°
+-a  yes|no è‡ªåŠ¨åˆ›å»ºå¤‡ä»½æ–‡ä»¶
+-c   æ•°æ®å—å¤§å°ï¼ˆ64Kï¼‰
+-x   ç©ºé—²ç›˜ä¸ªæ•°
 mdadm -C /dev/md0 -a yes -l 0 -n 2 /dev/sdb1 /dev/sdc1
-mdadm -C /dev/md1 -a yes -l 0 -n 2 /dev/sdb1 /dev/sdc1 -x 1 /dev/sde1  # ÈôÓĞ´ÅÅÌËğ»µ£¬¿ÕÏĞÅÌ²¹³ä
-mkfs.xfs -b 4096 /dev/md0   # -bÖ¸¶¨¿é´óĞ¡ 4byte, -E stride=16
-¹ÒÔØºóÊ¹ÓÃ£º
+mdadm -C /dev/md1 -a yes -l 0 -n 2 /dev/sdb1 /dev/sdc1 -x 1 /dev/sde1  # è‹¥æœ‰ç£ç›˜æŸåï¼Œç©ºé—²ç›˜è¡¥å……
+mkfs.xfs -b 4096 /dev/md0   # -bæŒ‡å®šå—å¤§å° 4byte, -E stride=16
+æŒ‚è½½åä½¿ç”¨ï¼š
 mount /dev/md0 /home/data
 
-2¡¢²é¿´RAID
+2ã€æŸ¥çœ‹RAID
 mdadm -D /dev/md1
-mdadm --detail /dev/md1   #ÏêÏ¸ĞÅÏ¢
-Ä£ÄâËğ»µ£º mdadm /dev/md1 -f /dev/sdc1    # /dev/sdc1Ëğ»µ
-ÒÆ³ıËğ»µ£º mdadm /dev/md1 --remove /dev/sdc1
-Ìí¼Ó±¸ÓÃ£ºmoun mdadm /dev/md1 -a /dev/sdd1   # /dev/sdd1 ĞÂ¼Ó
-Í£Ö¹RAID£ºmdadm -S /dev/md1  È»ºóÉ¾³ıËùÓĞ´ÅÅÌ£ºmdadm --misc --zero-superblock /dev/sdd
-ÖØĞÂ×°ÅäÆô¶¯£ºmdadm -A /dev/md1 /dev/sdb1 /dev/sdc1
-´´½¨RAID5£ºmdadm -C /dev/md2 -l 5 -n 3 /dev/sdd /dev/sde /dev/sdf -x /dev/sdg
+mdadm --detail /dev/md1   #è¯¦ç»†ä¿¡æ¯
+æ¨¡æ‹ŸæŸåï¼š mdadm /dev/md1 -f /dev/sdc1    # /dev/sdc1æŸå
+ç§»é™¤æŸåï¼š mdadm /dev/md1 --remove /dev/sdc1
+æ·»åŠ å¤‡ç”¨ï¼šmoun mdadm /dev/md1 -a /dev/sdd1   # /dev/sdd1 æ–°åŠ 
+åœæ­¢RAIDï¼šmdadm -S /dev/md1  ç„¶ååˆ é™¤æ‰€æœ‰ç£ç›˜ï¼šmdadm --misc --zero-superblock /dev/sdd
+é‡æ–°è£…é…å¯åŠ¨ï¼šmdadm -A /dev/md1 /dev/sdb1 /dev/sdc1
+åˆ›å»ºRAID5ï¼šmdadm -C /dev/md2 -l 5 -n 3 /dev/sdd /dev/sde /dev/sdf -x /dev/sdg
+
