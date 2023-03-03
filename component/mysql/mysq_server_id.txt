@@ -1,0 +1,1 @@
+server_id=$(/opt/midware/python3/bin/python3 -c "import uuid;nid=uuid.getnode();print(nid if nid < 2**63 else 1)")
