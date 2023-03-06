@@ -1,0 +1,21 @@
+
+文本缩进 ：Text-indent:2em
+
+文本对齐方式：Text-align:left/right/center/ justify
+
+文本修饰：Text-decoration:underline/line-through/overline/none
+
+字符间距：Word-spacing:px/em 英文单词之间的间隔；
+
+Letter-spacing:px/em汉字和英文字母之间的间隔；
+
+文本转换：Text-transform:uppercase/lowercase/ capitalize
+
+行与行间距：Line-height:px/%
+
+垂直对齐图像： vertical-align：text-top/text-bottom
+
+文本阴影：text-shadow:水平偏移，垂直偏移 颜色
+
+
+
