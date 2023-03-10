@@ -34,3 +34,7 @@ strace -ttt -T -e trace=all -f -s 1024 -o ./starce.log
 # connect
 strace -ttt -T -e trace=connect -f -F -o log.log
 
+# 指定进程号 
+strace -p 10501 -t -T -e trace=all -f -v
+
+
