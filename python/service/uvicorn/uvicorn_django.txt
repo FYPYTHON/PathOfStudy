@@ -1,0 +1,17 @@
+
+如何使用 Uvicorn 托管 Django¶
+Uvicorn 是一个基于 uvloop 和 httptools 的加强运行速度的ASGI服务器。
+
+安装Uvicorn¶
+你可以通过 pip 来安装Uvicorn
+
+python -m pip install uvicorn gunicorn
+在 Uvicorn 中运行 Django¶
+一旦 Uvicorn 安装完毕，你就可用 uvicorn 命令来运行ASGI应用了。Uvicorn 运行需要包含一个 ASGI 应用程序模块的位置和应用程序的名称（以冒号分隔）。
+
+对于一个典型的 Django 项目，可以像下面这样来启动 Uvicorn
+
+gunicorn myproject.asgi:application -k uvicorn.workers.UvicornWorker
+它将开启一个进程，监听 127.0.0.1:8000。这需要你的项目位于 Python path 上。为了确保这点，你应该在与 manage.py 文件相同的路径中运行这个命令。
+
+
