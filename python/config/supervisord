@@ -1,0 +1,46 @@
+#!/opt/midware/python3/bin/python3
+# coding=utf-8
+# 2023-03-13
+
+import argparse
+import sys
+import os
+
+
+def python_supervisord():
+    # default='/opt/midware/supervisord_python/supervisor.conf'
+    parse = argparse.ArgumentParser(description="supervisord python command")
+    parse.add_argument('-c', '--configuration', help='configuration file path (searches if not given)', nargs='?')
+    parse.add_argument('-u', '--user', type=str, help='username to use for authentication with server', default='')
+    parse.add_argument('-p', '--password', type=str, help='password to use for authentication with server', default='')
+    parse.add_argument('ctl', choices=("ctl", ), default='')
+    parse.add_argument('action', choices=('status', 'start', 'stop', 'restart', 'update', 'reload', 'add', 'shutdown'), default='status')
+    parse.add_argument('item', type=str, nargs='?', default='')
+    # print(sys.argv)
+    args = parse.parse_args()
+    # origin_args_str = " ".join(sys.argv[1:])
+    # print("argsparse:", args)
+    # for ar in args:
+    #     print("%s"%(ar))
+    configuration_file = args.configuration
+    if configuration_file is None or not os.path.exists(configuration_file):
+        print("Error: No config file found")
+        return
+    user = args.user
+    password = args.password
+    if user or password:
+        auth_info = "-u {} -p {}".format(user, password)
+    else:
+        auth_info = ""
+    ctl = args.ctl
+    if not ctl:
+        os.system("/opt/midware/supervisord_python/bin/supervisord -c {} {} ".format(configuration_file, auth_info))
+    else:
+        action = args.action
+        item = args.item
+        os.system("/opt/midware/supervisord_python/bin/supervisorctl -c {} {} {} {}".format(configuration_file,
+                                                                                            auth_info, action, item))
+
+
+if __name__ == '__main__':
+    python_supervisord()
