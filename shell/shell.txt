@@ -66,6 +66,9 @@ traceroute 10.10.10.10
 # 去掉字符中的颜色
 new_str=$(echo $mystr | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g")
 
+# find 按文件时间段
+find ./log -type f -newermt "2022-02-28 01:00:00"  ! -newermt "2022-02-28 01:30:00" | xargs ls -al
+
 ###Linux文件查看
   0）cat xx.txt
   1）diff   xx.txt xx.txt

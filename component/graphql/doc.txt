@@ -4,3 +4,7 @@ https://graphql.cn/
 https://graphql.js.cool/
 
 
+python graphql: graphene
+
+https://graphene-python.org/
+
