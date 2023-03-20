@@ -60,6 +60,8 @@ top -p `pgrep haproxy | awk 'NR>=0&&NR<=20{print $0}' | xargs | tr " " ","`
 top -d 1 >> top.log
 
 
+# ps -ae --forest -o pid,lstart,cmd
+
 traceroute 10.10.10.10
 
 
