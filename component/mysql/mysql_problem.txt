@@ -1,0 +1,4 @@
+1、MySQL 自增主键一定是连续的吗
+2、where 1=1的作用
+   http://www.dbs724.com/8246.html
+
