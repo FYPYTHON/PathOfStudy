@@ -53,8 +53,8 @@ def run():
         os.system("iptables -A INPUT -p tcp -s {} -j DROP".format(black_ip))
 
     print(json.dumps(all_ip_info, indent=4))
-    with open("./blackip.txt", "w+") as f:
-        f.write(msg.strip("\n"))
+    with open("./blackip.txt", "a+") as f:
+        f.write(msg)
 
 
 if __name__ == '__main__':
