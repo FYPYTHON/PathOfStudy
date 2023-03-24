@@ -5,8 +5,8 @@ npm run dev
 
 ldfs /  jdb_web must run build:test。(use ./*/js path to load static file。)
 npm run build:test
-
-
+# package.json 中增加"build:test":项
+# npm install cross-env --save-dev
 
 
 npm 报错This is probably not a problem with npm. There is likely additional logging output above.
