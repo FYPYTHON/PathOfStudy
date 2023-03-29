@@ -40,6 +40,8 @@ ps -w w -eo cmd,lstart,command | grep glusterfsd
 netstat -n | grep 2181| awk '/^tcp/ {++S[$NF]} END {for (a in S) print a, S[a]}'
 netstat -ntlp
 netstat -ntp
+# 查看FIN, 断开连接
+netstat -ano | grep 3306 | grep FIN
 
 
 *文件包含
