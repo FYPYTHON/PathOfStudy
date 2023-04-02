@@ -73,6 +73,10 @@ new_str=$(echo $mystr | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g")
 # find 按文件时间段
 find ./log -type f -newermt "2022-02-28 01:00:00"  ! -newermt "2022-02-28 01:30:00" | xargs ls -al
 
+# 时间戳转换成时间
+timestamp=1680078601.628
+date -d '1970-01-01 UTC 1680078601.628 seconds'
+
 ###Linux文件查看
   0）cat xx.txt
   1）diff   xx.txt xx.txt

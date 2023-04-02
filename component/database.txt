@@ -1,0 +1,10 @@
+mysql设置账号只读
+
+grant select on *.* to readonly@'%' identified by "readonly@0330";
+
+postgresql设置账号只读
+
+grant select on all tables in schema public to auditdb;
+
+
+
