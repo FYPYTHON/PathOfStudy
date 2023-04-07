@@ -1,10 +1,16 @@
-mysql设置账号只读
+# mysql设置账号只读
 
 grant select on *.* to readonly@'%' identified by "readonly@0330";
 
-postgresql设置账号只读
+# postgresql设置账号只读
 
 grant select on all tables in schema public to auditdb;
 
+# mysql禁止登陆
+revoke all privileges,grant option from 'readonly'@'%';flush privileges;
 
+# postgresql禁止登陆
+alter user readonly nologin
+# gaussdb
+alter user readonly noopradmin
 
