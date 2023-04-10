@@ -12,7 +12,10 @@ total 4
 
 
 1、zip 打包会把相同node id的文件认为是多个。
+---直接使用zip打包，软连接会消失，原来的软链接文件被源文件的内容所代替，相当于原来的软链接变成了硬链接。
 2、使用参数-y，可以使zip能够保留软链接
+
+
 
 [root@167b925e-eaea-11ec-bd74-ecd68a2ef3b9 keda_moyun]# ll gfs.tar.gz -h
 -rw-r--r-- 1 root root 38M Apr 10 13:14 gfs.tar.gz
