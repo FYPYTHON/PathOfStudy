@@ -1,0 +1,24 @@
+[root@167b925e-eaea-11ec-bd74-ecd68a2ef3b9 glusterfs]# du -shx /opt/data/glusterfs/volume-data/
+40M	/opt/data/glusterfs/volume-data/
+[root@167b925e-eaea-11ec-bd74-ecd68a2ef3b9 glusterfs]# ll -i ./volume-data/.glusterfs/00
+total 4
+1835020 drwx------ 2 root root 4096 Mar 20 15:46 00
+[root@167b925e-eaea-11ec-bd74-ecd68a2ef3b9 glusterfs]# ll -i ./volume-data/.glusterfs/00/00/00000000-0000-0000-0000-000000000001/.glusterfs/00
+total 4
+1835020 drwx------ 2 root root 4096 Mar 20 15:46 00
+[root@167b925e-eaea-11ec-bd74-ecd68a2ef3b9 glusterfs]# ll -i ./volume-data/.glusterfs/00/00/00000000-0000-0000-0000-000000000001/.glusterfs/00/00/00000000-0000-0000-0000-000000000001/.glusterfs/00
+total 4
+1835020 drwx------ 2 root root 4096 Mar 20 15:46 00
+
+
+1、zip 打包会把相同node id的文件认为是多个。
+2、使用参数-y，可以使zip能够保留软链接
+
+[root@167b925e-eaea-11ec-bd74-ecd68a2ef3b9 keda_moyun]# ll gfs.tar.gz -h
+-rw-r--r-- 1 root root 38M Apr 10 13:14 gfs.tar.gz
+[root@167b925e-eaea-11ec-bd74-ecd68a2ef3b9 keda_moyun]# tar zcvf gfs.tar.gz /opt/data/glusterfs/volume-data/
+
+
+3、tar打包的没有问题
+
+
