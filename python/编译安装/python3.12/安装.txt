@@ -1,0 +1,79 @@
+python3.12 下载
+https://www.python.org/ftp/python/3.12.0/Python-3.12.0a7.tar.xz
+
+sqlite3下载
+https://www.sqlite.org/2022/sqlite-autoconf-3390300.tar.gz
+wget https://www.sqlite.org/2022/sqlite-autoconf-3390300.tar.gz --no-check-certificate
+
+0、预安装
+yum -y install readline-devel
+yum install libsqlite3x-devel.x86_64
+
+1、编译sqlite3
+
+./configure --prefix=/opt/midware/python3.12 
+make && make install
+
+
+2、编译openssl
+wget https://www.openssl.org/source/openssl-1.1.1g.tar.gz --no-check-certificate
+./config --prefix=/opt/midware/python3.12 
+make && make install
+
+
+3、readline
+wget -c ftp://ftp.gnu.org/gnu/readline/readline-8.0.tar.gz
+./configure --prefix=/opt/midware/python3.12 
+make && make install
+
+
+3、编译python3.12
+
+
+修改Modules/Setup:
+\cp ./Setup ./Python-3.12.0a7/Modules/Setup
+
+LD_RUN_PATH=/opt/midware/python3.12/lib ./configure LDFLAGS="-L/opt/midware/python3.12/lib" CPPFLAGS="-I/opt/midware/python3.12/include" --with-openssl=/opt/midware/python3.12 --with-readline --enable-shared --prefix=/opt/midware/python3.12
+
+LD_RUN_PATH=/opt/midware/python3.12/lib make && make install
+
+# 查看sqlite ssl 版本
+import sqlite3
+sqlite3.sqlite_version
+
+import ssl
+ssl.OPENSSL_VERSION
+
+
+/opt/midware/python3.12/lib/python3.12/lib-dynload
+ldd  _ssl.cpython-312-x86_64-linux-gnu.so 
+	linux-vdso.so.1 =>  (0x00007ffd10395000)
+	libssl.so.1.1 => /opt/midware/python3.12/lib/libssl.so.1.1 (0x00007f0c6f114000)
+	libcrypto.so.1.1 => /opt/midware/python3.12/lib/libcrypto.so.1.1 (0x00007f0c6ecd1000)
+	libpthread.so.0 => /lib64/libpthread.so.0 (0x00007f0c6eab5000)
+	libc.so.6 => /lib64/libc.so.6 (0x00007f0c6e6e7000)
+	libdl.so.2 => /lib64/libdl.so.2 (0x00007f0c6e4e3000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007f0c6efb8000)
+
+# 查看python的编译项
+python3 -c "import sysconfig; print(sysconfig.get_config_var('CONFIG_ARGS'))"
+
+
+
+
+4、安装uwsgi
+
+# wget http://mirrors.aliyun.com/pypi/packages/24/fd/93851e4a076719199868d4c918cc93a52742e68370188c1c570a6e42a54f/uwsgi-2.0.20.tar.gz
+# wget http://mirrors.aliyun.com/pypi/packages/e7/1e/3dcca007f974fe4eb369bf1b8629d5e342bb3055e2001b2e5340aaefae7a/uwsgi-2.0.18.tar.gz
+
+python3.12需要下载github最新版本uwsgi
+
+wget https://github.com/unbit/uwsgi/archive/refs/heads/master.zip
+yum install python3-devel
+mv /usr/include/openssl /usr/include/openssl_bak
+
+cd uwsgi-master/
+ln -s python3.12 /usr/bin/python3
+/opt/midware/python3.12/bin/python3 setup.py build
+/opt/midware/python3.12/bin/python3 setup.py install
+make
