@@ -1,0 +1,9 @@
+
+# 获取N天前的日期
+
+expired_date=$(date -d"20 day ago" +%Y-%m-%d)
+
+# 获取N天后的日期
+
+expired_date=$(date -d"30 day" +%Y-%m-%d)
+
