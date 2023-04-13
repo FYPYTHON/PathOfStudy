@@ -1,3 +1,9 @@
 ﻿http://tangxinfa.github.io/article/redis-pub-sub-591a673a623f90e87f72.html
 
 订阅消息只能master上。
+
+
+redis高可用--持久化
+https://blog.csdn.net/weixin_40074110/article/details/125519332
+
+
