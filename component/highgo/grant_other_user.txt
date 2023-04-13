@@ -1,0 +1,27 @@
+
+版本：HighGo4.3.4.8
+
+highgo=> grant select on user_info to testuser;
+ERROR:  Can't grant it to other role.
+
+## 原文 https://blog.csdn.net/pg_hgdb/article/details/110386215
+
+三权分立下，普通用户无权访问系统对象（表、视图、方法等），并且无法单独的进行赋权操作，本文档介绍通过暂时关闭secure_level后按需赋权，再打开secure_level的方式解决该问题。 但是由于需要暂时关闭强制访问和三权分立，届时所有普通用户可以访问系统对象，存在一定的安全风险，需谨慎操作。
+
+
+highgo=> select set_secure_level('off');
+             set_secure_level              
+-------------------------------------------
+ Set security level to 'off' successfully.
+(1 行记录)
+
+
+highgo=> grant select on user_info to testuser;
+ERROR:  Can't grant it to other role.
+
+问题： 三权分立下，普通用户无权访问系统对象（表、视图、方法等），并且无法单独的进行赋权操作。
+
+--这个问题，在数据库的表不是sysdba创建的时候可以grant.
+--有sysdba创建的表，无法赋予其他用户权限。
+
+
