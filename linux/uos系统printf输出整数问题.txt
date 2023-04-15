@@ -1,0 +1,18 @@
+
+#!/bin/bash
+
+a=432091850803.2
+echo $a | awk '{printf("%lu", $a)}'
+echo -e "\n"
+
+### a最大值2147483647
+
+i=90
+hdsize=432091850803.2
+
+cursize=$(/opt/midware/python3/bin/python3 -c "print(int(int($i) * int($hdsize) /100))")
+echo $cursize
+
+
+
+
