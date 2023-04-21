@@ -1,0 +1,79 @@
+
+下载：https://golang.google.cn/   go1.18.10.linux-amd64.tar.gz
+cd /opt/midware/
+tar -zxvf go1.18.10.linux-amd64.tar.gz
+
+cd /opt/midware/go/src
+mkdir -p pkg bin src
+
+export GOROOT=/opt/midware/go
+
+vi /etc/profile
+
+export GOROOT=/opt/midware/go
+export GOPATH=/opt/midware/go/src  
+export GOBIN=${GOPATH}/bin
+export PATH=${PATH}:${GOBIN}:${GOROOT}/bin
+go env -w GO111MODULE=on
+go env -w GOPROXY="https://goproxy.cn,direct"
+
+git config --global http.postBuffer 5242880000
+go get github.com/mitchellh/cli
+
+
+### 最终版
+0、下载：https://golang.google.cn/  下载最新版go1.20.3.linux-amd64.tar.gz
+tar -zxvf go1.18.10.linux-amd64.tar.gz -C /opt/midware
+1、设置环境变量
+export GOROOT=/opt/midware/go
+export GO111MODULE=on
+export GOPROXY="https://goproxy.cn,direct"
+
+1.1 复制dms代码至/home/wgq/dms
+    cd /home/wgq/dms
+    mkdir -p pkg bin src
+	cp -r dms-agent/* ./
+
+2、生成依赖库
+export GOPATH=""
+# 使用go mod init时，GOPATH不能配置。。。？
+go mod init dms
+
+# module名字为dms
+将引用git的地方改为本地包：sed -i "s/github.com\/moooofly\/dms-agent/dms/g" ./*.go
+
+go mod tidy
+3、下载https://github.com/protocolbuffers/protobuf/releases  下载protoc-22.3-linux-x86_64.zip
+    下载https://github.com/protocolbuffers/protobuf-go/releases  下载protoc-gen-go.v1.30.0.linux.amd64.tar.gz
+
+    # https://www.cnblogs.com/davis12/p/16503010.html
+	
+	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+	cd /home/wgq/dms
+	unzip protoc-22.3-linux-x86_64.zip
+	tar -zxvf protoc-gen-go.v1.30.0.linux.amd64.tar.gz
+	cd bin
+	./protoc --plugin=./protoc-gen-go -I /home/wgq/dms/src/proto/ dms.proto --go_out=.
+
+4、export GOPATH=/home/wgq/dms
+   export GOROOT=/opt/midware/go/
+   go mod tidy
+   # go mod download
+   go env -w GO111MODULE=on
+   # go build cmd/serf/main.go  --error
+   
+   # 主函数 ./cmd/serf/中commands.go main.go都属于package main，编译的时候需要同时指定。
+   # 一个package里面有两个main入口。。。？
+   go build -o dms ./cmd/serf/*.go
+	
+5、error ?
+cmd/serf/command/agent/agent.go:374:61: undefined: pb.Wrapper_SubscribeServer
+cmd/serf/command/agent/agent.go:428:5: undefined: pb.RegisterWrapperServer
+
+
+/opt/midware/go
+/home/wgq/dms
+/root/go
+
+
