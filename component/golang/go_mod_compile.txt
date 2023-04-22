@@ -1,4 +1,4 @@
-
+### 测试记录
 下载：https://golang.google.cn/   go1.18.10.linux-amd64.tar.gz
 cd /opt/midware/
 tar -zxvf go1.18.10.linux-amd64.tar.gz
@@ -56,24 +56,18 @@ go mod tidy
 	cd bin
 	./protoc --plugin=./protoc-gen-go -I /home/wgq/dms/src/proto/ dms.proto --go_out=.
 
-4、export GOPATH=/home/wgq/dms
+4、export GOPATH=""   # go mod管理, 此项去掉
    export GOROOT=/opt/midware/go/
-   go mod tidy
+   go mod tidy    # 下载依赖
    # go mod download
    go env -w GO111MODULE=on
    # go build cmd/serf/main.go  --error
+   
+   # 模块本地化
+   go mod verdor
    
    # 主函数 ./cmd/serf/中commands.go main.go都属于package main，编译的时候需要同时指定。
    # 一个package里面有两个main入口。。。？
    go build -o dms ./cmd/serf/*.go
 	
-5、error ?
-cmd/serf/command/agent/agent.go:374:61: undefined: pb.Wrapper_SubscribeServer
-cmd/serf/command/agent/agent.go:428:5: undefined: pb.RegisterWrapperServer
-
-
-/opt/midware/go
-/home/wgq/dms
-/root/go
-
 
