@@ -1,0 +1,19 @@
+## 下载
+https://github.com/pexip/os-protoc-gen-go-grpc/releases/tag/upstream%2F1.2.0
+
+下载文件 os-protoc-gen-go-grpc-upstream-1.2.0.tar.gz
+
+tar -zxvf os-protoc-gen-go-grpc-upstream-1.2.0.tar.gz
+
+cd os-protoc-gen-go-grpc-upstream-1.2.0/cmd/protoc-gen-go-grpc
+
+
+## 编译protoc-gen-go-grpc
+
+go build -mod=vendor -o protoc-gen-go-grpc *.go
+
+
+protoc --plugin=./protoc-gen-go-grpc --go-grpc_out=./   -I ./ test.proto
+
+
+
