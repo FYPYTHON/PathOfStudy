@@ -1,0 +1,14 @@
+
+https://blog.csdn.net/weixin_46399792/article/details/116312671
+
+https://www.man7.org/linux/man-pages/man8/mount.8.html
+
+使用软挂载问题解决
+https://blog.51cto.com/u_13236892/6106376
+
+
+
+client.tcp-user-timeout 0
+
+glusterfs --volfile-id=/gvol --negative-timeout=1 --volfile-server=127.0.0.1 /data/gfs
+
