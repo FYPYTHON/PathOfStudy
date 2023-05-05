@@ -1,3 +1,9 @@
 1 实ip日志
 2 ha日志
 3 机器日志
+
+
+数据库内核月报
+
+http://static.kancloud.cn/taobaomysql/monthly/213784
+

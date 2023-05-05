@@ -14,3 +14,11 @@ alter user readonly nologin
 # gaussdb
 alter user readonly noopradmin
 
+
+# 原子操作概述
+近年来随着服务器上CPU核数的不断增加，无锁算法（Lock Free）越来越广泛的被应用于高并发的系统中。PostgreSQL 做为世界上最高级开源数据库也在9.5时引入了无锁算法。本文先介绍了无锁算法和原子操作在PostgreSQL中的具体实现， 再通过一个Patch来看一下在PostgreSQL中是如何利用它来解决实际的高并发问题的。
+
+无锁算法是利用CPU的原子操作实现的数据结构和算法来解决原来只能用锁才能解决的并发控制问题。 众所周知，在一个并发系统中特别是高并发的场景下，锁的使用会影响系统性能。 这里的CPU的原子操作是不可中断的一个或者一系列操作, 也就是不会被线程调度机制打断的操作， 运行期间不会有任何的上下文切换。
+
+参考：http://static.kancloud.cn/taobaomysql/monthly/213786
+

@@ -76,6 +76,9 @@ find ./log -type f -newermt "2022-02-28 01:00:00"  ! -newermt "2022-02-28 01:30:
 # 开机启动查看
 systemctl cat rc-local.service
 
+# mpstat查看用户占用还是系统占用
+mpstat
+
 # 时间戳转换成时间
 timestamp=1680078601.628
 date -d '1970-01-01 UTC 1680078601.628 seconds'
