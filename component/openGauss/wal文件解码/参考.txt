@@ -2,3 +2,7 @@ https://blog.csdn.net/weixin_42009408/article/details/126942259
 
 wal解码cdc
 https://blog.csdn.net/weixin_39600885/article/details/111107296
+
+GaussDB (DWS)高可用问题定位指南
+https://bbs.huaweicloud.com/blogs/detail/198733
+

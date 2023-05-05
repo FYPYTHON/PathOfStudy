@@ -10,3 +10,9 @@ newCkpLoc
 https://gitee.com/movead/walminer_for_opengauss
 
 
+
+###
+PostgreSQL提供的逻辑复制功能，例如test_decoding模块，原理也是如此，首先要创建SLOT，SLOT保证你在解析XLOG时，数据库的元数据还在，因此可以解读出XLOG的数据。
+
+PostgreSQL基于XLOG的恢复并不是逻辑恢复，而是物理块的恢复。所以不需要解读数据。
+
