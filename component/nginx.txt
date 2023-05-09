@@ -1,0 +1,9 @@
+
+add_header X-Content-Type-Options nosniff;
+add_header X-XSS-Protection "1; mode=block";
+
+X-Download-Options: noopen
+
+
+https://blog.csdn.net/weixin_45623111/article/details/120431899
+

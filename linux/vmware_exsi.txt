@@ -1,0 +1,30 @@
+1、查看资源占用esxtop
+
+1.1 检查虚拟机绑核情况，查看CPU列的CPU数字是否变化，如果一直变化则未绑核：
+
+1.2检查内存
+
+ 2、修改esxi主机物理网卡顺序
+
+3、查看主机物理网口esxcfg-nics
+
+esxcfg-vmknic -l
+
+4、查看主机路由esxcfg-route
+
+ 5、查看主机vmkernel网卡esxcfg-vmknic
+
+6、查看主机的虚拟交换机esxcfg-vswitch
+
+7、主机打ENS驱动
+
+8、主机紫屏现象
+
+9、esxcli
+
+10、日志收集
+
+查看ip
+esxcli network ip interface ipv4 get
+————————————————
+原文链接：https://blog.csdn.net/m0_58983558/article/details/125856505
