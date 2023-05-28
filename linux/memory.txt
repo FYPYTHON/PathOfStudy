@@ -1,0 +1,5 @@
+
+RSS is Resident Set Size, the non-swapped physical memory used by process
+
+RSS是驻留集合大小，即进程所使用的非交换区的物理内存
+
