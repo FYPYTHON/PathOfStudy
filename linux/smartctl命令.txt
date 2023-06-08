@@ -1,0 +1,11 @@
+
+smartctl -l /devstat /dev/sdc
+
+如果输出not supported则不支持
+
+
+smartctl -l devstat /dev/sda
+
+    Percentage Used Endurance Indicator, 单位是百分比，新的是 0%
+   
+
