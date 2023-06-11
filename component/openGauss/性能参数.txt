@@ -1,0 +1,21 @@
+
+[WLMmonitor占用cpu高问题](https://docs.opengauss.org/zh/docs/3.1.0/docs/Developerguide/%E8%B4%9F%E8%BD%BD%E7%AE%A1%E7%90%86.html)
+
+use_workload_manager=off
+
+
+# 慢查询
+instr_unique_sql_count=200000
+enable_auto_clean_unique_sql=on
+
+# io cpu 性能参数
+enable_instr_rt_percentile=off
+pagewriter_sleep=2000ms
+max_io_capacity=500MB
+bgwriter_delay=2s
+enable_memory_limit=on
+max_prepared_transactions=10
+
+# WLMmonitor cpu high, 关闭资源管理
+use_workload_manager=off
+
