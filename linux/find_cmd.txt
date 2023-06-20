@@ -1,0 +1,4 @@
+
+
+find /opt -printf '%h\n' | sort | uniq -c | sort -rn | head -10
+
