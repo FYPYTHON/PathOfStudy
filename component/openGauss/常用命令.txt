@@ -1,6 +1,16 @@
 ﻿查询数据库中的锁信息
 SELECT * FROM pg_locks;
 
+通过oid查询数据库中锁信息
+*库*
+select oid,datname from pg_database;
+*表*
+select oid from pg_class,relname where relname='xxx';
+select pg_stat_get_db_deadlocks(oid);
+
+锁
+select * from pgxc_stat_activity;
+
 查询等待锁的线程状态信息
 SELECT * FROM pg_thread_wait_status WHERE wait_status = 'acquire lock';
 

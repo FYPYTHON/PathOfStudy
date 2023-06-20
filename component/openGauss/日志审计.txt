@@ -53,3 +53,27 @@ gs_guc reload -c audit_rotation_interval=12d -D /opt/data/gaussdb/data/single_no
 gsql -d postgres -p 5432;
 show audit_enabled;
 select* from pg_query_audit('2022-08-05 08:00:00','2022-08-06 23:59:59');
+
+
+5、audit_system_object
+
+audit_system_object = 12303
+转换二进制：
+int('11000000001111', 2)
+12303
+
+"""
+# 数字转换二进制代码
+d_10 = 12295
+list = []
+while d_10//2 != 0:
+    temp = d_10%2
+    list.append(temp)
+    d_10 = d_10//2
+
+list.append(d_10%2)
+
+for i in list[::-1]:
+    print(i,end='')
+
+"""
