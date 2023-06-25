@@ -1,0 +1,22 @@
+
+https://blog.csdn.net/nejore/article/details/125049904
+
+
+报错示例：
+
+ls /data/
+ls: 无法访问/data/: 输入/输出错误
+解决办法：
+
+1. xfs文件系统
+
+xfs_repair /dev/sdc1
+
+2. ext4文件系统
+
+fsck -t ext4 -y /dev/sda1
+
+需要注意的是修复时要取消挂载，不然会报错提示被占用
+
+卸载示例：umount /dev/sdc1
+
