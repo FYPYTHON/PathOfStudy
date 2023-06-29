@@ -1,0 +1,6 @@
+
+
+lsof -i udp -P -R -n |grep gauss
+netstat -aulp | grep gaussdb 
+
+查看高斯udp端口
