@@ -22,3 +22,30 @@ alter user readonly noopradmin
 
 参考：http://static.kancloud.cn/taobaomysql/monthly/213786
 
+
+# sysbench
+1、sysbench cpu基准测试
+* 测试使用64位整数，测试计算素数直到某个最大值所需要的时间
+* cat /proc/cpuinfo
+* sysbench --test=cpu --cpu-max-prime=20000 run
+
+2、sysbench 文件i/o基准测试
+* 创建数据集
+* sysbench --test=fileio --file-total-size=150G prepare
+* seqwr:顺序写入 seqrewr:顺序重写 seqrd:顺序读取 rndrd:随机读取 rndwr:随机写入 rndrw:混合随机读/写
+
+* eg: sysbench --test=fileio --file-total-size=150G --file-test-mode=rndrw --init-rng=on --max-time=300 --max-requests=0 run
+
+* 运行清楚操作
+* sysbench --test=fileio --file-total-size=150G cleanup
+
+3、OLTP(联机事务处理过程) 测试mysql事务处理
+* 生成超过百万行记录的表
+* sysbench --test=oltp --oltp-table-size=1000000 --mysql-db=test --mysql-user=root prepare
+
+* 8个并发线程 只读模式 测试60s
+* sysbench --test=oltp --oltp-table-size=1000000 --mysql-db=test --mysql-user=root --max-time=60 --oltp-read-only=on --max-requests=0 --num-threads=8 run
+
+
+
+
