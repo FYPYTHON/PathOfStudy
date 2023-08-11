@@ -1,0 +1,7 @@
+
+https://code.launchpad.net/~percona-dev/perconatools/tpcc-mysql
+
+https://github.com/Percona-Lab/tpcc-mysql
+# tpcc-mysql 可以模拟真实压力
+
+
