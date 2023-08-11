@@ -1,0 +1,3 @@
+
+49.0.230.196 repo.openeuler.org
+
