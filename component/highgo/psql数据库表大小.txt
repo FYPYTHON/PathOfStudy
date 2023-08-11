@@ -3,5 +3,28 @@
 SELECT table_schema || '.' || table_name AS table_full_name, pg_size_pretty(pg_total_relation_size('"' || table_schema || '"."' || table_name || '"')) AS size FROM information_schema.tables ORDER BY pg_total_relation_size('"' || table_schema || '"."' || table_name || '"') DESC limit 20;
 
 
-
+select
+	table_name,
+	pg_size_pretty(table_size) as table_size,
+	pg_size_pretty(indexes_size) as indexes_size,
+	pg_size_pretty(total_size) as total_size
+from
+	(
+	select
+		table_name,
+		pg_table_size(table_name) as table_size,
+		pg_indexes_size(table_name) as indexes_size,
+		pg_total_relation_size(table_name) as total_size
+	from
+		(
+		select
+			('"' || table_schema || '"."' || table_name || '"') as table_name
+		from
+			information_schema.tables
+                where 
+                        table_schema = 'public' 
+) as all_tables
+	order by
+		total_size desc
+) as pretty_sizes;
 

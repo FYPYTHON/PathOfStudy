@@ -1,0 +1,8 @@
+
+https://hertzbeat.com/docs/v1.0.0/help/zookeeper/
+
+
+https://www.cnblogs.com/easonscx/p/12823249.html
+
+echo mntr|nc 127.0.0.1 2181
+

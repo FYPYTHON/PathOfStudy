@@ -1,0 +1,11 @@
+
+# 获取系统性能和状态
+
+cpu使用率
+磁盘i/o
+网络流量统计
+show global variables;
+show global status;
+show full processlist;
+
+# 5s采集一次
