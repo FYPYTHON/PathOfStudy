@@ -48,4 +48,9 @@ alter user readonly noopradmin
 
 
 
+# ---------------------------
+PostgreSQL 15: stats collector进程优化掉了
+
+https://blog.51cto.com/yanzongshuai/5653099
+
 
