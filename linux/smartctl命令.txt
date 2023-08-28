@@ -1,5 +1,5 @@
 
-smartctl -l /devstat /dev/sdc
+smartctl -l devstat /dev/sdc
 
 如果输出not supported则不支持
 

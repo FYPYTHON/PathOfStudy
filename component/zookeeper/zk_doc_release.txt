@@ -1,0 +1,10 @@
+
+https://zookeeper.apache.org/doc/r3.5.0-alpha/releasenotes.html
+
+https://zookeeper.apache.org/doc/
+
+
+系统时间改变，临时节点不会退出
+https://issues.apache.org/jira/browse/ZOOKEEPER-2774
+
+
