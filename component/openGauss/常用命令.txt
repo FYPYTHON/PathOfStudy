@@ -153,6 +153,9 @@ and usename = 'omm' order by duration desc;
 #查看线程等待状态
 select * from pg_thread_wait_status limit 1;
 
+#查看用户是否锁定
+select * from pg_catalog.pg_user_status s inner join pg_catalog.pg_user u on u.usesysid = s.roloid where u.usename='omm';
+
 
 #### 元命令
 # -E 显示元命令

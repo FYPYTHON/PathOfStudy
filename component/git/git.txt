@@ -23,6 +23,13 @@ git rebase --abort  # 回退rebase前
 git reset HEAD~2   # 回退两个提交
 git revert HEAD~2 # 撤销一个提交的同时会创建一个新的提交, 找出倒数第二个提交；创建一个新的提交来撤销这些更改，然后把这个提交加入项目中。
 
+2.1 local
+git config --local user.name
+git config --local user.email
+git config --local -l
+
+
+
 3、git 文档 
 https://git-scm.com/book/zh/v1/自定义-Git-配置-Git
 
@@ -75,4 +82,9 @@ git commit --amend
 12、删除最后一次提交
 git reset HEAD^ --hard
 git push -f origin master
+
+13、git 查看某个目录/文件的提交记录
+git log -- mydir     # 当前执行路径下
+git log -- myfile    # 当前执行路径下
+
 

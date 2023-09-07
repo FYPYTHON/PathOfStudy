@@ -7,4 +7,41 @@ gsql "port=5432 user=test password=pwd host=127.0.0.1 dbname=postgres"
 查看密码过期
 select * from pg_user;
 
+查看版本
+select kernel_version();
+
+查看启动时间
+select pg_postmaster_start_time();
+
+查看配置时间
+select pg_conf_load_time();
+
+查看时区
+show timezone;
+
+查看当前session pid
+select pg_backend_pid();
+
+当前wal文件
+select pg_xlogfile_name(pg_current_xlog_location());
+
+是否在备份
+select pg_is_in_backup(),pg_backup_start_time();
+
+主备查询
+select pg_is_in_recovery();
+f = false
+
+
+查看库大小
+select pg_database_size('highgo'),pg_size_pretty(pg_database_size('highgo'));
+
+查看表大小
+select pg_size_pretty(pg_relation_size('test'))
+select pg_size_pretty(pg_total_relation_size('test'));
+表空间大小
+select pg_size_pretty(pg_tablespace_size('pg_global'));
+
+表对应的文件
+select pg_relation_filepath('test');
 

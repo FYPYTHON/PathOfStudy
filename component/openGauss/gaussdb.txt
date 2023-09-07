@@ -1,0 +1,27 @@
+
+https://gitee.com/opengauss/openGauss-server/issues/I4WDEE?from=project-issue
+空闲占用
+https://gitee.com/opengauss/openGauss-server/issues/I3ARUA?from=project-issue
+
+内存
+
+https://docs.opengauss.org/zh/docs/3.1.0/docs/Developerguide/%E5%86%85%E5%AD%98-21.html
+
+
+锁问题
+
+https://bbs.huaweicloud.com/blogs/228809
+
+审计
+
+https://docs.opengauss.org/zh/docs/3.1.0/docs/Developerguide/%E5%AE%A1%E8%AE%A1%E5%BC%80%E5%85%B3.html
+
+https://docs.opengauss.org/zh/docs/3.1.0/docs/Developerguide/%E6%93%8D%E4%BD%9C%E5%AE%A1%E8%AE%A1.html
+
+wal日志
+
+http://www.manongjc.com/detail/18-oykfkbtkewyidni.html
+
+gsql -r -d postgres -h 127.0.0.1 -p 9243 -W Keda\!Mysql_36 -U kedacom
+alter system set replconninfo1='localhost=192.168.3.227 localport=9243 remotehost=192.168.3.228 remoteport=9243';
+

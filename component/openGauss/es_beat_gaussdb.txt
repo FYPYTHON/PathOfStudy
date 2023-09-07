@@ -1,0 +1,8 @@
+field:
+https://www.elastic.co/guide/en/beats/metricbeat/6.5/exported-fields-postgresql.html
+
+
+postgresql:
+https://www.elastic.co/guide/en/beats/metricbeat/6.5/metricbeat-metricset-postgresql-activity.html
+
+https://www.elastic.co/guide/en/beats/metricbeat/6.5/metricbeat-module-postgresql.html
