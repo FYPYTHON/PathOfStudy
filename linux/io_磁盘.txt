@@ -21,19 +21,28 @@ svctm:          平均每次设备I/O操作的服务时间 (毫秒)。即 delta(
 
 如果 %util 接近 100%，说明产生的I/O请求太多，I/O系统已经满负荷，该磁盘可能存在瓶颈。
  
-3、iotop 
+3、iotop 命令
 
-4、top
-
-
+4、top, dd命令
 
 
+
+---
    如：dd if=/dev/sda of=/home/test.bin bs=1M count=500
 
 	iostat -t -kx 1 1 >> iostat.log
 	top -d 1 >> top.log
 	iotop -b -d 1 >> iotop.log
+--
 
-
+5、通过日志分析
+/var/log/sa/*
+/var/log/cron*
+/var/log/messages
+log目录下的：
+zookeeper/zookeeper.out
+haproxy/haroxy*.zip
+redis/redis*.log
+guard/*.log 
 
 
