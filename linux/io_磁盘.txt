@@ -45,4 +45,5 @@ haproxy/haroxy*.zip
 redis/redis*.log
 guard/*.log 
 
+6、io高可能会导致oom-killer
 
