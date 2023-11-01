@@ -1,0 +1,8 @@
+# 慢查询
+配置：
+create extension pg_stat_statements;
+插件：shared_preload_libraries='auto_explain,pg_stat_statements'
+      log_min_duration_statement = 100     #慢查询最小时长，毫秒
+使用：
+SELECT * FROM pg_stat_statements order by total_time desc limit 10;
+
