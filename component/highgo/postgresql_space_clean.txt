@@ -1,0 +1,44 @@
+# wal日志清理
+pg_controldata -D /opt/data/highgodb/data_business | grep "Latest checkpoint's REDO WAL file"
+
+pg_archivecleanup /opt/data/highgodb/data_business/pg_wal/ 74CACA280000004100000074
+
+
+# 表空间清理
+
+du -shx $pg_data/base/* 
+
+1、获取占用空间最大的库的oid
+如：
+4.9G	./16388
+
+2、获取oid对应的库
+
+highgo=> select oid,datname from pg_database where oid=16388;
+  oid  | datname 
+-------+---------
+ 16388 | test_data
+
+3、获取库下占用空间最大的表
+
+du -shx $pg_data/base/16388/*
+
+如：
+1.1G	./16718
+
+4、获取表对应的oid
+test_data=> select oid,relname from pg_class where oid=16718;
+  oid  | relname  
+-------+----------
+ 16718 | test_table
+
+
+5、清理test_data.test_table中的数据
+
+test_data=> delete * from test_table where create_time < '2022-10-11';
+
+
+
+
+
+
