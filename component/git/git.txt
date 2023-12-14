@@ -87,4 +87,6 @@ git push -f origin master
 git log -- mydir     # 当前执行路径下
 git log -- myfile    # 当前执行路径下
 
+14、clone指定分支
+git clone -b master --single-branch https://gitee.com/movead/XLogMiner.git
 
