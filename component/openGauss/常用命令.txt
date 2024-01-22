@@ -192,3 +192,19 @@ https://docs.opengauss.org/zh/docs/3.1.0/docs/BriefTutorial/SCHEMA.html
 \c   -- 切换数据库
 \c - username   -- 切换用户
 
+# 设置变量
+openGauss=> \echo :HOST
+127.0.0.1
+openGauss=> \echo :DBNAME
+ap
+openGauss=> \echo :port
+:port
+openGauss=> \echo :PORT
+9243
+openGauss=> \echo :USER
+kedacom
+openGauss=> \echo :HISTSIZE
+50
+openGauss=> \set x1 2
+openGauss=> \echo :x1
+2
