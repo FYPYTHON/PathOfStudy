@@ -44,7 +44,7 @@ git push -u origin master -f
 
 5、清空缓存
 git rm -r --cached .
-
+* 不要使用 *
 
 6、记住密码
 git config --global credential.helper store
@@ -90,3 +90,5 @@ git log -- myfile    # 当前执行路径下
 14、clone指定分支
 git clone -b master --single-branch https://gitee.com/movead/XLogMiner.git
 
+15、lfs
+git config lfs.allowincompletepush true
