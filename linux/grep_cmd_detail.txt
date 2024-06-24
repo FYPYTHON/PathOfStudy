@@ -198,3 +198,11 @@ grep正则表达式（BRE、ERE、PCRE）
 --version 
 	 显示版本信息
 
+
+
+# 常用命令
+# 查看哪些连数据库的业务
+
+grep -m1 -R "5236" ./* | grep ".ini"
+
+

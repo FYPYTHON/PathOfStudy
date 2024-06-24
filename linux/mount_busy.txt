@@ -1,0 +1,10 @@
+https://codeleading.com/article/55042339594/
+
+
+lsof +L1; lsof|sed -n '/SYSV/d; /DEL\|(path /p;' |grep -Ev '/(dev|home|tmp|var)'
+
+
+lsof /opt | awk '$4~/^[0-9]+(w|u)/{print $0}'
+
+
+
