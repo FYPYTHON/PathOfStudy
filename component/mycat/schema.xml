@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE mycat:schema SYSTEM "schema.dtd">
+<mycat:schema xmlns:mycat="http://io.mycat/">
+
+    <schema name="PRODUCTION" checkSQLschema="true" sqlMaxLimit="100" >
+        <table name="PRODUCT_CATEGORY" primaryKey="id" autoIncrement="true" dataNode="dn1" rule="rule1"/>
+    </schema>
+
+	<dataNode name="dn1" dataHost="localhost1" database="DATABASE" />
+
+	<dataHost name="localhost1" maxCon="1000" minCon="10" balance="0" writeType="0" dbType="oracle" dbDriver="jdbc" switchType="0"  slaveThreshold="100">
+        <!-- 配置真实数据库与 MyCat 的心跳 -->
+        <heartbeat>select user()</heartbeat>
+        <!-- 配置真实的 MySQL 的连接信息 这里由于我们借用 Oracle 连接通道,通过达梦配置对 Oracle 数据库的兼容参数-->
+        <writeHost host="hostM1" url="jdbc:dm://127.0.0.1:5236?comOracle=true" user="USER" password="PASSWORD">
+        </writeHost>
+    </dataHost>
+
+</mycat:schema>
