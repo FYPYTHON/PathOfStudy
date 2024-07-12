@@ -1,5 +1,7 @@
 下载地址：
 https://mirrors.tuna.tsinghua.edu.cn/docker-ce/
+https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/static/stable/x86_64/
+
 
 官网:
 hub.docker.com
