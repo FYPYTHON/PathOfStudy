@@ -99,4 +99,9 @@ git clean -df  # -d 表示包括目录，-f 表示强制执行
 
 git gc --prune=now
 
+17、指定格式unix
+git config --local core.autocrlf false
+git config --local core.safecrlf true
+* 默认window本地是dos
+ 
 
