@@ -12,3 +12,9 @@ print(parser)
 
 # {'common': {'name': 'aaa'}, 'test': {'port': '2', 'ip': '1'}}
 
+
+# set(name, value, section)
+parser.set('name', 'iniparser', 'test')
+
+parser.write(ini_path)
+
