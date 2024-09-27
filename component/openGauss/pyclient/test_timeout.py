@@ -5,7 +5,7 @@ import sys
 import psycopg2
 
 
-class Psycopg2Client(object):
+class ClientPsycopg2(object):
     def __init__(self, host="127.0.0.1", port=3306, password="test", user="test",
                  database="postgres", timeout=10, logger=None):
             self.sqlclient = psycopg2.connect(host=host, port=port, user=user, password=password,
@@ -17,7 +17,8 @@ class Psycopg2Client(object):
             # self.cursor.execute("set statement_timeout='{}s'".format(timeout))
 
     def run(self):
-        self.cursor.execute("select sleep 60;")
+        # self.cursor.execute("select sleep 60;")
+        self.cursor.execute("select pg_sleep(60);")
 
 
 if __name__ == '__main__':
