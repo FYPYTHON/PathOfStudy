@@ -1,1 +1,9 @@
 cat /proc/sys/net/ipv4/ip_local_reserved_ports
+
+
+修改端口预留
+vi /etc/sysctl.conf
+
+sysctl -p
+
+
