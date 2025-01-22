@@ -1,2 +1,2 @@
-查看指令
+鏌ョ湅鎸囦护
 docker command --help   # eg: docker image --help
