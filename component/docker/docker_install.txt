@@ -1,31 +1,31 @@
-Ô´Âë£º
+æºç ï¼š
 https://download.docker.com/linux/static/stable/
 tar xzvf /path/to/<FILE>.tar.gz 
 sudo cp docker/* /usr/bin/ 
 sudo dockerd & 
 sudo docker run hello-world
 
-docker centos°²×°£º
-1¡¢uname -r £»CentOS ÏµÍ³µÄÄÚºË°æ±¾¸ßÓÚ 3.10
+docker centoså®‰è£…ï¼š
+1ã€uname -r ï¼›CentOS ç³»ç»Ÿçš„å†…æ ¸ç‰ˆæœ¬é«˜äº 3.10
      3.10.0-327.el7.x86_64
-2¡¢sudo yum install docker
+2ã€sudo yum install docker
 
 cat /etc/sysconfig/docker
 OPTIONS='--selinux-enabled=false --log-driver=journald --signature-verification=false -H unix:///var/run/docker.sock -H tcp://0.0.0.0:2375'
 
-3¡¢Æô¶¯docker
+3ã€å¯åŠ¨docker
     systemctl start docker.service
     service docker start
     #systemctl start docker
 
 
-½Å±¾°²×° Docker
-1¡¢sudo yum update
-2¡¢Ö´ĞĞ Docker °²×°½Å±¾¡£
+è„šæœ¬å®‰è£… Docker
+1ã€sudo yum update
+2ã€æ‰§è¡Œ Docker å®‰è£…è„šæœ¬ã€‚
 $ curl -fsSL https://get.docker.com -o get-docker.sh
-3¡¢$ sudo sh get-docker.sh
-4¡¢Æô¶¯ Docker ½ø³Ì¡£
+3ã€$ sudo sh get-docker.sh
+4ã€å¯åŠ¨ Docker è¿›ç¨‹ã€‚
 sudo systemctl start docker
-5¡¢ÑéÖ¤ docker ÊÇ·ñ°²×°³É¹¦²¢ÔÚÈİÆ÷ÖĞÖ´ĞĞÒ»¸ö²âÊÔµÄ¾µÏñ¡£
+5ã€éªŒè¯ docker æ˜¯å¦å®‰è£…æˆåŠŸå¹¶åœ¨å®¹å™¨ä¸­æ‰§è¡Œä¸€ä¸ªæµ‹è¯•çš„é•œåƒã€‚
 $ sudo docker run hello-world
 docker ps
